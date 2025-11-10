@@ -1,0 +1,1 @@
+// export * from "./icons" 형식으로

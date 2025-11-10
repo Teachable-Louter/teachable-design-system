@@ -1,0 +1,1 @@
+// export * from "./Avatar"; 형식으로

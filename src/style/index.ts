@@ -1,0 +1,1 @@
+// export * from "./SyncTheme"; 형식으로

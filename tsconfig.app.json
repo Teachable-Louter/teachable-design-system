@@ -1,0 +1,39 @@
+// tsconfig.app.json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+
+    /* Emotion 및 Project References 설정 추가 */
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "composite": true,                 
+
+    /* Build Output */
+    "declaration": true,
+    "outDir": "./dist",
+
+    /* Strictness & Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@tokens": ["src/tokens/index.ts"],
+      "@tokens/*": ["src/tokens/*"],
+      // ... 기타 alias 유지
+    }
+  },
+  "include": ["src"]
+}
