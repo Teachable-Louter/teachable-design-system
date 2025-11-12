@@ -1,7 +1,17 @@
 {
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src",
+    "src/types/**/*.d.ts"
+  ],
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+
 }

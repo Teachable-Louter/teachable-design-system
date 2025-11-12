@@ -54,6 +54,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "esbuild": "^0.25.8",
+    "krds-uiux": "^1.0.5",
     "lucide-react": "^0.540.0"
   }
 }
