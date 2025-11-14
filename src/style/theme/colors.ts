@@ -1,161 +1,231 @@
 export const colors = {
   // Primary Colors
-  background: {
-    'white': '#FFFFFF',
-    'black': '#000000',
-    'gray-subtler': '#F4F5F6',
-    'gray-subtle': '#E6E8EA',
-    'inverse': '#1E2124',
-
-  },
-  
-  surface: {
-    'white': '#FFFFFF',
-    'white-subtler': '#FFFFFF',
-    'white-subtle': '#FFFFFF',
-    'white-static': '#FFFFFF',
-    'inverse' : '#1E2124',
-    'inverse-static': '#1E2124',
-    'gray-subtler' :'#F4F5F6',
-    'gray-subtle' :'#E6E8EA',
-    'disabled' : '#CDD1D5',
-    'primary-subtler': '#ECF2FE',
-    'secondary-subtler': '#EEF2F7',
-    'point-subtler': '#FBEFF0',
-    'danger-subtler': '#FDEFEC',
-    'warning-subtler': '#FFF3DB',
-    'success-subtler': '#EAF6EC',
-    'information-subtler': '#E7F4FE'
-  },
-  
-  border: {
-    'transparency' : 'rgba(0, 0, 0, 0)',
-    'inverse' : '#FFFFFF',
-    'disabled' : '#B1B8BE',
-    'gray-light' : '#CDD1D5',
-    'gray' : '#B1B8BE',
-    'gray-dark' : '#58616A',
-    'gray-darker' : '#1E2124',
-    'primary-light' : '#D8E5FD',
-    'primary' : '#256EF4',
-    'secondary-light' : '#D6E0EB',
-    'secondary' : '#063A74',
-    'point-light' : '#F5D6D9',
-    'point' : '#D63D4A',
-    'danger-light' : '#FCDFD9',
-    'danger' : '#DE3412',
-    'warning-light' : '#FFE0A3',
-    'warning' : '#9E6A00',
-    'success-light' : '#D8EEDD',
-    'success' : '#228738',
-    'information-light' : '#D3EBFD',
-    'information' : '#0B78CB'
-  },
-  
-  divider: {
-    'gray-light' : '#CDD1D5',
-    'gray' : '#8A949E',
-    'gray-dark' : '#6D7882',
-    'gray-darker' : '#1E2124',
-    'inverse' : '#FFFFFF',
-    'primary-light' : '#D8E5FD',
-    'primary' : '#256EF4',
-    'secondary-light' : '#D6E0EB',
-    'secondary' : '#063A74',
-    'error' : '#DE3412',
-    'point' : '#D63D4A'
-  },
-  
-  text: {
-    'bolder' : '#131416',
-    'basic' : '#1E2124',
-    'subtle' : '#464C53',
-    'disabled' : '#8A949E',
-    'disabled-on' : '#6D7882',
-    'border-inverse' : '#FFFFFF',
-    'basic-inverse' : '#FFFFFF',
-    'subtle-inverse' : '#B1B8BE',
-    'static' : '#1E2124',
-    'inverse-static' : '#FFFFFF',
-    'primary' : '#0B50D0',
-    'secondary' : '#052B57',
-    'point' : '#AB2B36',
-    'danger' : '#BD2C0F',
-    'warning' : '#8A5C00',
-    'success' : '#267337',
-    'information' : '#096AB3'
-  },
-  
-  action: {
-    'white' : '#FFFFFF',
-    'primary' : 'rgba(255, 255, 255, 0)',
-    'primary-hover' : '#ECF2FE',
-    'primary-pressed' : '#D8E5FD',
-    'primary-selected' : '#ECF2FE',
-    'primary-active' : '#256EF4',
-    'secondary' : 'rgba(255, 255, 255, 0)',
-    'secondary-hover' : '#EEF2F7',
-    'secondary-pressed' : '#D6E0EB',
-    'secondary-selected' : '#EEF2F7',
-    'secondary-on' : '#rgba(255, 255, 255, 0)',
-    'secondary-on-hover' : '#FFFFFF',
-    'secondary-on-pressed' : '#D6E0EB',
-    'secondary-on-selected' : '#FFFFFF',
-    'secondary-active' : '#063A74',
-    'disabled' : '#CDD1D5'
-  },
-  
-  element: {
-    'inverse': '#FFFFFF',
-    'inverse-static': '#FFFFFF',
-    'gray-lighter': '#',
-    'gray-light': '#E6E8EA',
-    'gray': '#6D7882',
-    'gray-dark': '#58616A',
-    'disabled-light': '#CDD1D5',
-    'disabled-dark': '#8A949E',
-    'primary-light': '#D8E5FD',
-    'primary-lighter': '#ECF2FE',
-    'primary': '#256EF4',
-    'secondary-light': '#D6E0EB',
-    'secondary-lighter': '#EEF2F7',
-    'secondary': '#063A74',
-    'point-light': '#F5D6D9',
-    'point-lighter': '#FBEFF0',
-    'point': '#D63D4A',
-    'danger': '#DE3412',
-    'danger-lighter': '#FDEFEC',
-    'warning': '#FFB114',
-    'warning-lighter': '#FFF3DB',
-    'success': '#228738',
-    'success-lighter': '#EAF6EC',
-    'information': '#0B78CB',
-    'information-lighter': '#E7F4FE',
-    'logo-text' : '#575756'
-  },
-  
-  icon: {
-  
-  },
-  
-  link: {
-  
-  },
-  
-  button: {
-  
-  },
-  
-  input: {
-  
-  },
-  
-  graphic: {
-  
-  },
-  
-  alpha:{
-  
+  mode: {
+    background: {
+      'white': '#FFFFFF',
+      'black': '#000000',
+      'gray-subtler': '#F4F5F6',
+      'gray-subtle': '#E6E8EA',
+      'inverse': '#1E2124',
+      
+    },
+    surface: {
+      'white': '#FFFFFF',
+      'white-subtler': '#FFFFFF',
+      'white-subtle': '#FFFFFF',
+      'white-static': '#FFFFFF',
+      'inverse' : '#1E2124',
+      'inverse-static': '#1E2124',
+      'gray-subtler' :'#F4F5F6',
+      'gray-subtle' :'#E6E8EA',
+      'disabled' : '#CDD1D5',
+      'primary-subtler': '#ECF2FE',
+      'secondary-subtler': '#EEF2F7',
+      'point-subtler': '#FBEFF0',
+      'danger-subtler': '#FDEFEC',
+      'warning-subtler': '#FFF3DB',
+      'success-subtler': '#EAF6EC',
+      'information-subtler': '#E7F4FE'
+    },
+    
+    border: {
+      'transparency' : 'rgba(0, 0, 0, 0)',
+      'inverse' : '#FFFFFF',
+      'disabled' : '#B1B8BE',
+      'gray-light' : '#CDD1D5',
+      'gray' : '#B1B8BE',
+      'gray-dark' : '#58616A',
+      'gray-darker' : '#1E2124',
+      'primary-light' : '#D8E5FD',
+      'primary' : '#256EF4',
+      'secondary-light' : '#D6E0EB',
+      'secondary' : '#063A74',
+      'point-light' : '#F5D6D9',
+      'point' : '#D63D4A',
+      'danger-light' : '#FCDFD9',
+      'danger' : '#DE3412',
+      'warning-light' : '#FFE0A3',
+      'warning' : '#9E6A00',
+      'success-light' : '#D8EEDD',
+      'success' : '#228738',
+      'information-light' : '#D3EBFD',
+      'information' : '#0B78CB'
+    },
+    
+    divider: {
+      'gray-light' : '#CDD1D5',
+      'gray' : '#8A949E',
+      'gray-dark' : '#6D7882',
+      'gray-darker' : '#1E2124',
+      'inverse' : '#FFFFFF',
+      'primary-light' : '#D8E5FD',
+      'primary' : '#256EF4',
+      'secondary-light' : '#D6E0EB',
+      'secondary' : '#063A74',
+      'error' : '#DE3412',
+      'point' : '#D63D4A'
+    },
+    
+    text: {
+      'bolder' : '#131416',
+      'basic' : '#1E2124',
+      'subtle' : '#464C53',
+      'disabled' : '#8A949E',
+      'disabled-on' : '#6D7882',
+      'border-inverse' : '#FFFFFF',
+      'basic-inverse' : '#FFFFFF',
+      'subtle-inverse' : '#B1B8BE',
+      'static' : '#1E2124',
+      'inverse-static' : '#FFFFFF',
+      'primary' : '#0B50D0',
+      'secondary' : '#052B57',
+      'point' : '#AB2B36',
+      'danger' : '#BD2C0F',
+      'warning' : '#8A5C00',
+      'success' : '#267337',
+      'information' : '#096AB3'
+    },
+    
+    action: {
+      'white' : '#FFFFFF',
+      'primary' : 'rgba(255, 255, 255, 0)',
+      'primary-hover' : '#ECF2FE',
+      'primary-pressed' : '#D8E5FD',
+      'primary-selected' : '#ECF2FE',
+      'primary-active' : '#256EF4',
+      'secondary' : 'rgba(255, 255, 255, 0)',
+      'secondary-hover' : '#EEF2F7',
+      'secondary-pressed' : '#D6E0EB',
+      'secondary-selected' : '#EEF2F7',
+      'secondary-on' : '#rgba(255, 255, 255, 0)',
+      'secondary-on-hover' : '#FFFFFF',
+      'secondary-on-pressed' : '#D6E0EB',
+      'secondary-on-selected' : '#FFFFFF',
+      'secondary-active' : '#063A74',
+      'disabled' : '#CDD1D5'
+    },
+    
+    element: {
+      'inverse': '#FFFFFF',
+      'inverse-static': '#FFFFFF',
+      'gray-lighter': '#',
+      'gray-light': '#E6E8EA',
+      'gray': '#6D7882',
+      'gray-dark': '#58616A',
+      'disabled-light': '#CDD1D5',
+      'disabled-dark': '#8A949E',
+      'primary-light': '#D8E5FD',
+      'primary-lighter': '#ECF2FE',
+      'primary': '#256EF4',
+      'secondary-light': '#D6E0EB',
+      'secondary-lighter': '#EEF2F7',
+      'secondary': '#063A74',
+      'point-light': '#F5D6D9',
+      'point-lighter': '#FBEFF0',
+      'point': '#D63D4A',
+      'danger': '#DE3412',
+      'danger-lighter': '#FDEFEC',
+      'warning': '#FFB114',
+      'warning-lighter': '#FFF3DB',
+      'success': '#228738',
+      'success-lighter': '#EAF6EC',
+      'information': '#0B78CB',
+      'information-lighter': '#E7F4FE',
+      'logo-text' : '#575756'
+    },
+    
+    icon: {
+      'gray': '#33363D',
+      'gary-light': '#464C53',
+      'gray-fill': '#CDD1D5',
+      'inverse': '#FFFFFF',
+      'disabled': '#8A949E',
+      'disabled-on': '#6D7882',
+      'primary': '#256EF4',
+      'secondary': '#052B57',
+      'point': '#D63D4A',
+      'danger': '#DE3412',
+      'warning': '#9E6A00',
+      'success': '#228738',
+      'information': '#0B78CB',
+      'inverse-static': '#FFFFFF',
+      'primary-static': '#256EF4',
+      'secondary-static': '#052B57',
+      'point-static': '#D63D4A',
+      'danger-static': '#DE3412',
+      'warning-static': '#9E6A00',
+      'success-static': '#228738',
+      'information-static': '#0B78CB'
+    },
+    
+    link: {
+      'default': '#0B78CB',
+      'hover': '#0B50D0',
+      'pressed': '#083891',
+      'visited': '#5917B8'
+    },
+    
+    button: {
+      'primary-fill': '#256EF4',
+      'primary-fill-hover': '#0B50D0',
+      'primary-fill-pressed': '#083891',
+      'secondary-fill': '#ECF2FE',
+      'secondary-fill-hover': '#D8E5FD',
+      'secondary-fill-pressed': '#B1CEFB',
+      'secondary-border': '#256EF4',
+      'tertiary-fill': 'rgba(255, 255, 255, 0)',
+      'tertiary-fill-hover': '#F4F5F6',
+      'tertiary-fill-pressed': '#E6E8EA',
+      'tertiary-border': '#58616A',
+      'text-fill': 'rgba(255, 255, 255, 0)',
+      'text-fill-hover': '#EEF2F7',
+      'text-fill-pressed': '#D6E0EB',
+      'text-border': 'rgba(0, 0, 0, 0)',
+      'disabled-fill': '#CDD1D5',
+      'disabled-border': '#B1B8BE'
+    },
+    
+    input: {
+      'surface': '#FFFFFF',
+      'border': '#58616A',
+      'border-active': '#256EF4',
+      'border-error': '#DE3412',
+      'surface-disabled': '#CDD1D5',
+      'border-disabled': '#B1B8BE',
+    },
+    
+    graphic: {
+      'blue-subtler': '#E5ECF9',
+      'blue-subtle': '#98ACC5',
+      'blue': '#61758F',
+      'blue-dark': '#39506C',
+      'blue-darker': '#223A58',
+      'red-subtler': '#FBEFF0',
+      'red-subtle': '#F5D6D9',
+      'red': '#EBADB2',
+      'red-dark': '#D65C66',
+      'red-darker': '#7A1F26',
+      'brand': '#256EF4'
+    },
+    
+    alpha:{
+      'base100': 'rgba(255, 255, 255, 1)',
+      'base75': 'rgba(255, 255, 255, 0.75)',
+      'base50': 'rgba(255, 255, 255, 0.50)',
+      'base25': 'rgba(255, 255, 255, 0.25)',
+      'base10': 'rgba(255, 255, 255, 0.1)',
+      'base0': 'rgba(255, 255, 255, 0)',
+      'inverse100': 'rgba(0, 0, 0, 1)',
+      'inverse75': 'rgba(0, 0, 0, 0.75)',
+      'inverse50': 'rgba(0, 0, 0, 0.5)',
+      'inverse25': 'rgba(0, 0, 0, 0.25)',
+      'inverse10': 'rgba(0, 0, 0, 0.1)',
+      'inverse0': 'rgba(0, 0, 0, 0)',
+      'shadow0': 'rgba(0, 0, 0, 0)',
+      'shadow1': 'rgba(0, 0, 0, 0.05)',
+      'shadow2': 'rgba(0, 0, 0, 0.08)',
+      'shadow3': 'rgba(0, 0, 0, 0.12)',
+    },
   },
   // Grayscale
   gray: {
