@@ -1,35 +1,27 @@
 import React from 'react';
-import { Button as KRDSButton } from 'krds-uiux';
-
-interface ButtonProps {
-    width?: string;  // 너비 (ex: '100px', '50%')
-    height?: string; // 높이 (기본 40px)
-    variant?: 'primary' | 'secondary';
-    onClick?: () => void;
-    children: React.ReactNode;
-}
+import { StyledButton } from './style';
+import { ButtonProps } from '../../type/button.types';
 
 const Button: React.FC<ButtonProps> = ({
-       width,
-       height = '40px',
-       variant = 'primary',
-       onClick,
-       children
+    width,
+    height,
+    type = 'primary',
+    size = 'medium',
+    label = "Button",
+    onClick,
+    disabled = false,
 }) => {
     return (
-        <KRDSButton
-            variant={variant}
-            style={{
-                width,
-                height,
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}
+        <StyledButton
+            width={width}
+            height={height}
+            buttonType={type}
+            buttonSize={size}
             onClick={onClick}
+            disabled={disabled}
         >
-            {children}
-        </KRDSButton>
+            {label}
+        </StyledButton>
     );
 };
 
