@@ -1,1 +1,1 @@
-// export * from "./SyncTheme"; 형식으로
+export * from "./theme";
