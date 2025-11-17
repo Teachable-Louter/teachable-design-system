@@ -1,8 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { getInputWrapperStyle, labelStyle, getInputStyle } from './style';
-import { InputProps } from '../../type/input.types'
+import { InputProps } from '../../types/input.types'
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
     size = 'medium',
     label = false,
     labelText = '',
@@ -10,8 +10,8 @@ const Input: React.FC<InputProps> = ({
     value,
     onChange,
     disabled = false,
-}) => {
-    const [isFocused, setIsFocused] = React.useState(false);
+}: InputProps) => {
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
         <div style={getInputWrapperStyle(size)}>

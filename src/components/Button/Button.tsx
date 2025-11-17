@@ -1,8 +1,7 @@
-import React from 'react';
+import { ButtonProps } from '../../types/button.types';
 import { StyledButton } from './style';
-import { ButtonProps } from '../../type/button.types';
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
     width,
     height,
     type = 'primary',
@@ -10,7 +9,7 @@ const Button: React.FC<ButtonProps> = ({
     label = "Button",
     onClick,
     disabled = false,
-}) => {
+}: ButtonProps) => {
     return (
         <StyledButton
             width={width}
