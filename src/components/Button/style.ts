@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import { colors } from '../../style/theme/colors';
+import { typography } from '../../style/theme/typography';
 
 interface StyledButtonProps {
     width?: string;
@@ -15,29 +17,45 @@ const getButtonSizeStyle = (size?: string) => {
             return css`
                 width: 148px;
                 height: 40px;
-                padding: 12 0px;
-                font-size: 14px;
+                padding: 12px 0px;
+                font-size: ${typography.label.small.fontSize};
+                line-height: ${typography.label.small.lineHeight};
+                font-weight: ${typography.label.small.fontWeight};
+                font-family: ${typography.fontFamily.primary};
+                letter-spacing: -0.02em;
             `;
         case 'medium':
             return css`
                 width: 168px;
                 height: 40px;
-                padding: 12 0px;
-                font-size: 14px;
+                padding: 12px 0px;
+                font-size: ${typography.label.medium.fontSize};
+                line-height: ${typography.label.medium.lineHeight};
+                font-weight: ${typography.label.medium.fontWeight};
+                font-family: ${typography.fontFamily.primary};
+                letter-spacing: -0.02em;
             `;
         case 'large':
             return css`
                 width: 198px;
                 height: 40px;
-                padding: 12 0px;
-                font-size: 16px;
+                padding: 12px 0px;
+                font-size: ${typography.label.medium.fontSize};
+                line-height: ${typography.label.medium.lineHeight};
+                font-weight: ${typography.label.medium.fontWeight};
+                font-family: ${typography.fontFamily.primary};
+                letter-spacing: -0.02em;
             `;
         default:
             return css`
                 width: 168px;
                 height: 40px;
-                padding: 0 12px;
-                font-size: 14px;
+                padding: 12px 24px;
+                font-size: ${typography.label.medium.fontSize};
+                line-height: ${typography.label.medium.lineHeight};
+                font-weight: ${typography.label.medium.fontWeight};
+                font-family: ${typography.fontFamily.primary};
+                letter-spacing: -0.02em;
             `;
     }
 };
@@ -46,16 +64,16 @@ export const StyledButton = styled.button<StyledButtonProps>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: 500;
-    border-radius: 4px;
+    text-align: center;
+    border-radius: 8px;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     box-sizing: border-box;
+    white-space: nowrap;
 
     /* Size에 따른 스타일 */
     ${props => getButtonSizeStyle(props.buttonSize)}
 
-    /* width와 height가 직접 전달된 경우 우선 적용 */
     ${props => props.width && css`
         width: ${props.width};
     `}
@@ -65,27 +83,26 @@ export const StyledButton = styled.button<StyledButtonProps>`
     `}
 
     ${props => props.buttonType === 'primary' && css`
-        background-color: #0066ff;
-        color: #ffffff;
+        background-color: ${colors.button["primary-fill"]};
+        color: ${colors.text["inverse-static"]};
         border: none;
 
         &:hover:not(:disabled) {
-            background-color: #0052cc;
+            background-color: ${colors.button["primary-fill-hover"]};
         }
 
         &:active:not(:disabled) {
-            background-color: #003d99;
+            background-color: ${colors.button["tertiary-fill"]};
         }
     `}
 
     ${props => props.buttonType === 'secondary' && css`
-        background-color: #ECF2FE;
-        color: #0066ff;
-        border: 1px solid #0066ff;
-        
+        background-color: ${colors.button['secondary-fill']};
+        color: ${colors.text['primary']};
+        border: 1px solid ${colors.button["secondary-border"]};
 
         &:hover:not(:disabled) {
-            background-color: #f0f7ff;
+            background-color: ${colors.button['secondary-fill-hover']};
         }
 
         &:active:not(:disabled) {
@@ -95,8 +112,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
 
     ${props => props.buttonType === 'tertiary' && css`
         background-color: transparent;
-        color: #0066ff;
-        border: 1px solid #58616A;
+        color: ${colors.text["basic"]};
+        border: 1px solid ${colors.button["tertiary-border"]};
 
         &:hover:not(:disabled) {
             background-color: #f0f7ff;

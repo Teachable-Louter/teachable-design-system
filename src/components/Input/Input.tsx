@@ -1,5 +1,5 @@
 import React from 'react';
-import { inputWrapperStyle, labelStyle, getInputStyle } from './style';
+import { getInputWrapperStyle, labelStyle, getInputStyle } from './style';
 import { InputProps } from '../../type/input.types'
 
 const Input: React.FC<InputProps> = ({
@@ -14,7 +14,7 @@ const Input: React.FC<InputProps> = ({
     const [isFocused, setIsFocused] = React.useState(false);
 
     return (
-        <div style={inputWrapperStyle}>
+        <div style={getInputWrapperStyle(size)}>
             {label && labelText && <label style={labelStyle}>{labelText}</label>}
             <input
                 style={getInputStyle(size, disabled, isFocused)}

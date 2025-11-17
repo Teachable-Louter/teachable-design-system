@@ -1,16 +1,32 @@
 import React from 'react';
-import {  } from 'krds-uiux'
+import { typography } from '@/style';
 
-export const inputWrapperStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    width: '192px',
+export const getInputWrapperStyle = (size: 'small' | 'medium' | 'large'): React.CSSProperties => {
+    let height = '48px';
+
+    switch (size) {
+        case 'small':
+            height = '41px';
+            break;
+        case 'medium':
+            height = '48px';
+            break;
+        case 'large':
+            height = '56px';
+            break;
+    }
+
+    return {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        width: '306px',
+        height: height,
+    };
 };
 
 export const labelStyle: React.CSSProperties = {
-    fontSize: '14px',
-    fontWeight: 500,
+    ...typography.label.small,
     color: '#333',
 };
 
@@ -19,29 +35,44 @@ export const getInputStyle = (
     disabled: boolean,
     isFocused: boolean
 ): React.CSSProperties => {
-    let padding = '12px 16px';
-    let fontSize = '16px';
+    let padding = '0px 16px';
+    let fontSize = typography.label.medium.fontSize;
+    let lineHeight = typography.label.medium.lineHeight;
+    let fontWeight = typography.label.medium.fontWeight;
     let height = '48px';
+    let width = '306px';
 
     switch (inputSize) {
         case 'small':
-            fontSize = '14px';
+            fontSize = typography.label.small.fontSize;
+            lineHeight = typography.label.small.lineHeight;
+            fontWeight = typography.label.small.fontWeight;
             height = '40px';
             break;
         case 'medium':
-            fontSize = '16px';
+            fontSize = typography.label.medium.fontSize;
+            lineHeight = typography.label.medium.lineHeight;
+            fontWeight = typography.label.medium.fontWeight;
             height = '48px';
             break;
         case 'large':
-            fontSize = '18px';
+            fontSize = typography.label.large.fontSize;
+            lineHeight = typography.label.large.lineHeight;
+            fontWeight = typography.label.large.fontWeight;
             height = '56px';
             break;
     }
 
     return {
-        width: '192px',
+        width,
+        height,
+        minHeight: height,
+        maxHeight: height,
         padding,
         fontSize,
+        lineHeight,
+        fontWeight,
+        fontFamily: typography.fontFamily.primary,
         border: isFocused ? '1px solid #4a90e2' : '1px solid #ddd',
         borderRadius: '4px',
         outline: 'none',
@@ -50,5 +81,8 @@ export const getInputStyle = (
         backgroundColor: disabled ? '#f5f5f5' : '#fff',
         cursor: disabled ? 'not-allowed' : 'text',
         color: '#333',
+        boxSizing: 'border-box',
+        display: 'flex',
+        alignItems: 'center',
     };
 };
