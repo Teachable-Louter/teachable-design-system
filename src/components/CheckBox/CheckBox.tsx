@@ -1,12 +1,7 @@
 import React from "react";
 import * as S from "./style";
+import { CheckBoxProps } from "@/types/checkBox.types";
 
-export interface CheckBoxProps {
-  size: "medium" | "large";
-  select: "off" | "on" | "interminate";
-  state: "default" | "disabled";
-  onClick?: () => void;
-}
 
 const CheckBox = ({ size, select, state, onClick }: CheckBoxProps) => {
   const handleClick = () => {
@@ -16,7 +11,7 @@ const CheckBox = ({ size, select, state, onClick }: CheckBoxProps) => {
   };
 
   return (
-    <S.Container
+    <S.Wrapper
       size={size}
       select={select}
       state={state}
@@ -39,7 +34,7 @@ const CheckBox = ({ size, select, state, onClick }: CheckBoxProps) => {
         </S.CheckIcon>
       )}
       {select === "interminate" && <S.DashIcon state={state} />}
-    </S.Container>
+    </S.Wrapper>
   );
 };
 

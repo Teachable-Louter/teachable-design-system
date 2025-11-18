@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { colors } from "../../style/theme/colors";
 
-interface ContainerProps {
+interface WrapperProps {
   size: "medium" | "large";
   select: "off" | "on" | "interminate";
   state: "default" | "disabled";
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Wrapper = styled.div<WrapperProps>`
   ${({ size, select, state }) => {
     const dimensions = size === "large" ? "24px" : "20px";
     const borderRadius = size === "large" ? "8px" : "6px";
