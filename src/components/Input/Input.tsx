@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { getInputWrapperStyle, labelStyle, getInputStyle } from './style';
 import { InputProps } from '../../types/input.types'
 
