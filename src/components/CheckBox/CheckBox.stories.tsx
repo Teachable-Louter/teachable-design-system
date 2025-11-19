@@ -17,7 +17,7 @@ const meta = {
     },
     select: {
       control: "select",
-      options: ["off", "on", "interminate"],
+      options: ["off", "on", "indeterminate"],
       description: "체크박스 선택 상태",
     },
     state: {
@@ -57,7 +57,7 @@ export const Checked: Story = {
 export const Indeterminate: Story = {
   args: {
     size: "large",
-    select: "interminate",
+    select: "indeterminate",
     state: "default",
   },
 };
@@ -102,7 +102,7 @@ export const DisabledChecked: Story = {
 export const DisabledIndeterminate: Story = {
   args: {
     size: "large",
-    select: "interminate",
+    select: "indeterminate",
     state: "disabled",
   },
 };
@@ -114,12 +114,12 @@ export const Interactive = {
     state: "default" as const,
   },
   render: () => {
-    const [select, setSelect] = useState<"off" | "on" | "interminate">("off");
+    const [select, setSelect] = useState<"off" | "on" | "indeterminate">("off");
 
     const handleClick = () => {
       setSelect((prev) => {
         if (prev === "off") return "on";
-        if (prev === "on") return "interminate";
+        if (prev === "on") return "indeterminate";
         return "off";
       });
     };
@@ -168,7 +168,7 @@ export const AllStates = {
         </h4>
         <CheckBox size="large" select="off" state="default" />
         <CheckBox size="large" select="on" state="default" />
-        <CheckBox size="large" select="interminate" state="default" />
+        <CheckBox size="large" select="indeterminate" state="default" />
       </div>
       <div
         style={{
@@ -183,7 +183,7 @@ export const AllStates = {
         </h4>
         <CheckBox size="large" select="off" state="disabled" />
         <CheckBox size="large" select="on" state="disabled" />
-        <CheckBox size="large" select="interminate" state="disabled" />
+        <CheckBox size="large" select="indeterminate" state="disabled" />
       </div>
       <div
         style={{
@@ -196,7 +196,7 @@ export const AllStates = {
         <h4 style={{ margin: 0, fontSize: "14px", fontWeight: 600 }}>Medium</h4>
         <CheckBox size="medium" select="off" state="default" />
         <CheckBox size="medium" select="on" state="default" />
-        <CheckBox size="medium" select="interminate" state="default" />
+        <CheckBox size="medium" select="indeterminate" state="default" />
       </div>
     </div>
   ),

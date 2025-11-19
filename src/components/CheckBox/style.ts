@@ -4,7 +4,7 @@ import { colors } from "../../style/theme/colors";
 
 interface WrapperProps {
   size: "medium" | "large";
-  select: "off" | "on" | "interminate";
+  select: "off" | "on" | "indeterminate";
   state: "default" | "disabled";
 }
 
@@ -41,7 +41,7 @@ export const Wrapper = styled.div<WrapperProps>`
       `}
       
       ${state === "default" &&
-      (select === "on" || select === "interminate") &&
+      (select === "on" || select === "indeterminate") &&
       css`
         background-color: ${colors.element.primary};
         border: 1px solid ${colors.element.primary};
