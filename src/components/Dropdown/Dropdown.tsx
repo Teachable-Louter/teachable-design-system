@@ -1,13 +1,14 @@
+import React from "react";
 import {DropdownProps} from "../../type/Dropdown.types";
-import {useState, useRef, useEffect} from "react";
+import {Box, StyledDropDown, Text} from "./style";
+// import icon from '../../assets/icon/icon-dropdown.svg';
 
-
-export function Dropdown({width, height, options, onSelect, label}: DropdownProps) {
-	const [open, setOpen] = useState(false);
-	const [selected, setSelected] = useState<string | null>(null);
-	const ref = useRef<HTMLDivElement>(null);
+export function Dropdown({size, options, onSelect, label}: DropdownProps) {
+	const [open, setOpen] = React.useState(false);
+	const [selected, setSelected] = React.useState<string | null>(null);
+	const ref = React.useRef<HTMLDivElement>(null);
 	
-	useEffect(() => {
+	React.useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
 			if (ref.current && !ref.current.contains(e.target as Node)) {
 				setOpen(false);
@@ -23,15 +24,24 @@ export function Dropdown({width, height, options, onSelect, label}: DropdownProp
 		setOpen(false);
 	};
 	
+	
 	return (
 		<div style={{position: 'relative'}}>
-			<label>{label}</label>
-			<button onClick={() => setOpen((prev) => !prev)}>
-				{selected ?? "선택해주세요"}
-			</button>
+			<p>{label}</p>
+			<StyledDropDown onClick={() => setOpen((prev) => !prev)}
+				size={size}
+				>
+				<Box>
+					<Text
+						size={size}
+					>{selected ?? "선택해주세요"}</Text>
+					{/*<img src={icon} alt="icon" />*/}
+					<p>i</p>
+				</Box>
+			</StyledDropDown>
 			{open && (
-				<ul>
-					{options.map((option) => (
+				<ul style={{border:'1px solid'}}>
+					{options?.map((option) => (
 						<li key={option} onClick={() => handleSelect(option)}>
 							{option}
 						</li>

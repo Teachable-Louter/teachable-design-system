@@ -1,7 +1,6 @@
 export interface DropdownProps {
-	width?: string;
-	height?: string;
-	onSelect?: () => void;
+	size?: "small" | "medium" | "large";
+	onSelect?: (option: string) => void;
 	options: string[];
 	label?: string;
 }

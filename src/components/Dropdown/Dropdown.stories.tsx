@@ -13,7 +13,7 @@ const meta = {
 			control: 'text',
 			description: '드롭다운 너비 (예: "240px", "100%")',
 		},
-		height: {
+		size: {
 			control: 'text',
 			description: '트리거 버튼 높이',
 		},
@@ -38,8 +38,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	args: {
 		label: '과목 선택',
-		width: '240px',
+		width: '320px',
 		options: ['국어', '영어', '수학', '사회', '과학'],
+		size: 'medium'
 	},
 };
 
@@ -47,7 +48,16 @@ export const WithCustomSize: Story = {
 	args: {
 		label: '강의 분류',
 		width: '320px',
-		height: '48px',
+		size: 'large',
+		options: ['정규 과정', '특강', '워크숍'],
+	},
+};
+
+export const MiniSize: Story = {
+	args: {
+		label: '강의 분류',
+		width: '320px',
+		size: 'small',
 		options: ['정규 과정', '특강', '워크숍'],
 	},
 };
@@ -55,5 +65,11 @@ export const WithCustomSize: Story = {
 export const WithoutLabel: Story = {
 	args: {
 		options: ['옵션 1', '옵션 2', '옵션 3'],
+	},
+};
+
+export const ManiOptions: Story = {
+	args: {
+		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 	},
 };
