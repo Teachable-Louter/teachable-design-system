@@ -11,7 +11,6 @@ const CheckBox = ({ size, select, state, onClick }: CheckBoxProps) => {
 
   return (
     <S.Wrapper size={size} select={select} state={state} onClick={handleClick}>
-      {select === "off" && <></>}
       {select === "on" && (
         <S.CheckIcon
           viewBox="0 0 24 24"
