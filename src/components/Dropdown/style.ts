@@ -6,6 +6,7 @@ import { typography } from '../../style/theme/typography';
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
 	onSelect?: (option: string) => void;
+	isOpen?: boolean;
 }
 
 const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
@@ -28,28 +29,34 @@ const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
 			`
 	}
 }
-
 const getFontSize = (size?: 'small' | 'medium' | 'large') => {
 	switch (size) {
 		case 'small':
 			return css`
 			font-size: ${typography.label.small.fontSize};
+			line-height: ${typography.label.small.lineHeight};
+			font-weight: ${typography.label.small.fontWeight};
 			`
 		case 'medium':
 			return css`
 			font-size: ${typography.label.medium.fontSize};
+			line-height: ${typography.label.medium.lineHeight};
+			font-weight: ${typography.label.medium.fontWeight};
 			`
 		case 'large':
 			return css`
 			font-size: ${typography.label.large.fontSize};
+			line-height: ${typography.label.large.lineHeight};
+			font-weight: ${typography.label.large.fontWeight};
 			`
 		default:
 			return css`
 			font-size: ${typography.label.medium.fontSize};
+			line-height: ${typography.label.medium.lineHeight};
+			font-weight: ${typography.label.medium.fontWeight};
 			`
 	}
 }
-
 const getIconSize = (size?: 'small' | 'medium' | 'large') => {
 	switch (size) {
 		case 'small':
@@ -74,21 +81,43 @@ const getIconSize = (size?: 'small' | 'medium' | 'large') => {
 			`
 	}
 }
+const getOptionSize = (size?: 'small' | 'medium' | 'large') => {
+	switch (size) {
+		case 'small':
+			return css`
+				height: 23px;
+			`
+		case 'medium':
+			return css`
+				height: 26px;
+			`
+		case 'large':
+			return css`
+			height: 29px;
+			`
+		default:
+			return css`
+			height: 26px;
+			`
+	}
+}
 
 export const StyledDropDown = styled.button<StyledDropdownProps>`
+	font-family: ${typography.fontFamily.primary};
 	background: ${colors.input.surface};
-	border:1px solid ${colors.input.border};
     border-radius: 8px;
 	display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
 	width: 320px;
-    ${({ onSelect }) => (onSelect ? colors.input['border-active'] : colors.input.border)};
+	
+    border: ${({ isOpen }) =>
+            isOpen ? `2px solid ${colors.input['border-active']}` : `1px solid ${colors.input.border}`};
     ${props => getButtonSize(props.size)}
 	
-    ${props => getButtonSize(props.size)}
 `;
+// ${({ onSelect }) => (onSelect ? colors.input['border-active'] : colors.input.border)};
 
 export const StyledBox = styled.div`
     display: flex;
@@ -101,15 +130,13 @@ export const StyledBox = styled.div`
 
 export const StyledText = styled.p<StyledDropdownProps>`
     font-family: ${typography.fontFamily.primary};
-	color: ${colors.text.disabled};
     font-style: normal;
-    font-weight: 150;
-    line-height: 150%;
     letter-spacing: 0;
 	width: 246px;
     flex: 1 0 0;
 	text-align: left;
 	${props => getFontSize(props.size)}
+    color: ${({ isOpen }) => isOpen ? colors.text.static : colors.text.disabled};
 `
 
 export const StyledLabel = styled.p`
@@ -121,7 +148,43 @@ export const StyledIcon = styled.div<StyledDropdownProps>`
     ${props => getIconSize(props.size)}
 `
 
-export const StyledOptions = styled.ul`
+export const StyledOptions = styled.div<StyledDropdownProps>`
 	border: 1px solid ${colors.border["gray-light"]};
 	border-radius: 8px;
+
+    display: flex;
+    padding: 12px 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    max-height: ${({ size }) =>
+        size === 'small' ? '220px' :
+		size === 'large' ? '260px' :
+            '240px'};
+    overflow-y: auto;
+    overflow-x: hidden;
+`
+
+export const StyledOption = styled.div<StyledDropdownProps>`
+    display: flex;
+    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+	
+	
+	border-radius: 8px;
+	
+	color: ${colors.text.subtle};
+	
+	${props => getFontSize(props.size)}
+	${props => getOptionSize(props.size)}
+	
+	&:hover {
+		background: ${colors.action["secondary-hover"]};
+	}
+	&:active {
+		background: ${colors.action["secondary-pressed"]};
+	}
 `

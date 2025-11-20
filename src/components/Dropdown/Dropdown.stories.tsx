@@ -75,3 +75,17 @@ export const ManiOptions: Story = {
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 	},
 };
+export const ManiOptionsWithSmallSize: Story = {
+	args: {
+		placeholder: '가상학급수',
+		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
+		size: 'small'
+	},
+};
+export const ManiOptionsWithLargeSize: Story = {
+	args: {
+		placeholder: '가상학급수',
+		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
+		size: 'large'
+	},
+};

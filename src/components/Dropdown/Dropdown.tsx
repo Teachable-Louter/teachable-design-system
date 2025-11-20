@@ -1,12 +1,12 @@
 import React from "react";
 import {DropdownProps} from "../../type/Dropdown.types";
-import {StyledBox, StyledDropDown, StyledText, StyledLabel, StyledIcon, StyledOptions} from "./style";
+import {StyledBox, StyledDropDown, StyledText, StyledLabel, StyledIcon, StyledOptions, StyledOption} from "./style";
 import arrowDownIcon from '../../assets/icons/arrow-down.png';
 
 export function Dropdown({size, options, onSelect, label, placeholder}: DropdownProps) {
 	const [open, setOpen] = React.useState(false);
 	const [selected, setSelected] = React.useState<string | null>(null);
-	const ref = React.useRef<HTMLUListElement>(null);
+	const ref = React.useRef<HTMLDivElement>(null);
 	
 	React.useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -30,10 +30,12 @@ export function Dropdown({size, options, onSelect, label, placeholder}: Dropdown
 			<StyledLabel>{label}</StyledLabel>
 			<StyledDropDown onClick={() => setOpen((prev) => !prev)}
 				size={size}
+				isOpen={open}
 				>
 				<StyledBox>
 					<StyledText
 						size={size}
+						isOpen={open}
 					>{selected ?? placeholder}</StyledText>
 					<StyledIcon size={size}>
 						<img src={arrowDownIcon} alt="dropdown icon" style={{width:'100%', height:'100%'}}/>
@@ -41,11 +43,11 @@ export function Dropdown({size, options, onSelect, label, placeholder}: Dropdown
 				</StyledBox>
 			</StyledDropDown>
 			{open && (
-				<StyledOptions ref={ref}>
+				<StyledOptions ref={ref} size={size}>
 					{options?.map((option) => (
-						<div key={option} onClick={() => handleSelect(option)}>
+						<StyledOption key={option} onClick={() => handleSelect(option)} size={size}>
 							{option}
-						</div>
+						</StyledOption>
 					))}
 				</StyledOptions>
 				)}
