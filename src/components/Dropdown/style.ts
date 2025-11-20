@@ -6,7 +6,6 @@ import { typography } from '../../style/theme/typography';
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
 	onSelect?: (option: string) => void;
-	label?: string;
 }
 
 const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
@@ -60,6 +59,8 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
     align-items: flex-start;
     gap: 8px;
 	width: 320px;
+    ${({ onSelect }) => (onSelect ? colors.input['border-active'] : colors.input.border)};
+    ${props => getButtonSize(props.size)}
 	
     ${props => getButtonSize(props.size)}
 `;

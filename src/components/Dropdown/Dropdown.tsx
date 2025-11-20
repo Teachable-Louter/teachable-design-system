@@ -3,7 +3,7 @@ import {DropdownProps} from "../../type/Dropdown.types";
 import {Box, StyledDropDown, Text} from "./style";
 // import icon from '../../assets/icon/icon-dropdown.svg';
 
-export function Dropdown({size, options, onSelect, label}: DropdownProps) {
+export function Dropdown({size, options, onSelect, label, placeholder}: DropdownProps) {
 	const [open, setOpen] = React.useState(false);
 	const [selected, setSelected] = React.useState<string | null>(null);
 	const ref = React.useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ export function Dropdown({size, options, onSelect, label}: DropdownProps) {
 				<Box>
 					<Text
 						size={size}
-					>{selected ?? "선택해주세요"}</Text>
+					>{selected ?? placeholder}</Text>
 					{/*<img src={icon} alt="icon" />*/}
 					<p>i</p>
 				</Box>

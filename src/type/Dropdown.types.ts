@@ -3,4 +3,5 @@ export interface DropdownProps {
 	onSelect?: (option: string) => void;
 	options: string[];
 	label?: string;
+	placeholder?: string;
 }

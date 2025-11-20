@@ -9,9 +9,9 @@ const meta = {
 	},
 	tags: ['autodocs'],
 	argTypes: {
-		width: {
+		placeholder: {
 			control: 'text',
-			description: '드롭다운 너비 (예: "240px", "100%")',
+			description: '기본',
 		},
 		size: {
 			control: 'text',
@@ -38,7 +38,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	args: {
 		label: '과목 선택',
-		width: '320px',
+		placeholder: '가상학급수',
 		options: ['국어', '영어', '수학', '사회', '과학'],
 		size: 'medium'
 	},
@@ -47,7 +47,7 @@ export const Default: Story = {
 export const WithCustomSize: Story = {
 	args: {
 		label: '강의 분류',
-		width: '320px',
+		placeholder: '가상학급수',
 		size: 'large',
 		options: ['정규 과정', '특강', '워크숍'],
 	},
@@ -56,7 +56,7 @@ export const WithCustomSize: Story = {
 export const MiniSize: Story = {
 	args: {
 		label: '강의 분류',
-		width: '320px',
+		placeholder: '가상학급수',
 		size: 'small',
 		options: ['정규 과정', '특강', '워크숍'],
 	},
@@ -64,12 +64,14 @@ export const MiniSize: Story = {
 
 export const WithoutLabel: Story = {
 	args: {
+		placeholder: '가상학급수',
 		options: ['옵션 1', '옵션 2', '옵션 3'],
 	},
 };
 
 export const ManiOptions: Story = {
 	args: {
+		placeholder: '가상학급수',
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 	},
 };
