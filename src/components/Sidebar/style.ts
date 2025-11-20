@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 // import { css } from '@emotion/react';
-import { colors } from '../../style/theme/colors';
-import { typography } from '../../style/theme/typography';
+import { colors } from '../../style/theme';
+import { typography } from '../../style/theme';
 
 interface TitleProps {
 	isOpen: boolean;
@@ -71,7 +71,10 @@ export const StyledButtonArea = styled.div`
 `
 
 export const StyledDisclosure = styled.div`
-
+	display: flex;
+	gap: 4px;
+    flex-direction: column;
+	
 `
 export const StyledTitle = styled.div`
     display: flex;
