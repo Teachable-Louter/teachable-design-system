@@ -50,6 +50,31 @@ const getFontSize = (size?: 'small' | 'medium' | 'large') => {
 	}
 }
 
+const getIconSize = (size?: 'small' | 'medium' | 'large') => {
+	switch (size) {
+		case 'small':
+			return css`
+			width: 16px;
+			height: 16px;
+			`
+		case 'medium':
+			return css`
+			width: 20px;
+			height: 20px;
+			`
+		case 'large':
+			return css`
+			width: 24px;
+			height: 24px;
+			`
+		default:
+			return css`
+			width: 20px;
+			height: 20px;
+			`
+	}
+}
+
 export const StyledDropDown = styled.button<StyledDropdownProps>`
 	background: ${colors.input.surface};
 	border:1px solid ${colors.input.border};
@@ -65,7 +90,7 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
     ${props => getButtonSize(props.size)}
 `;
 
-export const Box = styled.div`
+export const StyledBox = styled.div`
     display: flex;
 	height: 100%;
     padding: 0 16px;
@@ -74,7 +99,7 @@ export const Box = styled.div`
     align-self: stretch;
 `
 
-export const Text = styled.p<StyledDropdownProps>`
+export const StyledText = styled.p<StyledDropdownProps>`
     font-family: ${typography.fontFamily.primary};
 	color: ${colors.text.disabled};
     font-style: normal;
@@ -87,4 +112,16 @@ export const Text = styled.p<StyledDropdownProps>`
 	${props => getFontSize(props.size)}
 `
 
-export const Label = styled.p``
+export const StyledLabel = styled.p`
+    font-family: ${typography.fontFamily.primary};
+	color: ${colors.text.static};
+`
+
+export const StyledIcon = styled.div<StyledDropdownProps>`
+    ${props => getIconSize(props.size)}
+`
+
+export const StyledOptions = styled.ul`
+	border: 1px solid ${colors.border["gray-light"]};
+	border-radius: 8px;
+`
