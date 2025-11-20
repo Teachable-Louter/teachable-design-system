@@ -10,6 +10,10 @@ const meta = {
   },
   tags: ["autodocs"],
   argTypes: {
+    title: {
+      control: "text",
+      description: "탭바 제목",
+    },
     items: {
       description: "탭 아이템 목록",
     },
@@ -39,6 +43,7 @@ const sampleItems = [
 // 기본 TabBar
 export const Default: Story = {
   args: {
+    title: "시간표 설정",
     items: sampleItems,
     defaultSelectedId: "4",
   },
@@ -47,6 +52,7 @@ export const Default: Story = {
 // 첫 번째 항목 선택
 export const FirstSelected: Story = {
   args: {
+    title: "시간표 설정",
     items: sampleItems,
     defaultSelectedId: "1",
   },
@@ -55,6 +61,7 @@ export const FirstSelected: Story = {
 // 마지막 항목 선택
 export const LastSelected: Story = {
   args: {
+    title: "시간표 설정",
     items: sampleItems,
     defaultSelectedId: "6",
   },
@@ -63,6 +70,7 @@ export const LastSelected: Story = {
 // 적은 항목
 export const FewItems: Story = {
   args: {
+    title: "간단한 설정",
     items: [
       { id: "1", label: "기본 정보 등록" },
       { id: "2", label: "교사명 등록" },
@@ -75,6 +83,7 @@ export const FewItems: Story = {
 // 많은 항목
 export const ManyItems: Story = {
   args: {
+    title: "전체 설정",
     items: [
       { id: "1", label: "기본 정보 등록" },
       { id: "2", label: "교사명 등록" },
@@ -92,11 +101,12 @@ export const ManyItems: Story = {
 // 인터랙티브 예제
 export const Interactive: Story = {
   args: {
+    title: "시간표 설정",
     items: sampleItems,
     defaultSelectedId: "4",
   },
   render: (args) => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+    <div style={{ display: "flex", gap: "16px" }}>
       <TabBar {...args} onChange={(id) => console.log("Selected:", id)} />
       <p style={{ margin: 0, fontSize: "14px", color: "#666" }}>
         탭을 클릭하여 선택 상태를 변경하세요

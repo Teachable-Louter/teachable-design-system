@@ -8,12 +8,13 @@ export interface TabItem {
 }
 
 export interface TabBarProps {
+  title?: string;
   items: TabItem[];
   defaultSelectedId?: string;
   onChange?: (id: string) => void;
 }
 
-const TabBar = ({ items, defaultSelectedId, onChange }: TabBarProps) => {
+const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
   const [selectedId, setSelectedId] = useState(
     defaultSelectedId || items[0]?.id
   );
@@ -27,6 +28,7 @@ const TabBar = ({ items, defaultSelectedId, onChange }: TabBarProps) => {
 
   return (
     <S.Wrapper>
+      {title && <S.Title>{title}</S.Title>}
       {items.map((item) => (
         <S.TabItem
           key={item.id}
