@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { colors } from '../../style/theme/colors';
-import { typography } from '../../style/theme/typography';
+import { colors } from '../../style/theme';
+import { typography } from '../../style/theme';
 
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
