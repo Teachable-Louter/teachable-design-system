@@ -46,7 +46,7 @@ export default function Sidebar({description}: SidebarProps) {
 			</StyledDescription>
 			<StyledButtonArea>
 				<Button size='small' type='secondary' label='이전으로' width='100px' height='40px' ></Button>
-				<Button size='small' type='tertiary' label='다음으로' width='100px' height='40px'></Button>
+				<Button size='small' type='primary' label='다음으로' width='100px' height='40px' ></Button>
 			</StyledButtonArea>
 		</StyledSidebar>
 	)
