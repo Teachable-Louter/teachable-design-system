@@ -7,6 +7,7 @@ export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
 	onSelect?: (option: string) => void;
 	isOpen?: boolean;
+	isSelected?: boolean;
 }
 
 const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
@@ -180,6 +181,11 @@ export const StyledOption = styled.div<StyledDropdownProps>`
 	
 	${props => getFontSize(props.size)}
 	${props => getOptionSize(props.size)}
+
+    ${({ isSelected }) => isSelected && css`
+		background: ${colors.action["secondary-selected"]};
+		color: ${colors.text.secondary};
+	`}
 	
 	&:hover {
 		background: ${colors.action["secondary-hover"]};
