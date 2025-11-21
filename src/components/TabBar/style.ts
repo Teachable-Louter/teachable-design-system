@@ -12,11 +12,11 @@ export const Wrapper = styled.div`
   gap: 16px;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.span`
   padding: 4px 0;
   margin: 0;
-  font-size: ${typography.heading.xxsmall.fontSize};
-  font-weight: ${typography.heading.xxsmall.fontWeight};
+  ${typography.heading.xxsmall}
+  font-family:${typography.fontFamily.primary};
   color: ${colors.text.bolder};
 `;
 
@@ -30,11 +30,9 @@ export const Tablist = styled.div`
 `;
 export const TabItem = styled.div<TabItemProps>`
   padding: 8px 8px;
-  font-size: ${typography.body.xsmall.fontSize};
-  font-weight: ${({ isSelected }) =>
-    isSelected
-      ? typography.body.xsmallBold.fontWeight
-      : typography.body.xsmall.fontWeight};
+  font-family: ${typography.fontFamily.primary};
+  ${({ isSelected }) =>
+    isSelected ? typography.body.xsmallBold : typography.body.xsmall}
   color: ${({ isSelected }) =>
     isSelected ? colors.text.secondary : colors.text.subtle};
   background-color: ${({ isSelected }) =>
