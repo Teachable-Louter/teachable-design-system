@@ -1,43 +1,52 @@
 import styled from "@emotion/styled";
-import { colors } from "../../style/theme/colors";
+import { colors } from "@/style/theme";
+import { typography } from "@/style/theme";
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 160px;
   height: 100vh;
-  padding: 18px;
+  padding: 16px;
   background-color: ${colors.surface.white};
-  border: 1px solid ${colors.border["gray-light"]};
-  gap: 4px;
+  gap: 16px;
 `;
 
 export const Title = styled.h3`
-  margin: 0 0 16px 0;
-  padding: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: ${colors.text.basic};
+  padding: 4px 0;
+  margin: 0;
+  font-size: ${typography.heading.xxsmall.fontSize};
+  font-weight: ${typography.heading.xxsmall.fontWeight};
+  color: ${colors.text.bolder};
 `;
 
 interface TabItemProps {
   isSelected: boolean;
 }
-
+export const Tablist = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
 export const TabItem = styled.div<TabItemProps>`
-  padding: 10px 12px;
-  font-size: 16px;
+  padding: 8px 8px;
+  font-size: ${typography.body.xsmall.fontSize};
   font-weight: ${({ isSelected }) =>
-    isSelected ? 700 : 400};
+    isSelected
+      ? typography.body.xsmallBold.fontWeight
+      : typography.body.xsmall.fontWeight};
   color: ${({ isSelected }) =>
     isSelected ? colors.text.secondary : colors.text.subtle};
   background-color: ${({ isSelected }) =>
     isSelected ? colors.action["secondary-selected"] : "transparent"};
+  border-radius: 4px;
   cursor: pointer;
 
   &:hover {
     background-color: ${({ isSelected }) =>
-      isSelected ? colors.action["secondary-selected"] : colors.action["secondary-hover"]};
+      isSelected
+        ? colors.action["secondary-selected"]
+        : colors.action["secondary-hover"]};
   }
 
   &:active {

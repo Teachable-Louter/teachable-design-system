@@ -29,15 +29,17 @@ const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
   return (
     <S.Wrapper>
       {title && <S.Title>{title}</S.Title>}
-      {items.map((item) => (
-        <S.TabItem
-          key={item.id}
-          isSelected={selectedId === item.id}
-          onClick={() => handleTabClick(item.id)}
-        >
-          {item.label}
-        </S.TabItem>
-      ))}
+      <S.Tablist>
+        {items.map((item) => (
+          <S.TabItem
+            key={item.id}
+            isSelected={selectedId === item.id}
+            onClick={() => handleTabClick(item.id)}
+          >
+            {item.label}
+          </S.TabItem>
+        ))}
+      </S.Tablist>
     </S.Wrapper>
   );
 };
