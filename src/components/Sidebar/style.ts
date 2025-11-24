@@ -81,7 +81,7 @@ export const StyledTitle = styled.div`
     align-items: center;
     gap: 4px;
 	height: 26px;
-    user-select:none
+    user-select: none;
 `
 export const StyledOpenContents = styled.div`
     display: flex;
