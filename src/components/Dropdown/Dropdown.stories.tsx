@@ -69,20 +69,20 @@ export const WithoutLabel: Story = {
 	},
 };
 
-export const ManiOptions: Story = {
+export const ManyOptions: Story = {
 	args: {
 		placeholder: '가상학급수',
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 	},
 };
-export const ManiOptionsWithSmallSize: Story = {
+export const ManyOptionsWithSmallSize: Story = {
 	args: {
 		placeholder: '가상학급수',
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 		size: 'small'
 	},
 };
-export const ManiOptionsWithLargeSize: Story = {
+export const ManyOptionsWithLargeSize: Story = {
 	args: {
 		placeholder: '가상학급수',
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
