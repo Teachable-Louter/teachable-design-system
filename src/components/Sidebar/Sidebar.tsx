@@ -12,7 +12,7 @@ import Button from "../Button/Button";
 import {SidebarProps} from "../../type/Sidebar.types";
 import icon from "../../assets/icons/icon_size.png"
 
-export default function Sidebar({description}: SidebarProps) {
+export default function Sidebar({buttonStyle, description}: SidebarProps) {
 	
 	const [openSections, setOpenSections] = React.useState<boolean[]>(
 		Array(description.length).fill(true) // 기본적으로 모두 열려있게
@@ -44,10 +44,24 @@ export default function Sidebar({description}: SidebarProps) {
 					</StyledDisclosure>
 				))}
 			</StyledDescription>
-			<StyledButtonArea>
-				<Button size='small' type='secondary' label='이전으로' width='100px' height='40px' ></Button>
-				<Button size='small' type='primary' label='다음으로' width='100px' height='40px' ></Button>
-			</StyledButtonArea>
+			{buttonStyle === 'two' ? <TwoButton /> : <OneButton />}
 		</StyledSidebar>
+	)
+}
+
+function OneButton() {
+	return (
+		<StyledButtonArea>
+			<Button size='small' type='primary' label='다음으로' width='240px' height='40px' ></Button>
+		</StyledButtonArea>
+	)
+}
+
+function TwoButton() {
+	return (
+		<StyledButtonArea>
+			<Button size='small' type='secondary' label='이전으로' width='115px' height='40px' ></Button>
+			<Button size='small' type='primary' label='다음으로' width='115px' height='40px' ></Button>
+		</StyledButtonArea>
 	)
 }

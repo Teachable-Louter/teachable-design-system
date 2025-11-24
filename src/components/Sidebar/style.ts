@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 // import { css } from '@emotion/react';
-import { colors } from '../../style/theme';
-import { typography } from '../../style/theme';
+import { colors } from '../../style';
+import { typography } from '../../style';
 
 interface TitleProps {
 	isOpen: boolean;
@@ -18,7 +18,6 @@ export const StyledIcon = styled.img<TitleProps>`
 export const StyledSidebar = styled.div`
     display: flex;
     width: 240px;
-    //height: 653px;
 	height: 100vh;
     padding: 16px;
     flex-direction: column;
