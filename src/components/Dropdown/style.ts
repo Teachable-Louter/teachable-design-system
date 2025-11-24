@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { colors } from '../../style/theme';
-import { typography } from '../../style/theme';
+import { colors } from '../../style';
+import { typography } from '../../style';
+import element from '../../assets/icons/checked.png';
 
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
@@ -177,13 +178,30 @@ export const StyledOption = styled.div<StyledDropdownProps>`
 	border-radius: 8px;
 	
 	color: ${colors.text.subtle};
+	position: relative;
 	
 	${props => getFontSize(props.size)}
 	${props => getOptionSize(props.size)}
 
+
     ${({ isSelected }) => isSelected && css`
 		background: ${colors.action["secondary-selected"]};
 		color: ${colors.text.secondary};
+
+		padding-left: 36px;
+
+		&::after {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background-image: url(${element});
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 12px; /* 텍스트 오른쪽에 표시 */
+        top: 50%;
+        transform: translateY(-50%);
+    }
 	`}
 	
 	&:hover {
