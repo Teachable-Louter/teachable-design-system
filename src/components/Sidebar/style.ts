@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-// import { css } from '@emotion/react';
 import { colors } from '../../style';
 import { typography } from '../../style';
 
