@@ -118,7 +118,6 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
     ${props => getButtonSize(props.size)}
 	
 `;
-// ${({ onSelect }) => (onSelect ? colors.input['border-active'] : colors.input.border)};
 
 export const StyledBox = styled.div`
     display: flex;
