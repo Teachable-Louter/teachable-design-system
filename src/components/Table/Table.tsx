@@ -1,6 +1,6 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-import type { TableProps, SortDirection } from '../../types/table';
+import type { TableProps, SortDirection, DataType } from '../../types/table';
 import {
   TableWrapper,
   TableContainer,
@@ -10,11 +10,35 @@ import {
   ScrollButton,
 } from './style';
 import TableHeader from './table-header';
-import TableBodyComponent from './table-body';
+import TableBody from './table-body';
+
+/** 값 비교 함수 */
+const compareValues = (a: unknown, b: unknown, dataType?: DataType): number => {
+  if (a == null) return 1;
+  if (b == null) return -1;
+
+  switch (dataType) {
+    case 'number':
+      return Number(a) - Number(b);
+    case 'date':
+      return new Date(a as string).getTime() - new Date(b as string).getTime();
+    case 'boolean':
+      return (a ? 1 : 0) - (b ? 1 : 0);
+    default:
+      return String(a).localeCompare(String(b), 'ko-KR');
+  }
+};
+
+/** 다음 정렬 방향 계산 */
+const getNextSortDirection = (current: SortDirection): SortDirection => {
+  if (current === 'asc') return 'desc';
+  if (current === 'desc') return null;
+  return 'asc';
+};
 
 /**
- * 편집 가능한 테이블 컴포넌트
- * @template T - 행 데이터의 타입
+ * 테이블 컴포넌트
+ * @template T - 행 데이터 타입
  */
 export default function Table<T extends Record<string, unknown> = Record<string, unknown>>({
   columns,
@@ -22,14 +46,13 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   onCellEdit,
   onSort,
   maxHeight,
-  striped = false,
   className,
 }: TableProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
 
-  // 정렬된 데이터
+  // 정렬된 데이터 (메모이제이션)
   const sortedData = useMemo(() => {
     if (!sortColumn || !sortDirection) return data;
 
@@ -37,84 +60,33 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     if (!column) return data;
 
     return [...data].sort((a, b) => {
-      const aValue = a[sortColumn as keyof T];
-      const bValue = b[sortColumn as keyof T];
+      const aVal = a[sortColumn as keyof T];
+      const bVal = b[sortColumn as keyof T];
 
-      // 커스텀 정렬 함수가 있는 경우
-      if (column.sortFn) {
-        return sortDirection === 'asc'
-          ? column.sortFn(aValue, bValue)
-          : column.sortFn(bValue, aValue);
-      }
+      const result = column.sortFn
+        ? column.sortFn(aVal, bVal)
+        : compareValues(aVal, bVal, column.dataType);
 
-      // 기본 정렬 로직
-      const compareValue = (valA: unknown, valB: unknown): number => {
-        // null/undefined 처리
-        if (valA === null || valA === undefined) return 1;
-        if (valB === null || valB === undefined) return -1;
-
-        // 타입별 비교
-        switch (column.dataType) {
-          case 'number':
-            return Number(valA) - Number(valB);
-          case 'date':
-            return new Date(valA as string).getTime() - new Date(valB as string).getTime();
-          case 'boolean':
-            return (valA ? 1 : 0) - (valB ? 1 : 0);
-          default:
-            return String(valA).localeCompare(String(valB), 'ko-KR');
-        }
-      };
-
-      return sortDirection === 'asc'
-        ? compareValue(aValue, bValue)
-        : compareValue(bValue, aValue);
+      return sortDirection === 'asc' ? result : -result;
     });
   }, [data, sortColumn, sortDirection, columns]);
 
-  const handleSort = (columnKey: string) => {
-    if (sortColumn === columnKey) {
-      // 같은 컬럼 클릭: asc -> desc -> null
-      if (sortDirection === 'asc') {
-        setSortDirection('desc');
-      } else if (sortDirection === 'desc') {
-        setSortColumn(null);
-        setSortDirection(null);
-      }
-    } else {
-      // 새로운 컬럼 클릭: asc부터 시작
-      setSortColumn(columnKey);
-      setSortDirection('asc');
-    }
+  // 정렬 핸들러
+  const handleSort = useCallback((columnKey: string) => {
+    const isSameColumn = sortColumn === columnKey;
+    const nextDirection = isSameColumn
+      ? getNextSortDirection(sortDirection)
+      : 'asc';
 
-    // 외부 콜백 호출
-    if (onSort) {
-      const newDirection = sortColumn === columnKey
-        ? sortDirection === 'asc'
-          ? 'desc'
-          : null
-        : 'asc';
-      onSort(columnKey, newDirection);
-    }
-  };
+    setSortColumn(nextDirection ? columnKey : null);
+    setSortDirection(nextDirection);
+    onSort?.(columnKey, nextDirection);
+  }, [sortColumn, sortDirection, onSort]);
 
-  const handleScrollUp = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollBy({
-        top: -100,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  const handleScrollDown = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollBy({
-        top: 100,
-        behavior: 'smooth',
-      });
-    }
-  };
+  // 스크롤 핸들러
+  const scroll = useCallback((delta: number) => {
+    containerRef.current?.scrollBy({ top: delta, behavior: 'smooth' });
+  }, []);
 
   return (
     <TableOuterWrapper className={className}>
@@ -123,11 +95,11 @@ export default function Table<T extends Record<string, unknown> = Record<string,
           <StyledTable>
             <TableHeader<T>
               columns={columns}
-              sortColumn={sortColumn || undefined}
+              sortColumn={sortColumn ?? undefined}
               sortDirection={sortDirection}
               onSort={handleSort}
             />
-            <TableBodyComponent<T>
+            <TableBody<T>
               columns={columns}
               data={sortedData}
               onCellEdit={onCellEdit}
@@ -135,12 +107,13 @@ export default function Table<T extends Record<string, unknown> = Record<string,
           </StyledTable>
         </TableContainer>
       </TableWrapper>
+
       {maxHeight && (
         <ScrollContainer>
-          <ScrollButton position="top" onClick={handleScrollUp}>
+          <ScrollButton position="top" onClick={() => scroll(-100)}>
             <ChevronUp />
           </ScrollButton>
-          <ScrollButton position="bottom" onClick={handleScrollDown}>
+          <ScrollButton position="bottom" onClick={() => scroll(100)}>
             <ChevronDown />
           </ScrollButton>
         </ScrollContainer>
