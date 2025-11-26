@@ -12,7 +12,7 @@ import Button from "../Button/Button";
 import {SidebarProps} from "../../type/Sidebar.types";
 import icon from "../../assets/icons/icon_size.png"
 
-export default function Sidebar({buttonStyle, description}: SidebarProps) {
+export default function Sidebar({buttonStyle, description, title}: SidebarProps) {
 	
 	const [openSections, setOpenSections] = React.useState<boolean[]>(
 		Array(description.length).fill(true) // 기본적으로 모두 열려있게
@@ -27,16 +27,16 @@ export default function Sidebar({buttonStyle, description}: SidebarProps) {
 	return(
 		<StyledSidebar>
 			<StyledDescription>
-				{description.map((item, index) => (
+				{title.map((item, index) => (
 					<StyledDisclosure>
 						<StyledTitle onClick={() => toggleSection(index)} style={{ cursor: 'pointer' }}>
 							<StyledIcon src={icon} alt="icon" isOpen={openSections[index]} />
-							{item[0]}
+							{item}
 						</StyledTitle>
 						
 						{openSections[index] && (
 							<StyledOpenContents>
-								{item[1].map((option, i) => (
+								{description[index].map((option, i) => (
 									<StyledOpenContentsText key={i}>{option}</StyledOpenContentsText>
 								))}
 							</StyledOpenContents>

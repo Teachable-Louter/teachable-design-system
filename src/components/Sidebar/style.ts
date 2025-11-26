@@ -99,7 +99,6 @@ export const StyledOpenContentsText = styled.p`
 	
     color: ${colors.text.subtle};
 
-    /* body/xsmall */
     font-family: ${typography.fontFamily.primary};
     font-size: 13px;
     font-style: normal;

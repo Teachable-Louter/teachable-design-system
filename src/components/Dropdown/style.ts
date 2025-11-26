@@ -198,7 +198,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
         background-size: cover;
         background-repeat: no-repeat;
         position: absolute;
-        left: 12px; /* 텍스트 오른쪽에 표시 */
+        left: 12px;
         top: 50%;
         transform: translateY(-50%);
     }
