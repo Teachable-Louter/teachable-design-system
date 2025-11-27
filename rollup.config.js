@@ -29,6 +29,7 @@ export default [
       commonjs(),
       typescript({ tsconfig: "./tsconfig.build.json" }),
     ],
+    external: [/\.(png|jpg|jpeg|gif|svg|webp)$/],
   },
   {
     input: "src/index.ts",
@@ -39,6 +40,9 @@ export default [
         preserveSymlinks: false,
       },
     })],
-    external: [/\.stories\.(ts|tsx|js|jsx)$/],
+    external: [
+      /\.stories\.(ts|tsx|js|jsx)$/, 
+      /\.(png|jpg|jpeg|gif|svg|webp)$/ 
+    ],
   },
 ];
