@@ -14,7 +14,7 @@ export interface TabBarProps {
   onChange?: (id: string) => void;
 }
 
-const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
+export const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
   const [selectedId, setSelectedId] = useState(
     defaultSelectedId || items[0]?.id
   );
@@ -43,5 +43,3 @@ const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
     </S.Wrapper>
   );
 };
-
-export default TabBar;

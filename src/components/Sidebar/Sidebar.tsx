@@ -8,11 +8,11 @@ import {
 	StyledTitle,
 	StyledIcon
 } from './style'
-import Button from "../Button/Button";
+import { Button } from "../Button/Button";
 import {SidebarProps} from "../../types/Sidebar.types";
 import icon from "../../assets/icons/icon_size.png"
 
-export default function Sidebar({buttonStyle, description, title}: SidebarProps) {
+export function Sidebar({buttonStyle, description, title}: SidebarProps) {
 	
 	const [openSections, setOpenSections] = React.useState<boolean[]>(
 		Array(description.length).fill(true) // 기본적으로 모두 열려있게
