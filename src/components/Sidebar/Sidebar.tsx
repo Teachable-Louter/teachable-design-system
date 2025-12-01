@@ -9,7 +9,7 @@ import {
 	StyledIcon
 } from './style'
 import Button from "../Button/Button";
-import {SidebarProps} from "../../type/Sidebar.types";
+import {SidebarProps} from "../../types/Sidebar.types";
 import icon from "../../assets/icons/icon_size.png"
 
 export default function Sidebar({buttonStyle, description, title}: SidebarProps) {

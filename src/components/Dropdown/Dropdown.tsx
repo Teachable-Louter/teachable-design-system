@@ -1,5 +1,5 @@
 import React from "react";
-import {DropdownProps} from "../../type/Dropdown.types";
+import {DropdownProps} from "../../types/Dropdown.types";
 import {StyledBox, StyledDropDown, StyledText, StyledLabel, StyledIcon, StyledOptions, StyledOption} from "./style";
 import arrowDownIcon from '../../assets/icons/arrow-down.png';
 
