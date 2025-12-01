@@ -44,12 +44,14 @@ export default function Sidebar({buttonStyle, description, title}: SidebarProps)
 					</StyledDisclosure>
 				))}
 			</StyledDescription>
-			{buttonStyle === 'two' ? <TwoButton /> : <OneButton />}
+			{
+				buttonStyle === 'start' ? <StartButton /> : buttonStyle === 'middle' ? <MiddleButton /> : buttonStyle === 'end' ? <EndButton /> : <MiddleButton />
+			}
 		</StyledSidebar>
 	)
 }
 
-function OneButton() {
+function StartButton() {
 	return (
 		<StyledButtonArea>
 			<Button size='small' type='primary' label='다음으로' width='240px' height='40px' ></Button>
@@ -57,11 +59,19 @@ function OneButton() {
 	)
 }
 
-function TwoButton() {
+function MiddleButton() {
 	return (
 		<StyledButtonArea>
 			<Button size='small' type='secondary' label='이전으로' width='115px' height='40px' ></Button>
 			<Button size='small' type='primary' label='다음으로' width='115px' height='40px' ></Button>
+		</StyledButtonArea>
+	)
+}
+
+function EndButton() {
+	return(
+		<StyledButtonArea>
+			<Button size='small' type='primary' label='이전으로' width='240px' height='40px' ></Button>
 		</StyledButtonArea>
 	)
 }
