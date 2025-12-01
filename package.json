@@ -20,7 +20,7 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "rollup -c && node scripts/fix-asset-paths.js"
+    "build": "rm -rf dist && rollup -c && node scripts/copy-assets.js && node scripts/fix-asset-paths.js"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
