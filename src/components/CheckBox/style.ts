@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { colors } from "@/style/theme";
+import { colors } from "../../style/theme";
 
 interface WrapperProps {
   size: "medium" | "large";
