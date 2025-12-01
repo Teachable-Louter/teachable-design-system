@@ -1,5 +1,5 @@
 import React from 'react';
-import { typography } from '@/style';
+import { typography } from '../../style';
 
 export const getInputWrapperStyle = (size: 'small' | 'medium' | 'large'): React.CSSProperties => {
     let height = '48px';
