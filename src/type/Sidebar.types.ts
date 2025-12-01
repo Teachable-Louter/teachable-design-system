@@ -1,5 +1,5 @@
 export interface SidebarProps {
-	buttonStyle?: 'one' | 'two' ;
+	buttonStyle?: 'start' | 'middle' | 'end';
 	title: string[],
 	description: string[] []
 }
