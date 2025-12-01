@@ -89,7 +89,7 @@ export const StyledOpenContents = styled.div`
     align-items: flex-start;
     gap: 8px;
     align-self: stretch;
-	max-width: 186px;
+	width: 186px;
 	
 	border-radius: 12px;
 	background: ${colors.surface["gray-subtler"]};

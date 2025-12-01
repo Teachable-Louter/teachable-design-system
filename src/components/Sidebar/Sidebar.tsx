@@ -44,12 +44,6 @@ export default function Sidebar({buttonStyle, description, title}: SidebarProps)
 					</StyledDisclosure>
 				))}
 			</StyledDescription>
-			{/*{switchCase(buttonStyle, {*/}
-			{/*	start: <StartButton />,*/}
-			{/*	middle: <MiddleButton />,*/}
-			{/*	end: <EndButton />,*/}
-			{/*	default: <MiddleButton />*/}
-			{/*})}*/}
 			{
 			buttonStyle === 'start' ? <StartButton /> : buttonStyle === 'middle' ? <MiddleButton /> : buttonStyle === 'end' ? <EndButton /> : <MiddleButton />
 		}
