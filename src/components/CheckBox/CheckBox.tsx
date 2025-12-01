@@ -1,6 +1,6 @@
 import React from "react";
 import * as S from "./style";
-import { CheckBoxProps } from "@/types/checkBox.types";
+import { CheckBoxProps } from "../../types/checkBox.types";
 
 const CheckBox = ({ size, select, state, onClick }: CheckBoxProps) => {
   const handleClick = () => {
