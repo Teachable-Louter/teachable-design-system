@@ -3,7 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import external from 'rollup-plugin-peer-deps-external';
 import dts from 'rollup-plugin-dts';
-import copy from 'rollup-plugin-copy'; // 추가
+import copy from 'rollup-plugin-copy';
 
 // 이미지 파일 무시 플러그인
 const ignoreAssetsPlugin = {
