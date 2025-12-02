@@ -3,7 +3,7 @@ import React,{ useState } from 'react';
 import { getInputWrapperStyle, labelStyle, getInputStyle } from './style';
 import { InputProps } from '../../types/input.types'
 
-export const Input = ({
+const Input = ({
     size = 'medium',
     label = false,
     labelText = '',
@@ -29,3 +29,5 @@ export const Input = ({
         </div>
     );
 };
+
+export default Input;
