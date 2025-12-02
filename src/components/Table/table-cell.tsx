@@ -1,8 +1,7 @@
-import React, { useState, useCallback, type KeyboardEvent } from 'react';
+import React, { useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
 import type { TableCellProps, DataType } from '../../types/table';
 import { TableDataCell, EditableInput } from './style';
 
-/** 값을 문자열로 포맷 */
 const formatValue = (val: unknown, dataType: DataType): string => {
   if (val == null) return '';
 
@@ -18,7 +17,6 @@ const formatValue = (val: unknown, dataType: DataType): string => {
   }
 };
 
-/** 문자열을 타입에 맞게 파싱 */
 const parseValue = (val: string, dataType: DataType): unknown => {
   switch (dataType) {
     case 'number': {
@@ -34,28 +32,29 @@ const parseValue = (val: string, dataType: DataType): unknown => {
   }
 };
 
-/** input 타입 결정 */
 const getInputType = (dataType: DataType): string => {
   if (dataType === 'number') return 'number';
   if (dataType === 'date') return 'date';
   return 'text';
 };
 
-/**
- * 테이블 셀
- * - 더블클릭: 편집 모드
- * - Enter: 저장 / ESC: 취소
- */
 export default function TableCell({
   value,
   editable = false,
   height,
+  rowHeight,
   dataType = 'text',
   isHeaderColumn = false,
+  isSelected = false,
+  rowSelected = false,
+  selectionEdge,
   rowSpan,
   colSpan,
   onEdit,
   render,
+  onMouseDown,
+  onMouseEnter,
+  onMouseUp,
 }: TableCellProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
@@ -86,16 +85,36 @@ export default function TableCell({
     }
   }, [save, cancel]);
 
+  const handleMouseDown = useCallback((e: MouseEvent) => {
+    if (isEditing) return;
+    e.preventDefault();
+    onMouseDown?.();
+  }, [isEditing, onMouseDown]);
+
+  const handleMouseEnter = useCallback(() => {
+    if (isEditing) return;
+    onMouseEnter?.();
+  }, [isEditing, onMouseEnter]);
+
   const displayValue = render ? render(value) : formatValue(value, dataType);
 
   return (
     <TableDataCell
       editable={editable}
-      height={height}
+      height={height || rowHeight}
       isHeaderColumn={isHeaderColumn}
+      isSelected={isSelected}
+      $rowSelected={rowSelected}
+      $edgeTop={selectionEdge?.top}
+      $edgeBottom={selectionEdge?.bottom}
+      $edgeLeft={selectionEdge?.left}
+      $edgeRight={selectionEdge?.right}
       rowSpan={rowSpan}
       colSpan={colSpan}
       onDoubleClick={startEditing}
+      onMouseDown={handleMouseDown}
+      onMouseEnter={handleMouseEnter}
+      onMouseUp={onMouseUp}
     >
       {isEditing ? (
         <EditableInput

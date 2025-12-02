@@ -46,11 +46,23 @@ export interface TableProps<T = Record<string, unknown>> {
   data: TableRow<T>[];
   onCellEdit?: (rowIndex: number, columnKey: string, value: unknown) => void;
   onSort?: (columnKey: string, direction: SortDirection) => void;
+  onSelectionChange?: (cells: CellPosition[]) => void;
+  onPaste?: (startRow: number, startCol: number, values: string[][]) => void;
   /** 최대 높이 (스크롤 활성화) */
   maxHeight?: string;
+  /** 행 높이 (기본값: 30px) */
+  rowHeight?: string;
   /** 줄무늬 스타일 */
   striped?: boolean;
   className?: string;
+  /** 행 선택 활성화 */
+  enableRowSelection?: boolean;
+  /** 선택된 행 인덱스 */
+  selectedRowIndex?: number;
+  /** 행 클릭 콜백 */
+  onRowClick?: (rowIndex: number, row: T) => void;
+  /** 키보드 네비게이션 활성화 (↑↓ 화살표) */
+  enableKeyboardNavigation?: boolean;
 }
 
 /** 테이블 셀 Props */
@@ -58,12 +70,24 @@ export interface TableCellProps {
   value: unknown;
   editable?: boolean;
   height?: string;
+  rowHeight?: string;
   dataType?: DataType;
   isHeaderColumn?: boolean;
   rowSpan?: number;
   colSpan?: number;
+  isSelected?: boolean;
+  rowSelected?: boolean;
+  selectionEdge?: {
+    top: boolean;
+    bottom: boolean;
+    left: boolean;
+    right: boolean;
+  };
   onEdit?: (value: unknown) => void;
   render?: (value: unknown) => ReactNode;
+  onMouseDown?: () => void;
+  onMouseEnter?: () => void;
+  onMouseUp?: () => void;
 }
 
 /** 테이블 헤더 Props */
@@ -78,5 +102,36 @@ export interface TableHeaderProps<T = Record<string, unknown>> {
 export interface TableBodyProps<T = Record<string, unknown>> {
   columns: TableColumn<T>[];
   data: TableRow<T>[];
+  rowHeight?: string;
   onCellEdit?: (rowIndex: number, columnKey: string, value: unknown) => void;
+  selectedCells?: Set<string>;
+  selectionStart?: CellPosition | null;
+  selectionEnd?: CellPosition | null;
+  onCellMouseDown?: (rowIndex: number, colIndex: number) => void;
+  onCellMouseEnter?: (rowIndex: number, colIndex: number) => void;
+  onCellMouseUp?: () => void;
+  /** 행 선택 활성화 */
+  enableRowSelection?: boolean;
+  /** 선택된 행 인덱스 */
+  selectedRowIndex?: number;
+  /** 호버된 행 인덱스 */
+  hoveredRowIndex?: number;
+  /** 행 클릭 콜백 */
+  onRowClick?: (rowIndex: number) => void;
+  /** 행 호버 콜백 */
+  onRowHover?: (rowIndex: number | null) => void;
+}
+
+/** 셀 위치 */
+export interface CellPosition {
+  row: number;
+  col: number;
+}
+
+/** 선택 범위 */
+export interface SelectionRange {
+  startRow: number;
+  endRow: number;
+  startCol: number;
+  endCol: number;
 }
