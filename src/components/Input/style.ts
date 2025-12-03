@@ -26,8 +26,11 @@ export const getInputWrapperStyle = (size: 'small' | 'medium' | 'large'): React.
 };
 
 export const labelStyle: React.CSSProperties = {
+    display:'flex',
+    justifyContent:'flex-start',
     ...typography.label.small,
     color: '#333',
+    border:'1px solid'
 };
 
 export const getInputStyle = (
