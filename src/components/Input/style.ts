@@ -30,7 +30,6 @@ export const labelStyle: React.CSSProperties = {
     justifyContent:'flex-start',
     ...typography.label.small,
     color: '#333',
-    border:'1px solid'
 };
 
 export const getInputStyle = (
