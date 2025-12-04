@@ -79,11 +79,6 @@ export const InputContainer = styled.div`
 
 export const StyledInput = styled.input<StyledInputProps>`
   width: ${(props) => props.width || "306px"};
-  ${(props) =>
-    props.height &&
-    css`
-      height: ${props.height};
-    `}
   padding: ${(props) => (props.isPassword ? "0px 48px 0px 16px" : "0px 16px")};
   font-family: ${typography.fontFamily.primary};
   border: 1px solid ${colors.input.border};
@@ -97,6 +92,12 @@ export const StyledInput = styled.input<StyledInputProps>`
   box-sizing: border-box;
 
   ${(props) => getInputSizeStyle(props.inputSize)}
+
+  ${(props) =>
+    props.height &&
+    css`
+      height: ${props.height};
+    `}
 
   &:focus {
     border: 1px solid ${colors.input["border-active"]};
