@@ -10,6 +10,7 @@ import {
 import { InputProps } from "../../types/input.types";
 
 export const Input = ({
+  id,
   width,
   height,
   size = "medium",
@@ -27,9 +28,10 @@ export const Input = ({
 
   return (
     <InputWrapper width={width}>
-      {label && labelText && <Label>{labelText}</Label>}
+      {label && labelText && <Label htmlFor={id}>{labelText}</Label>}
       <InputContainer>
         <StyledInput
+          id={id}
           type={inputType}
           inputSize={size}
           width={width}

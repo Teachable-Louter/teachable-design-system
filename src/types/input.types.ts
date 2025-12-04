@@ -1,4 +1,5 @@
 export interface InputProps {
+  id?: string;
   width?: string;
   height?: string;
   size?: "small" | "medium" | "large";
