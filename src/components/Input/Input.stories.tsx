@@ -11,6 +11,14 @@ const meta: Meta<InputProps> = {
   },
   tags: ["autodocs"],
   argTypes: {
+    width: {
+      control: "text",
+      description: "인풋의 너비 (예: 100%, 300px, 500px)",
+    },
+    height: {
+      control: "text",
+      description: "인풋의 높이 (예: 40px, 50px, 60px)",
+    },
     size: {
       control: "select",
       options: ["small", "medium", "large"],
@@ -219,5 +227,55 @@ export const PasswordControlled: Story = {
     label: true,
     labelText: "Create Password",
     placeholder: "Enter a strong password",
+  },
+};
+
+// 커스텀 너비
+export const CustomWidth: Story = {
+  args: {
+    width: "500px",
+    size: "medium",
+    label: true,
+    labelText: "Custom Width Input",
+    placeholder: "Width: 500px",
+  },
+};
+
+// 커스텀 높이
+export const CustomHeight: Story = {
+  args: {
+    height: "60px",
+    size: "medium",
+    label: true,
+    labelText: "Custom Height Input",
+    placeholder: "Height: 60px",
+  },
+};
+
+// 커스텀 너비와 높이
+export const CustomWidthAndHeight: Story = {
+  args: {
+    width: "400px",
+    height: "70px",
+    size: "medium",
+    label: true,
+    labelText: "Custom Width & Height",
+    placeholder: "Width: 400px, Height: 70px",
+  },
+};
+
+// 퍼센트 너비
+export const PercentageWidth: Story = {
+  render: (args) => (
+    <div style={{ width: "600px", padding: "20px", border: "1px dashed #ccc" }}>
+      <Input {...args} />
+    </div>
+  ),
+  args: {
+    width: "100%",
+    size: "medium",
+    label: true,
+    labelText: "100% Width Input",
+    placeholder: "This input fills the container",
   },
 };
