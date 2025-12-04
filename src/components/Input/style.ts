@@ -5,7 +5,6 @@ import { typography } from "../../style/theme/typography";
 
 interface InputWrapperProps {
   width?: string;
-  inputSize?: string;
 }
 
 interface StyledInputProps {
