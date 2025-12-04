@@ -45,7 +45,7 @@ export const Input = ({
             type="button"
             disabled={disabled}
             onClick={() => setShowPassword(!showPassword)}
-            aria-label={showPassword ? "Show password" : "Hide password"}
+            aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
           </IconButton>
