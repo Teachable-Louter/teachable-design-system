@@ -1,4 +1,6 @@
 export interface InputProps {
+  width?: string;
+  height?: string;
   size?: "small" | "medium" | "large";
   label?: boolean;
   labelText?: string;

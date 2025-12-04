@@ -1,120 +1,135 @@
-import React from "react";
-import { typography } from "../../style";
+import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+import { colors } from "../../style/theme/colors";
+import { typography } from "../../style/theme/typography";
 
-export const getInputWrapperStyle = (
-  size: "small" | "medium" | "large"
-): React.CSSProperties => {
-  let height = "48px";
+interface InputWrapperProps {
+  width?: string;
+  inputSize?: string;
+}
 
+interface StyledInputProps {
+  width?: string;
+  height?: string;
+  inputSize?: string;
+  disabled?: boolean;
+  isPassword?: boolean;
+}
+
+interface IconButtonProps {
+  disabled?: boolean;
+}
+
+const getInputSizeStyle = (size?: string) => {
   switch (size) {
     case "small":
-      height = "41px";
-      break;
+      return css`
+        height: 40px;
+        font-size: ${typography.label.small.fontSize};
+        line-height: ${typography.label.small.lineHeight};
+        font-weight: ${typography.label.small.fontWeight};
+      `;
     case "medium":
-      height = "48px";
-      break;
+      return css`
+        height: 48px;
+        font-size: ${typography.label.medium.fontSize};
+        line-height: ${typography.label.medium.lineHeight};
+        font-weight: ${typography.label.medium.fontWeight};
+      `;
     case "large":
-      height = "56px";
-      break;
+      return css`
+        height: 56px;
+        font-size: ${typography.label.large.fontSize};
+        line-height: ${typography.label.large.lineHeight};
+        font-weight: ${typography.label.large.fontWeight};
+      `;
+    default:
+      return css`
+        height: 48px;
+        font-size: ${typography.label.medium.fontSize};
+        line-height: ${typography.label.medium.lineHeight};
+        font-weight: ${typography.label.medium.fontWeight};
+      `;
+  }
+};
+
+export const InputWrapper = styled.div<InputWrapperProps>`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: ${(props) => props.width || "306px"};
+`;
+
+export const Label = styled.label`
+  display: flex;
+  justify-content: flex-start;
+  font-size: ${typography.label.small.fontSize};
+  line-height: ${typography.label.small.lineHeight};
+  font-weight: ${typography.label.small.fontWeight};
+  font-family: ${typography.fontFamily.primary};
+  color: ${colors.text.subtle};
+`;
+
+export const InputContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+export const StyledInput = styled.input<StyledInputProps>`
+  width: ${(props) => props.width || "306px"};
+  ${(props) =>
+    props.height &&
+    css`
+      height: ${props.height};
+    `}
+  padding: ${(props) => (props.isPassword ? "0px 48px 0px 16px" : "0px 16px")};
+  font-family: ${typography.fontFamily.primary};
+  border: 1px solid ${colors.input.border};
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: ${(props) =>
+    props.disabled ? colors.input["surface-disabled"] : colors.input.surface};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "text")};
+  color: ${colors.text.basic};
+  box-sizing: border-box;
+
+  ${(props) => getInputSizeStyle(props.inputSize)}
+
+  &:focus {
+    border: 1px solid ${colors.input["border-active"]};
+    box-shadow: 0 0 0 3px ${colors.light.primary["5"]};
   }
 
-  return {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-    width: "306px",
-    height: height,
-  };
-};
-
-export const labelStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "flex-start",
-  ...typography.label.small,
-  color: "#333",
-};
-
-export const getInputStyle = (
-  inputSize: "small" | "medium" | "large",
-  disabled: boolean,
-  isFocused: boolean,
-  isPassword: boolean = false
-): React.CSSProperties => {
-  let padding = isPassword ? "0px 48px 0px 16px" : "0px 16px";
-  let fontSize = typography.label.medium.fontSize;
-  let lineHeight = typography.label.medium.lineHeight;
-  let fontWeight = typography.label.medium.fontWeight;
-  let height = "48px";
-  let width = "306px";
-
-  switch (inputSize) {
-    case "small":
-      fontSize = typography.label.small.fontSize;
-      lineHeight = typography.label.small.lineHeight;
-      fontWeight = typography.label.small.fontWeight;
-      height = "40px";
-      break;
-    case "medium":
-      fontSize = typography.label.medium.fontSize;
-      lineHeight = typography.label.medium.lineHeight;
-      fontWeight = typography.label.medium.fontWeight;
-      height = "48px";
-      break;
-    case "large":
-      fontSize = typography.label.large.fontSize;
-      lineHeight = typography.label.large.lineHeight;
-      fontWeight = typography.label.large.fontWeight;
-      height = "56px";
-      break;
+  &:disabled {
+    border: 1px solid ${colors.input["border-disabled"]};
+    color: ${colors.text.disabled};
   }
 
-  return {
-    width,
-    height,
-    minHeight: height,
-    maxHeight: height,
-    padding,
-    fontSize,
-    lineHeight,
-    fontWeight,
-    fontFamily: typography.fontFamily.primary,
-    border: isFocused ? "1px solid #4a90e2" : "1px solid #ddd",
-    borderRadius: "4px",
-    outline: "none",
-    transition: "all 0.2s ease",
-    boxShadow: isFocused ? "0 0 0 3px rgba(74, 144, 226, 0.1)" : "none",
-    backgroundColor: disabled ? "#f5f5f5" : "#fff",
-    cursor: disabled ? "not-allowed" : "text",
-    color: "#333",
-    boxSizing: "border-box",
-    display: "flex",
-    alignItems: "center",
-  };
-};
+  &::placeholder {
+    color: ${colors.text.disabled};
+  }
+`;
 
-export const getInputContainerStyle = (): React.CSSProperties => {
-  return {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    width: "100%",
-  };
-};
+export const IconButton = styled.button<IconButtonProps>`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  transition: opacity 0.2s ease;
 
-export const getIconButtonStyle = (disabled: boolean): React.CSSProperties => {
-  return {
-    position: "absolute",
-    right: "12px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    background: "none",
-    border: "none",
-    cursor: disabled ? "not-allowed" : "pointer",
-    padding: "4px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: disabled ? 0.5 : 1,
-    transition: "opacity 0.2s ease",
-  };
-};
+  svg {
+    color: ${(props) =>
+      props.disabled ? colors.icon.disabled : colors.icon.gray};
+  }
+`;
