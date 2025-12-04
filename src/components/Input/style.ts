@@ -1,5 +1,5 @@
 import React from 'react';
-import { typography } from '@/style';
+import { typography } from '../../style';
 
 export const getInputWrapperStyle = (size: 'small' | 'medium' | 'large'): React.CSSProperties => {
     let height = '48px';
@@ -26,6 +26,8 @@ export const getInputWrapperStyle = (size: 'small' | 'medium' | 'large'): React.
 };
 
 export const labelStyle: React.CSSProperties = {
+    display:'flex',
+    justifyContent:'flex-start',
     ...typography.label.small,
     color: '#333',
 };

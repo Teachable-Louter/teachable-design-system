@@ -2,7 +2,7 @@ import React from 'react';
 import { ButtonProps } from '../../types/button.types';
 import { StyledButton } from './style';
 
-const Button = ({
+export const Button = ({
     width,
     height,
     type = 'primary',
@@ -24,5 +24,3 @@ const Button = ({
         </StyledButton>
     );
 };
-
-export default Button;

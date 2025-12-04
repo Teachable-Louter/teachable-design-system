@@ -8,17 +8,17 @@ export const typography = {
     large: {
       fontSize: '60px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     medium: {
       fontSize: '44px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     small: {
       fontSize: '36px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
   },
 
@@ -27,32 +27,32 @@ export const typography = {
     xlarge: {
       fontSize: '40px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     large: {
       fontSize: '32px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     medium: {
       fontSize: '24px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     small: {
       fontSize: '19px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     xsmall: {
       fontSize: '17px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     xxsmall: {
       fontSize: '15px',
       lineHeight: '150%',
-      fontWeight: 400,
+      fontWeight: 700,
     },
   },
 
