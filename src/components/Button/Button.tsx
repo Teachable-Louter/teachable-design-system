@@ -1,3 +1,4 @@
+import React from 'react';
 import { ButtonProps } from '../../types/button.types';
 import { StyledButton } from './style';
 
