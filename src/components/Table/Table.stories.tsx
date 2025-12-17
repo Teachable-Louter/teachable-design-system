@@ -42,7 +42,7 @@ const FileSelectComponent = () => {
     { key: 'no', header: '번호', width: '80px' },
     { key: 'filename', header: '파일명', width: '300px' },
     { key: 'modifiedDate', header: '변경일자', width: '140px' },
-    { key: 'school', header: '학교명' },
+    { key: 'school', header: '학교명', width: '250px' },
     { key: 'classCount', header: '학급', width: '80px' },
     { key: 'teacherCount', header: '교사', width: '80px' },
   ];

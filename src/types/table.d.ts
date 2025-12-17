@@ -69,6 +69,7 @@ export interface TableProps<T = Record<string, unknown>> {
 export interface TableCellProps {
   value: unknown;
   editable?: boolean;
+  width?: string;
   height?: string;
   rowHeight?: string;
   dataType?: DataType;
@@ -77,6 +78,12 @@ export interface TableCellProps {
   colSpan?: number;
   isSelected?: boolean;
   rowSelected?: boolean;
+  /** 부모에서 편집 시작 요청 여부 */
+  isEditingRequested?: boolean;
+  /** 편집 시작 트리거 토큰(값이 바뀌면 편집 시작) */
+  startEditingToken?: number;
+  /** 편집 시작 시 초기 입력 값(타이핑 시작 등) */
+  startEditingValue?: string | null;
   selectionEdge?: {
     top: boolean;
     bottom: boolean;
@@ -107,6 +114,12 @@ export interface TableBodyProps<T = Record<string, unknown>> {
   selectedCells?: Set<string>;
   selectionStart?: CellPosition | null;
   selectionEnd?: CellPosition | null;
+  /** 키 입력 등으로 시작되는 편집 대상 셀 */
+  editingCell?: CellPosition | null;
+  /** 키 입력으로 시작된 경우 초기 값 */
+  editStartValue?: string | null;
+  /** 편집 시작 트리거 토큰 */
+  editToken?: number;
   onCellMouseDown?: (rowIndex: number, colIndex: number) => void;
   onCellMouseEnter?: (rowIndex: number, colIndex: number) => void;
   onCellMouseUp?: () => void;

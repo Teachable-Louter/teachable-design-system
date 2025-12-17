@@ -121,7 +121,6 @@ export const TableRow = styled.tr<{ striped?: boolean }>`
 // 셀 컴포넌트
 // ============================================
 const baseCellStyle = `
-  min-width: 80px;
   box-sizing: border-box;
   vertical-align: middle;
   line-height: 1.5;
@@ -129,6 +128,7 @@ const baseCellStyle = `
 
 export const TableHeaderCell = styled.th<{ width?: string; sortable?: boolean }>`
   ${baseCellStyle}
+  min-width: ${({ width }) => (width ? '0' : '80px')};
   background: ${colors.header};
   border: 1px solid ${colors.borderLight};
   border-left: none;
@@ -160,6 +160,7 @@ export const TableHeaderCell = styled.th<{ width?: string; sortable?: boolean }>
 
 export const TableDataCell = styled.td<{
   editable?: boolean;
+  width?: string;
   height?: string;
   isHeaderColumn?: boolean;
   isSelected?: boolean;
@@ -170,6 +171,7 @@ export const TableDataCell = styled.td<{
   $rowSelected?: boolean;
 }>`
   ${baseCellStyle}
+  min-width: ${({ width }) => (width ? '0' : '80px')};
   background: ${({ isHeaderColumn, isSelected, $rowSelected }) => 
     isSelected ? colors.selected : (isHeaderColumn ? colors.header : ($rowSelected ? 'inherit' : colors.body))};
   border-right: 1px solid ${({ isHeaderColumn }) => 

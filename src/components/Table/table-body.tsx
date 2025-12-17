@@ -42,6 +42,9 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
   onCellEdit,
   selectionStart,
   selectionEnd,
+  editingCell,
+  editStartValue,
+  editToken,
   onCellMouseDown,
   onCellMouseEnter,
   onCellMouseUp,
@@ -74,17 +77,23 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
         >
           {columns.map((col, colIndex) => {
             const { isSelected, edge } = getSelectionInfo(rowIndex, colIndex, selectionStart, selectionEnd);
+            const isEditingRequested =
+              !!editingCell && editingCell.row === rowIndex && editingCell.col === colIndex;
             return (
               <TableCell
                 key={`${rowIndex}-${col.key}`}
                 value={row[col.key]}
                 editable={col.editable !== false}
+                width={col.width}
                 height={col.height}
                 rowHeight={rowHeight}
                 dataType={col.dataType}
                 isHeaderColumn={col.isHeaderColumn}
                 isSelected={isSelected}
                 rowSelected={enableRowSelection && (selectedRowIndex === rowIndex || hoveredRowIndex === rowIndex)}
+                isEditingRequested={isEditingRequested}
+                startEditingToken={editToken}
+                startEditingValue={isEditingRequested ? editStartValue : null}
                 selectionEdge={isSelected ? edge : undefined}
                 rowSpan={col.rowSpan}
                 colSpan={col.colSpan}

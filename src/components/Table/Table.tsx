@@ -67,6 +67,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   onRowClick,
   enableKeyboardNavigation,
 }: TableProps<T>) {
+  const outerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
@@ -75,6 +76,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   const [selectionEnd, setSelectionEnd] = useState<CellPosition | null>(null);
   const [contextMenu, setContextMenu] = useState<ContextMenuState>({ visible: false, x: 0, y: 0 });
   const [hoveredRowIndex, setHoveredRowIndex] = useState<number | null>(null);
+  const [editingCell, setEditingCell] = useState<CellPosition | null>(null);
+  const [editStartValue, setEditStartValue] = useState<string | null>(null);
+  const [editToken, setEditToken] = useState(0);
 
   const sortedData = useMemo(() => {
     if (!sortColumn || !sortDirection) return data;
@@ -161,6 +165,12 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, [selectionStart, selectionEnd, columns, sortedData]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    // 셀 편집(input/textarea) 중에는 전역 키 핸들러가 Backspace/Delete 등을 가로채지 않도록 무시
+    const target = e.target as HTMLElement | null;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+      return;
+    }
+
     // 행 선택 모드에서 키보드 네비게이션
     if (enableRowSelection && enableKeyboardNavigation && onRowClick) {
       if (e.key === 'ArrowUp') {
@@ -180,6 +190,28 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     }
 
     if (!selectionStart || !selectionEnd) return;
+
+    // 셀 선택 상태에서 문자 입력 시 즉시 편집 모드로 전환 (스프레드시트 UX)
+    // - 단일 셀 선택일 때만 동작
+    // - onCellEdit가 있어야 의미 있는 편집이 가능
+    if (
+      onCellEdit &&
+      !e.ctrlKey &&
+      !e.metaKey &&
+      !e.altKey &&
+      e.key.length === 1
+    ) {
+      const isSingleCell = selectionStart.row === selectionEnd.row && selectionStart.col === selectionEnd.col;
+      if (!isSingleCell) {
+        setSelectionEnd(selectionStart);
+      }
+      e.preventDefault();
+      setEditingCell({ row: selectionStart.row, col: selectionStart.col });
+      setEditStartValue(e.key);
+      setEditToken((t) => t + 1);
+      setContextMenu({ visible: false, x: 0, y: 0 });
+      return;
+    }
 
     if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
       e.preventDefault();
@@ -250,6 +282,28 @@ export default function Table<T extends Record<string, unknown> = Record<string,
       setContextMenu({ visible: false, x: 0, y: 0 });
     }
   }, [enableRowSelection, enableKeyboardNavigation, selectedRowIndex, sortedData, onRowClick, selectionStart, selectionEnd, getSelectedData, onPaste, onCellEdit, data, columns]);
+
+  // 표 밖을 클릭하면 셀 선택(타겟) 해제
+  useEffect(() => {
+    const handleMouseDownOutside = (event: MouseEvent) => {
+      const root = outerRef.current;
+      const target = event.target as Node | null;
+      if (!root || !target) return;
+      if (root.contains(target)) return;
+
+      setIsSelecting(false);
+      setSelectionStart(null);
+      setSelectionEnd(null);
+      setEditingCell(null);
+      setEditStartValue(null);
+      setContextMenu({ visible: false, x: 0, y: 0 });
+    };
+
+    document.addEventListener('mousedown', handleMouseDownOutside, true);
+    return () => {
+      document.removeEventListener('mousedown', handleMouseDownOutside, true);
+    };
+  }, []);
 
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -362,10 +416,18 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, [isSelecting, handleCellMouseUp, handleKeyDown]);
 
   return (
-    <TableOuterWrapper className={className} tabIndex={0} onContextMenu={handleContextMenu}>
+    <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu}>
       <TableWrapper>
         <TableContainer ref={containerRef} maxHeight={maxHeight}>
           <StyledTable>
+            <colgroup>
+              {columns.map((col) => (
+                <col
+                  key={String(col.key)}
+                  style={col.width ? { width: col.width } : undefined}
+                />
+              ))}
+            </colgroup>
             <TableHeader<T>
               columns={columns}
               sortColumn={sortColumn ?? undefined}
@@ -379,6 +441,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               onCellEdit={onCellEdit}
               selectionStart={enableRowSelection ? null : selectionStart}
               selectionEnd={enableRowSelection ? null : selectionEnd}
+              editingCell={enableRowSelection ? null : editingCell}
+              editStartValue={editStartValue}
+              editToken={editToken}
               onCellMouseDown={enableRowSelection ? undefined : handleCellMouseDown}
               onCellMouseEnter={enableRowSelection ? undefined : handleCellMouseEnter}
               onCellMouseUp={enableRowSelection ? undefined : handleCellMouseUp}

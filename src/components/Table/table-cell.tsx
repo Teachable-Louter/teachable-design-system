@@ -1,4 +1,4 @@
-import React, { useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
+import React, { useEffect, useRef, useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
 import type { TableCellProps, DataType } from '../../types/table';
 import { TableDataCell, EditableInput } from './style';
 
@@ -41,12 +41,16 @@ const getInputType = (dataType: DataType): string => {
 export default function TableCell({
   value,
   editable = false,
+  width,
   height,
   rowHeight,
   dataType = 'text',
   isHeaderColumn = false,
   isSelected = false,
   rowSelected = false,
+  isEditingRequested,
+  startEditingToken,
+  startEditingValue,
   selectionEdge,
   rowSpan,
   colSpan,
@@ -58,12 +62,27 @@ export default function TableCell({
 }: TableCellProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
+  const lastStartTokenRef = useRef<number | undefined>(undefined);
 
   const startEditing = useCallback(() => {
     if (!editable) return;
     setEditValue(formatValue(value, dataType));
     setIsEditing(true);
   }, [editable, value, dataType]);
+
+  // 부모에서 "편집 시작" 요청이 오면 (예: 선택 셀에서 타이핑) 편집 모드로 진입
+  useEffect(() => {
+    if (!isEditingRequested) return;
+    if (startEditingToken == null) return;
+    if (lastStartTokenRef.current === startEditingToken) return;
+
+    lastStartTokenRef.current = startEditingToken;
+    if (!editable) return;
+
+    const nextValue = startEditingValue ?? formatValue(value, dataType);
+    setEditValue(nextValue);
+    setIsEditing(true);
+  }, [isEditingRequested, startEditingToken, startEditingValue, editable, value, dataType]);
 
   const save = useCallback(() => {
     onEdit?.(parseValue(editValue, dataType));
@@ -101,6 +120,7 @@ export default function TableCell({
   return (
     <TableDataCell
       editable={editable}
+      width={width}
       height={height || rowHeight}
       isHeaderColumn={isHeaderColumn}
       isSelected={isSelected}
