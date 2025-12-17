@@ -1,22 +1,24 @@
 import styled from '@emotion/styled';
+import { colors as themeColors, typography } from '@/style/theme';
 import type { SortDirection } from '../../types/table';
 
 // ============================================
 // 디자인 토큰
 // ============================================
 const colors = {
-  header: '#eef2f7',
-  headerHover: '#d6e0eb',
-  body: '#ffffff',
-  bodyHover: '#f5f7fa',
-  border: '#cdd1d5',
-  borderLight: '#d6e0eb',
-  text: '#131416',
-  textSecondary: '#464c53',
-  scrollThumb: '#e6e8ea',
-  scrollThumbBorder: '#b1b8be',
-  selected: '#e7f4fe',
-  selectedBorder: '#3b82f6',
+  header: themeColors.surface['secondary-subtler'],
+  headerHover: themeColors.action['secondary-pressed'],
+  body: themeColors.surface.white,
+  bodyHover: themeColors.surface['gray-subtler'],
+  border: themeColors.border['gray-light'],
+  borderLight: themeColors.border['secondary-light'],
+  text: themeColors.text.bolder,
+  textSecondary: themeColors.text.subtle,
+  scrollThumb: themeColors.surface['gray-subtle'],
+  scrollThumbBorder: themeColors.border.gray,
+  selected: themeColors.surface['information-subtler'],
+  selectedBorder: themeColors.border.primary,
+  disabledText: themeColors.text.disabled,
 } as const;
 
 const spacing = {
@@ -93,7 +95,7 @@ export const StyledTable = styled.table`
   border-collapse: separate;
   border-spacing: 0;
   table-layout: auto;
-  font-family: 'Pretendard GOV', sans-serif;
+  font-family: ${typography.fontFamily.primary};
 `;
 
 export const TableHead = styled.thead`
@@ -302,12 +304,12 @@ export const ContextMenu = styled.div<{ x: number; y: number }>`
   left: ${({ x }) => x}px;
   z-index: 1000;
   min-width: 160px;
-  background: white;
+  background: ${colors.body};
   border: 1px solid ${colors.border};
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 4px 0;
-  font-family: 'Pretendard GOV', sans-serif;
+  font-family: ${typography.fontFamily.primary};
 `;
 
 export const ContextMenuItem = styled.button<{ disabled?: boolean }>`
@@ -317,7 +319,7 @@ export const ContextMenuItem = styled.button<{ disabled?: boolean }>`
   background: transparent;
   text-align: left;
   font-size: 13px;
-  color: ${({ disabled }) => (disabled ? '#9ca3af' : colors.text)};
+  color: ${({ disabled }) => (disabled ? colors.disabledText : colors.text)};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   align-items: center;
@@ -330,7 +332,7 @@ export const ContextMenuItem = styled.button<{ disabled?: boolean }>`
   span.shortcut {
     margin-left: auto;
     font-size: 11px;
-    color: #9ca3af;
+    color: ${colors.disabledText};
   }
 `;
 
