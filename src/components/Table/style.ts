@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { colors as themeColors, typography } from '@/style/theme';
+import { colors as themeColors, typography } from '../../style/theme';
 import type { SortDirection } from '../../types/table';
 
 // ============================================
