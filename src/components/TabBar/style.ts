@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { colors } from "@/style/theme";
-import { typography } from "@/style/theme";
+import { colors } from "../../style/theme";
+import { typography } from "../../style/theme";
 
 export const Wrapper = styled.div`
   display: flex;

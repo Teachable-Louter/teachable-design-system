@@ -1,6 +1,6 @@
 {
   "name": "teachable-design-system",
-  "version": "0.0.1",
+  "version": "0.1.16",
   "type": "module",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.esm.js",
@@ -20,7 +20,7 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "rollup -c"
+    "build": "rm -rf dist && rollup -c && node scripts/copy-assets.js && node scripts/fix-asset-paths.js"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -43,6 +43,7 @@
     "eslint-plugin-storybook": "^9.1.1",
     "globals": "^16.3.0",
     "rollup": "^3.0.0",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^5.3.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "storybook": "^9.1.1",

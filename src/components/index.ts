@@ -1,5 +1,7 @@
 export * from './Button';
 export * from './CheckBox';
+export * from './Dropdown'
 export * from './Input';
+export * from './Sidebar'
 export * from './TabBar';
 export * from './Table';
