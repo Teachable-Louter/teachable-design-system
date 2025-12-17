@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React,{ useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Table from './Table';
 import type { TableColumn } from '../../types/table';
@@ -40,7 +40,7 @@ const FileSelectComponent = () => {
 
   const columns: TableColumn<FileData>[] = [
     { key: 'no', header: '번호', width: '80px' },
-    { key: 'filename', header: '파일명' },
+    { key: 'filename', header: '파일명', width: '300px' },
     { key: 'modifiedDate', header: '변경일자', width: '140px' },
     { key: 'school', header: '학교명' },
     { key: 'classCount', header: '학급', width: '80px' },
@@ -134,4 +134,46 @@ export const MemberList: Story = {
   name: 'Member List',
   args: { columns: [], data: [] },
   render: () => <MemberListComponent />,
+};
+
+interface EditRow extends Record<string, unknown> {
+  id: number;
+  name: string;
+  score: number;
+}
+
+const EditTableComponent = () => {
+  const [data, setData] = useState<EditRow[]>([
+    { id: 1, name: '홍길동', score: 90 },
+    { id: 2, name: '김철수', score: 75 },
+    { id: 3, name: '이영희', score: 88 },
+  ]);
+
+  const columns: TableColumn<EditRow>[] = [
+    { key: 'id', header: 'ID', width: '60px', editable: false, dataType: 'number' },
+    { key: 'name', header: '이름', width: '140px' },
+    { key: 'score', header: '점수', width: '100px', dataType: 'number' },
+  ];
+
+  return (
+    <div style={{ width: '320px' }}>
+      <Table<EditRow>
+        columns={columns}
+        data={data}
+        onCellEdit={(rowIndex, columnKey, value) => {
+          setData((prev) =>
+            prev.map((row, idx) =>
+              idx === rowIndex ? ({ ...row, [columnKey]: value } as EditRow) : row
+            )
+          );
+        }}
+      />
+    </div>
+  );
+};
+
+export const Edit: Story = {
+  name: 'Edit',
+  args: { columns: [], data: [] },
+  render: () => <EditTableComponent />,
 };
