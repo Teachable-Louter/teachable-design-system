@@ -1,7 +1,7 @@
 import React from "react";
 import {DropdownProps} from "../../types/Dropdown.types";
 import {StyledBox, StyledDropDown, StyledText, StyledLabel, StyledIcon, StyledOptions, StyledOption} from "./style";
-import { arrowDownIconBase64 } from '../../assets/icons';
+import arrowDownIcon from '../../assets/icons/arrow-down.png';
 
 export function Dropdown({size, options, onSelect, label, placeholder, width}: DropdownProps) {
 	const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ export function Dropdown({size, options, onSelect, label, placeholder, width}: D
 						isOpen={open}
 					>{selected ?? placeholder}</StyledText>
 					<StyledIcon size={size}>
-						<img src={arrowDownIconBase64} alt="dropdown icon" style={{width:'100%', height:'100%'}}/>
+						<img src={arrowDownIcon} alt="dropdown icon" style={{width:'100%', height:'100%'}}/>
 					</StyledIcon>
 				</StyledBox>
 			</StyledDropDown>
