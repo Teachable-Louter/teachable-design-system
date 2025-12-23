@@ -10,7 +10,7 @@ import {
 } from './style'
 import { Button } from "../Button/Button";
 import {SidebarProps} from "../../types/Sidebar.types";
-import icon from "../../assets/icons/icon_size.png"
+import { iconSizeBase64 } from "../../assets/icons";
 
 export function Sidebar({buttonStyle, description, title}: SidebarProps) {
 	
@@ -29,12 +29,10 @@ export function Sidebar({buttonStyle, description, title}: SidebarProps) {
 			<StyledDescription>
 				{title.map((item, index) => (
 					<StyledDisclosure>
-						<StyledTitle onClick={() => toggleSection(index)} style={{ cursor: 'pointer' }}>
-							<StyledIcon src={icon} alt="icon" isOpen={openSections[index]} />
-							{item}
-						</StyledTitle>
-						
-						{openSections[index] && (
+					<StyledTitle onClick={() => toggleSection(index)} style={{ cursor: 'pointer' }}>
+						<StyledIcon src={iconSizeBase64} alt="icon" isOpen={openSections[index]} />
+						{item}
+					</StyledTitle>						{openSections[index] && (
 							<StyledOpenContents>
 								{description[index].map((option, i) => (
 									<StyledOpenContentsText key={i}>{option}</StyledOpenContentsText>

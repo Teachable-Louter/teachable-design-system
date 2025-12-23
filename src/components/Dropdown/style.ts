@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { colors } from '../../style';
 import { typography } from '../../style';
-import element from '../../assets/icons/checked.png';
+import { checkedIconBase64 } from '../../assets/icons';
 
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
@@ -185,7 +185,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
 	${props => getOptionSize(props.size)}
 
 
-    ${({ isSelected }) => isSelected && css`
+	${({ isSelected }) => isSelected && css`
 		background: ${colors.action["secondary-selected"]};
 		color: ${colors.text.secondary};
 
@@ -195,7 +195,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
         content: '';
         width: 16px;
         height: 16px;
-        background-image: url(${element});
+        background-image: url(${checkedIconBase64});
         background-size: cover;
         background-repeat: no-repeat;
         position: absolute;
@@ -203,9 +203,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
         top: 50%;
         transform: translateY(-50%);
     }
-	`}
-	
-	&:hover {
+	`}	&:hover {
 		background: ${colors.action["secondary-hover"]};
 	}
 	&:active {
