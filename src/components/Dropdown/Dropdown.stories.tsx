@@ -92,4 +92,4 @@ export const ManyOptionsWithLargeSize: Story = {
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 		size: 'large'
 	},
-};
+}
