@@ -14,8 +14,8 @@ export function Dropdown({size, options, onSelect, label, placeholder, width}: D
 				setOpen(false);
 			}
 		};
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => document.removeEventListener("mousedown", handleClickOutside);
+		document.addEventListener("click", handleClickOutside);
+		return () => document.removeEventListener("click", handleClickOutside);
 	}, []);
 	
 	const handleSelect = (option: string) => {
@@ -23,10 +23,8 @@ export function Dropdown({size, options, onSelect, label, placeholder, width}: D
 		onSelect?.(option);
 		setOpen(false);
 	};
-	
-	
 	return (
-		<div style={{position: 'relative'}}>
+		<div ref={ref} style={{position: 'relative'}}>
 			<StyledLabel>{label}</StyledLabel>
 			<StyledDropDown onClick={() => setOpen((prev) => !prev)}
 				size={size}
@@ -44,7 +42,7 @@ export function Dropdown({size, options, onSelect, label, placeholder, width}: D
 				</StyledBox>
 			</StyledDropDown>
 			{open && (
-				<StyledOptions ref={ref} size={size}>
+				<StyledOptions size={size}>
 					{options?.map((option) => (
 						<StyledOption key={option} onClick={() => handleSelect(option)} size={size} isSelected={option === selected}>
 							{option}
