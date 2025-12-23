@@ -23,8 +23,6 @@ export function Dropdown({size, options, onSelect, label, placeholder}: Dropdown
 		onSelect?.(option);
 		setOpen(false);
 	};
-	
-	
 	return (
 		<div style={{position: 'relative'}}>
 			<StyledLabel>{label}</StyledLabel>

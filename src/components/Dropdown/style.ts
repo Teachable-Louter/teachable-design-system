@@ -153,7 +153,9 @@ export const StyledOptions = styled.div<StyledDropdownProps>`
 	border: 1px solid ${colors.border["gray-light"]};
 	border-radius: 8px;
 
+	width: 302px;
     display: flex;
+	position: fixed;
     padding: 12px 8px;
     flex-direction: column;
     align-items: flex-start;
@@ -164,6 +166,8 @@ export const StyledOptions = styled.div<StyledDropdownProps>`
             '240px'};
     overflow-y: auto;
     overflow-x: hidden;
+	
+	background: ${colors.surface.white};
 `
 
 export const StyledOption = styled.div<StyledDropdownProps>`
