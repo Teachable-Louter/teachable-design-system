@@ -21,6 +21,10 @@ const meta = {
 			control: 'text',
 			description: '상단 라벨 텍스트',
 		},
+		width: {
+			control: 'text',
+			description: '드롭다운 너비 (예: 320px, 100%)',
+		},
 		options: {
 			control: 'object',
 			description: '표시할 옵션 문자열 배열',

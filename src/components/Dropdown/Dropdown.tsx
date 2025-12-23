@@ -3,7 +3,7 @@ import {DropdownProps} from "../../types/Dropdown.types";
 import {StyledBox, StyledDropDown, StyledText, StyledLabel, StyledIcon, StyledOptions, StyledOption} from "./style";
 import arrowDownIcon from '../../assets/icons/arrow-down.png';
 
-export function Dropdown({size, options, onSelect, label, placeholder}: DropdownProps) {
+export function Dropdown({size, options, onSelect, label, placeholder, width}: DropdownProps) {
 	const [open, setOpen] = React.useState(false);
 	const [selected, setSelected] = React.useState<string | null>(null);
 	const ref = React.useRef<HTMLDivElement>(null);
@@ -30,6 +30,7 @@ export function Dropdown({size, options, onSelect, label, placeholder}: Dropdown
 			<StyledLabel>{label}</StyledLabel>
 			<StyledDropDown onClick={() => setOpen((prev) => !prev)}
 				size={size}
+				width={width}
 				isOpen={open}
 				>
 				<StyledBox>

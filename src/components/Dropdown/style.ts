@@ -9,6 +9,7 @@ export interface StyledDropdownProps {
 	onSelect?: (option: string) => void;
 	isOpen?: boolean;
 	isSelected?: boolean;
+	width?: string;
 }
 
 const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
@@ -112,7 +113,7 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-	width: 320px;
+	width: ${({ width }) => width || '320px'};
 	
     border: ${({ isOpen }) =>
             isOpen ? `2px solid ${colors.input['border-active']}` : `1px solid ${colors.input.border}`};
