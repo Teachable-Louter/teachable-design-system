@@ -118,6 +118,7 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
             isOpen ? `2px solid ${colors.input['border-active']}` : `1px solid ${colors.input.border}`};
     ${props => getButtonSize(props.size)}
 	
+	cursor: pointer;
 `;
 
 export const StyledBox = styled.div`
