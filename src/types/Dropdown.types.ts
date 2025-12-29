@@ -4,4 +4,5 @@ export interface DropdownProps {
 	options: string[];
 	label?: string;
 	placeholder?: string;
+	width?: string;
 }

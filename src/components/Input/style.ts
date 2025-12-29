@@ -81,7 +81,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   padding: ${(props) => (props.isPassword ? "0px 48px 0px 16px" : "0px 16px")};
   font-family: ${typography.fontFamily.primary};
   border: 1px solid ${colors.input.border};
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   transition: all 0.2s ease;
   background-color: ${(props) =>
