@@ -94,6 +94,10 @@ export default function TableCell({
     setIsEditing(false);
   }, []);
 
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue(e.target.value);
+  }, []);
+
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -140,7 +144,7 @@ export default function TableCell({
         <EditableInput
           type={getInputType(dataType)}
           value={editValue}
-          onChange={(e) => setEditValue(e.target.value)}
+          onChange={handleInputChange}
           onBlur={save}
           onKeyDown={handleKeyDown}
           autoFocus
