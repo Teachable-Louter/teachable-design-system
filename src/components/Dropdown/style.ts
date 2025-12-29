@@ -111,7 +111,6 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
 	display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
 	width: 320px;
 	
     border: ${({ isOpen }) =>

@@ -25,7 +25,7 @@ export function Dropdown({size, options, onSelect, label, placeholder}: Dropdown
 	};
 	return (
 		<div ref={ref} style={{position: 'relative'}}>
-			<StyledLabel>{label}</StyledLabel>
+			{label && <StyledLabel>{label}</StyledLabel>}
 			<StyledDropDown onClick={() => setOpen((prev) => !prev)}
 				size={size}
 				isOpen={open}
