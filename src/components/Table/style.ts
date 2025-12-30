@@ -169,11 +169,12 @@ export const TableDataCell = styled.td<{
   $edgeLeft?: boolean;
   $edgeRight?: boolean;
   $rowSelected?: boolean;
+  $backgroundColor?: string;
 }>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
-  background: ${({ isHeaderColumn, isSelected, $rowSelected }) => 
-    isSelected ? colors.selected : (isHeaderColumn ? colors.header : ($rowSelected ? 'inherit' : colors.body))};
+  background: ${({ isHeaderColumn, isSelected, $rowSelected, $backgroundColor }) => 
+    isSelected ? colors.selected : (isHeaderColumn ? colors.header : ($rowSelected ? 'inherit' : ($backgroundColor || colors.body)))};
   border-right: 1px solid ${({ isHeaderColumn }) => 
     isHeaderColumn ? colors.borderLight : colors.border};
   border-bottom: 1px solid ${({ isHeaderColumn }) => 
