@@ -42,7 +42,7 @@ export function Dropdown({size, options, onSelect, label, placeholder, width}: D
 				</StyledBox>
 			</StyledDropDown>
 			{open && (
-				<StyledOptions size={size}>
+				<StyledOptions size={size} width={width}>
 					{options?.map((option) => (
 						<StyledOption key={option} onClick={() => handleSelect(option)} size={size} isSelected={option === selected}>
 							{option}

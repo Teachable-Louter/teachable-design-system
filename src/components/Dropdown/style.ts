@@ -155,7 +155,8 @@ export const StyledOptions = styled.div<StyledDropdownProps>`
 	border: 1px solid ${colors.border["gray-light"]};
 	border-radius: 8px;
 
-	width: 302px;
+	z-index: 100;
+    width: ${({ width }) => width ? `calc(${width} - 18px)` : '302px'};
     display: flex;
 	position: fixed;
     padding: 12px 8px;

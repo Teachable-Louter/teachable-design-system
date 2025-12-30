@@ -92,4 +92,12 @@ export const ManyOptionsWithLargeSize: Story = {
 		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
 		size: 'large'
 	},
+};
+export const WithCustomWidth: Story = {
+	args: {
+		placeholder: '가상학급수',
+		options: ['옵션 1', '옵션 2', '옵션 3', '옵션 1', '옵션 2', '옵션 3','옵션 1', '옵션 2', '옵션 3'],
+		size: 'large',
+		width: '240px',
+	},
 }
