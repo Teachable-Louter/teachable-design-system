@@ -4,4 +4,5 @@ export * from './Dropdown'
 export * from './Input';
 export * from './Sidebar'
 export * from './TabBar';
+export * from './TabAtomic';
 export * from './Table';
