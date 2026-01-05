@@ -4,3 +4,4 @@ export * from './Dropdown.types';
 export * from './input.types';
 export * from './Sidebar.types';
 export * from './table';
+export * from './TabAtomic.types';
