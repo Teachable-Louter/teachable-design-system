@@ -170,6 +170,7 @@ export const TableDataCell = styled.td<{
   $edgeRight?: boolean;
   $rowSelected?: boolean;
   $backgroundColor?: string;
+  $align?: 'left' | 'center' | 'right';
 }>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
@@ -188,6 +189,7 @@ export const TableDataCell = styled.td<{
   height: ${({ height }) => height ?? '30px'};
   position: relative;
   user-select: none;
+  text-align: ${({ $align }) => $align ?? 'left'};
 
   &:first-of-type {
     border-left: 1px solid ${({ isHeaderColumn }) => 

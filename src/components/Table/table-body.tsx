@@ -98,6 +98,7 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
                 rowSpan={col.rowSpan}
                 colSpan={col.colSpan}
                 backgroundColor={col.backgroundColor}
+                align={col.align}
                 onEdit={(value) => onCellEdit?.(rowIndex, col.key, value)}
                 render={col.render ? (value) => col.render!(value, row, rowIndex) : undefined}
                 onMouseDown={enableRowSelection ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}

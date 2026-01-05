@@ -57,6 +57,7 @@ export default function TableCell({
   onEdit,
   render,
   backgroundColor,
+  align,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
@@ -131,6 +132,7 @@ export default function TableCell({
       isSelected={isSelected}
       $rowSelected={rowSelected}
       $backgroundColor={backgroundColor}
+      $align={align}
       $edgeTop={selectionEdge?.top}
       $edgeBottom={selectionEdge?.bottom}
       $edgeLeft={selectionEdge?.left}
