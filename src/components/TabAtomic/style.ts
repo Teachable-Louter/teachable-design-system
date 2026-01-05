@@ -17,7 +17,7 @@ export const StyledTab = styled.button<StyledTabProps>`
 	font-family: ${typography.fontFamily.primary};
 	font-size: ${typography.body.medium.fontSize};
 	line-height: ${typography.body.medium.lineHeight};
-	font-weight: ${typography.body.medium.fontWeight};
+	font-weight: ${typography.body.smallBold.fontWeight};
 	
 	color: ${({ isSelected }) => 
 		isSelected ? colors.border.secondary : colors.text.subtle};
