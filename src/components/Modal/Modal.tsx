@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
 import { Button } from '../Button';
-import CloseIcon from '../../assets/icons/close_icon.svg'; // 실제 경로로 수정
+import CloseIcon from '../../assets/icons/close_icon.svg'; 
 
 interface ModalProps {
   title: string | string[];
@@ -9,6 +9,10 @@ interface ModalProps {
   onClose?: () => void;
   size?: "small" | "medium" | "large";
   isVisionButton?: boolean;
+  cancelButtonLabel?: string;
+  confirmButtonLabel?: string;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 }
 
 const Modal = ({ 
@@ -16,7 +20,11 @@ const Modal = ({
   description, 
   onClose, 
   size = "large",
-  isVisionButton = true 
+  isVisionButton = true,
+  cancelButtonLabel = "취소",
+  confirmButtonLabel = "확인",
+  onCancel,
+  onConfirm,
 }: ModalProps) => {
   const renderText = (text: string | string[]) => {
     const lines = Array.isArray(text) ? text : [text];
@@ -26,6 +34,24 @@ const Modal = ({
         {index < lines.length - 1 && <br />}
       </React.Fragment>
     ));
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
+    if (onClose) {
+      onClose();
+    }
   };
 
   return (
@@ -41,8 +67,22 @@ const Modal = ({
         {isVisionButton && (
           <S.ButtonArea>
             <S.ButtonWrapper>
-              <Button size="medium" type="tertiary" label="확인" width="78px" height="48px" />
-              <Button size="medium" type="primary" label="확인" width="78px" height="48px" />
+              <Button 
+                size="medium" 
+                type="tertiary" 
+                label={cancelButtonLabel} 
+                width="78px" 
+                height="48px"
+                onClick={handleCancel}
+              />
+              <Button 
+                size="medium" 
+                type="primary" 
+                label={confirmButtonLabel} 
+                width="78px" 
+                height="48px"
+                onClick={handleConfirm}
+              />
             </S.ButtonWrapper>
           </S.ButtonArea>
         )}

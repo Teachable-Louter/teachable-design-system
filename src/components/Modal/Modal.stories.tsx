@@ -27,6 +27,14 @@ const meta = {
       control: 'boolean',
       description: '버튼 영역 표시 여부 (true: 표시, false: 숨김)',
     },
+    cancelButtonLabel: {
+      control: 'text',
+      description: '취소 버튼 텍스트',
+    },
+    confirmButtonLabel: {
+      control: 'text',
+      description: '확인 버튼 텍스트',
+    },
   },
 } satisfies Meta<typeof Modal>;
 
@@ -40,6 +48,8 @@ export const Playground: Story = {
     description: "Controls 패널에서 props를 자유롭게 변경해보세요!",
     isVisionButton: true,
     size: "large",
+    cancelButtonLabel: "취소",
+    confirmButtonLabel: "확인",
   },
   render: (args) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +61,8 @@ export const Playground: Story = {
           <Modal 
             {...args}
             onClose={() => setIsOpen(false)}
+            onConfirm={() => console.log('확인 클릭')}
+            onCancel={() => console.log('취소 클릭')}
           />
         )}
       </>
@@ -213,6 +225,55 @@ export const ConfirmAction: Story = {
             description="정말로 이 작업을 진행하시겠습니까? 이 작업은 되돌릴 수 없습니다."
             onClose={() => setIsOpen(false)}
             isVisionButton={true}
+            onConfirm={() => alert('작업이 실행되었습니다')}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+// 커스텀 버튼 텍스트
+export const CustomButtonLabels: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    return (
+      <>
+        <button onClick={() => setIsOpen(true)}>커스텀 버튼 모달 열기</button>
+        {isOpen && (
+          <Modal 
+            title="변경 사항 저장"
+            description="변경 사항을 저장하시겠습니까?"
+            onClose={() => setIsOpen(false)}
+            isVisionButton={true}
+            cancelButtonLabel="아니오"
+            confirmButtonLabel="저장"
+            onConfirm={() => alert('저장되었습니다')}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+// 삭제 확인 모달
+export const DeleteConfirm: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    return (
+      <>
+        <button onClick={() => setIsOpen(true)}>삭제 확인 모달 열기</button>
+        {isOpen && (
+          <Modal 
+            title="삭제 확인"
+            description="정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+            onClose={() => setIsOpen(false)}
+            isVisionButton={true}
+            cancelButtonLabel="취소"
+            confirmButtonLabel="삭제"
+            onConfirm={() => alert('삭제되었습니다')}
           />
         )}
       </>
@@ -238,6 +299,9 @@ export const ErrorMessage: Story = {
             ]}
             onClose={() => setIsOpen(false)}
             isVisionButton={true}
+            cancelButtonLabel="닫기"
+            confirmButtonLabel="재시도"
+            onConfirm={() => alert('재시도합니다')}
           />
         )}
       </>
@@ -259,6 +323,7 @@ export const SuccessMessage: Story = {
             description="요청하신 작업이 성공적으로 완료되었습니다."
             onClose={() => setIsOpen(false)}
             isVisionButton={true}
+            confirmButtonLabel="확인"
           />
         )}
       </>
