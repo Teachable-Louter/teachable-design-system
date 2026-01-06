@@ -6,6 +6,7 @@ import {
   InputContainer,
   StyledInput,
   IconButton,
+  WarningText,
 } from "./style";
 import { InputProps } from "../../types/input.types";
 
@@ -21,6 +22,8 @@ export const Input = ({
   onChange,
   disabled = false,
   isPassword = false,
+  isWarning = false,
+  warningText = "",
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,6 +41,7 @@ export const Input = ({
           height={height}
           disabled={disabled}
           isPassword={isPassword}
+          isWarning={isWarning}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -53,6 +57,7 @@ export const Input = ({
           </IconButton>
         )}
       </InputContainer>
+      {isWarning && warningText && <WarningText>{warningText}</WarningText>}
     </InputWrapper>
   );
 };
