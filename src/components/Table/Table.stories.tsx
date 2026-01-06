@@ -177,3 +177,42 @@ export const Edit: Story = {
   args: { columns: [], data: [] },
   render: () => <EditTableComponent />,
 };
+
+interface AlignData extends Record<string, unknown> {
+  id: number;
+  left: string;
+  center: string;
+  right: string;
+  number: number;
+}
+
+const AlignTableComponent = () => {
+  const columns: TableColumn<AlignData>[] = [
+    { key: 'id', header: 'ID', width: '60px', align: 'center' },
+    { key: 'left', header: '좌측 정렬', width: '150px', align: 'left' },
+    { key: 'center', header: '중앙 정렬', width: '150px', align: 'center' },
+    { key: 'right', header: '우측 정렬', width: '150px', align: 'right' },
+    { key: 'number', header: '숫자', width: '100px', align: 'right', dataType: 'number' },
+  ];
+
+  const data: AlignData[] = [
+    { id: 1, left: 'Left', center: 'Center', right: 'Right', number: 1234 },
+    { id: 2, left: 'Text', center: 'Text', right: 'Text', number: 5678 },
+    { id: 3, left: 'Sample', center: 'Sample', right: 'Sample', number: 9012 },
+  ];
+
+  return (
+    <div style={{ width: '650px' }}>
+      <Table<AlignData>
+        columns={columns}
+        data={data}
+      />
+    </div>
+  );
+};
+
+export const TextAlign: Story = {
+  name: 'Text Align',
+  args: { columns: [], data: [] },
+  render: () => <AlignTableComponent />,
+};

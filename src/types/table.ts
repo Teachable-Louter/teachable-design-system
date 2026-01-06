@@ -6,6 +6,9 @@ export type DataType = 'text' | 'number' | 'date' | 'boolean' | 'custom';
 /** 정렬 방향 */
 export type SortDirection = 'asc' | 'desc' | null;
 
+/** 텍스트 정렬 */
+export type TextAlign = 'left' | 'center' | 'right';
+
 /**
  * 테이블 컬럼 정의
  * @template T - 행 데이터 타입
@@ -35,6 +38,10 @@ export interface TableColumn<T = Record<string, unknown>> {
   render?: (value: unknown, row: T, rowIndex: number) => ReactNode;
   /** 커스텀 정렬 함수 */
   sortFn?: (a: unknown, b: unknown) => number;
+  /** 컬럼 배경색 (예: '#f0f0f0', 'rgba(255,0,0,0.1)') */
+  backgroundColor?: string;
+  /** 텍스트 정렬 @default 'left' */
+  align?: TextAlign;
 }
 
 /** 테이블 행 데이터 타입 */
@@ -92,6 +99,10 @@ export interface TableCellProps {
   };
   onEdit?: (value: unknown) => void;
   render?: (value: unknown) => ReactNode;
+  /** 컬럼 배경색 (예: '#f0f0f0', 'rgba(255,0,0,0.1)') */
+  backgroundColor?: string;
+  /** 텍스트 정렬 @default 'left' */
+  align?: TextAlign;
   onMouseDown?: () => void;
   onMouseEnter?: () => void;
   onMouseUp?: () => void;
