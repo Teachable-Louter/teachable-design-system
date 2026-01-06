@@ -279,3 +279,27 @@ export const PercentageWidth: Story = {
     placeholder: "This input fills the container",
   },
 };
+
+// Warning 상태
+export const WithWarning: Story = {
+  args: {
+    size: "medium",
+    label: true,
+    labelText: "Password",
+    placeholder: "Enter password...",
+    isPassword: true,
+    isWarning: true,
+    warningText: "Password must be at least 8 characters",
+  },
+};
+
+// Warning 텍스트 없음
+export const WarningWithoutText: Story = {
+  args: {
+    size: "medium",
+    label: true,
+    labelText: "Email",
+    placeholder: "Enter email...",
+    isWarning: true,
+  },
+};
