@@ -99,7 +99,9 @@ export interface TableCellProps {
   };
   onEdit?: (value: unknown) => void;
   render?: (value: unknown) => ReactNode;
+  /** 컬럼 배경색 (예: '#f0f0f0', 'rgba(255,0,0,0.1)') */
   backgroundColor?: string;
+  /** 텍스트 정렬 @default 'left' */
   align?: TextAlign;
   onMouseDown?: () => void;
   onMouseEnter?: () => void;
