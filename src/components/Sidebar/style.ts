@@ -16,8 +16,8 @@ export const StyledIcon = styled.img<TitleProps>`
 
 export const StyledSidebar = styled.div`
     display: flex;
-    width: 240px;
-    height: 100vh;
+    width: 208px;
+    height: 621px;
     padding: 16px;
     flex-direction: column;
     align-items: flex-start;
@@ -33,7 +33,7 @@ export const StyledDescription = styled.div`
     align-items: flex-start;
     gap: 18px;
     flex: 1 0 0;
-    max-height: calc(100vh - 40px);
+    max-height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -89,14 +89,14 @@ export const StyledOpenContents = styled.div`
     align-items: flex-start;
     gap: 8px;
     align-self: stretch;
-    width: 186px;
+    width: 154px;
 
     border-radius: 12px;
     background: ${colors.surface["gray-subtler"]};
 `
 export const StyledOpenContentsText = styled.p`
     align-self: stretch;
-
+    white-space: pre-line;
     color: ${colors.text.subtle};
 
     font-family: ${typography.fontFamily.primary};

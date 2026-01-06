@@ -8,7 +8,6 @@ export type SortDirection = 'asc' | 'desc' | null;
 
 /** 텍스트 정렬 */
 export type TextAlign = 'left' | 'center' | 'right';
-
 /**
  * 테이블 컬럼 정의
  * @template T - 행 데이터 타입
@@ -42,6 +41,7 @@ export interface TableColumn<T = Record<string, unknown>> {
   backgroundColor?: string;
   /** 텍스트 정렬 @default 'left' */
   align?: TextAlign;
+
 }
 
 /** 테이블 행 데이터 타입 */
