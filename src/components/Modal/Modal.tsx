@@ -1,7 +1,7 @@
 import React from "react";
 import * as S from "./style";
-import { Button } from '../Button';
-import CloseIcon from '../../assets/icons/close_icon.svg'; 
+import { Button } from "../Button";
+import CloseIcon from "../../assets/icons/close_icon.svg";
 
 interface ModalProps {
   title: string | string[];
@@ -15,10 +15,10 @@ interface ModalProps {
   onConfirm?: () => void;
 }
 
-const Modal = ({ 
-  title, 
-  description, 
-  onClose, 
+const Modal = ({
+  title,
+  description,
+  onClose,
   size = "large",
   isVisionButton = true,
   cancelButtonLabel = "취소",
@@ -67,19 +67,19 @@ const Modal = ({
         {isVisionButton && (
           <S.ButtonArea>
             <S.ButtonWrapper>
-              <Button 
-                size="medium" 
-                type="tertiary" 
-                label={cancelButtonLabel} 
-                width="78px" 
+              <Button
+                size="medium"
+                type="tertiary"
+                label={cancelButtonLabel}
+                width="78px"
                 height="48px"
                 onClick={handleCancel}
               />
-              <Button 
-                size="medium" 
-                type="primary" 
-                label={confirmButtonLabel} 
-                width="78px" 
+              <Button
+                size="medium"
+                type="primary"
+                label={confirmButtonLabel}
+                width="78px"
                 height="48px"
                 onClick={handleConfirm}
               />

@@ -39,17 +39,17 @@ const customScrollbar = css`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #D1D5DB;
+    background: #d1d5db;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #9CA3AF;
+    background: #9ca3af;
   }
 
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: #D1D5DB transparent;
+  scrollbar-color: #d1d5db transparent;
 `;
 
 export const Overlay = styled.div`

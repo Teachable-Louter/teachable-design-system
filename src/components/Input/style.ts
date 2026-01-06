@@ -117,7 +117,7 @@ export const StyledInput = styled.input<StyledInputProps>`
     props.isWarning &&
     css`
       border: 1px solid ${colors.border["point"]};
-      
+
       &:focus {
         border: 1px solid ${colors.border["point"]};
         box-shadow: 0 0 0 3px ${colors.light.point["5"]};
@@ -128,7 +128,7 @@ export const StyledInput = styled.input<StyledInputProps>`
 export const WarningText = styled.span`
   ${typography.label.small};
   color: ${colors.border["point"]};
-  margin-left:8px;
+  margin-left: 8px;
 `;
 
 export const IconButton = styled.button<IconButtonProps>`
