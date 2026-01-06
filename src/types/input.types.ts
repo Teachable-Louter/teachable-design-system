@@ -10,6 +10,8 @@ export interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
   isPassword?: boolean;
+  isWarning?: boolean;
+  warningText?: string;
 }
 
 export type InputSize = "small" | "medium" | "large";
