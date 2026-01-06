@@ -31,7 +31,7 @@ const spacing = {
 // ============================================
 /**
  * 테이블 셀의 배경색을 결정합니다.
- * 우선순위: 선택됨 > 헤더 컬럼 > 행 선택 > 커스텀 배경색 > 기본 배경색
+ * 우선순위: 선택됨 > 헤더 컬럼 > 행 선택됨 (inherit) > 커스텀 배경색 > 기본 배경색
  */
 const getCellBackgroundColor = (params: {
   isSelected?: boolean;
@@ -43,7 +43,7 @@ const getCellBackgroundColor = (params: {
   
   if (isSelected) return colors.selected;
   if (isHeaderColumn) return colors.header;
-  if (rowSelected) return 'inherit';
+  if (rowSelected) return 'inherit'; // 행 선택 시 부모 스타일 상속
   return backgroundColor || colors.body;
 };
 
