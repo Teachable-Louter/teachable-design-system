@@ -27,6 +27,27 @@ const spacing = {
 } as const;
 
 // ============================================
+// 헬퍼 함수
+// ============================================
+/**
+ * 테이블 셀의 배경색을 결정합니다.
+ * 우선순위: 선택됨 > 헤더 컬럼 > 행 선택 > 커스텀 배경색 > 기본 배경색
+ */
+const getCellBackgroundColor = (params: {
+  isSelected?: boolean;
+  isHeaderColumn?: boolean;
+  rowSelected?: boolean;
+  backgroundColor?: string;
+}): string => {
+  const { isSelected, isHeaderColumn, rowSelected, backgroundColor } = params;
+  
+  if (isSelected) return colors.selected;
+  if (isHeaderColumn) return colors.header;
+  if (rowSelected) return 'inherit';
+  return backgroundColor || colors.body;
+};
+
+// ============================================
 // 레이아웃 컴포넌트
 // ============================================
 export const TableOuterWrapper = styled.div`
@@ -175,7 +196,12 @@ export const TableDataCell = styled.td<{
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
   background: ${({ isHeaderColumn, isSelected, $rowSelected, $backgroundColor }) => 
-    isSelected ? colors.selected : (isHeaderColumn ? colors.header : ($rowSelected ? 'inherit' : ($backgroundColor || colors.body)))};
+    getCellBackgroundColor({
+      isSelected,
+      isHeaderColumn,
+      rowSelected: $rowSelected,
+      backgroundColor: $backgroundColor,
+    })};
   border-right: 1px solid ${({ isHeaderColumn }) => 
     isHeaderColumn ? colors.borderLight : colors.border};
   border-bottom: 1px solid ${({ isHeaderColumn }) => 
