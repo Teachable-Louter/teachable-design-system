@@ -264,7 +264,7 @@ export const Sortable: Story = {
 interface DataTypeData extends Record<string, unknown> {
   id: number;
   name: string;
-  birthDate: Date;
+  birthDate: string;
   active: boolean;
   score: number;
 }
@@ -279,9 +279,9 @@ const DataTypeTableComponent = () => {
   ];
 
   const data: DataTypeData[] = [
-    { id: 1, name: '홍길동', birthDate: new Date('1990-05-15'), active: true, score: 95 },
-    { id: 2, name: '김철수', birthDate: new Date('1985-12-20'), active: false, score: 82 },
-    { id: 3, name: '이영희', birthDate: new Date('1995-03-08'), active: true, score: 78 },
+    { id: 1, name: '홍길동', birthDate: '1990-05-15', active: true, score: 95 },
+    { id: 2, name: '김철수', birthDate: '1985-12-20', active: false, score: 82 },
+    { id: 3, name: '이영희', birthDate: '1995-03-08', active: true, score: 78 },
   ];
 
   return (
@@ -323,7 +323,14 @@ const CustomRenderTableComponent = () => {
           inactive: { bg: '#fee2e2', text: '#dc2626' },
           pending: { bg: '#fef3c7', text: '#d97706' },
         };
-        const color = statusColors[value as string] || { bg: '#f3f4f6', text: '#6b7280' };
+        const statusLabels: Record<string, string> = {
+          active: '활성',
+          inactive: '비활성',
+          pending: '대기중',
+        };
+        const statusValue = value as string;
+        const color = statusColors[statusValue] || { bg: '#f3f4f6', text: '#6b7280' };
+        const label = statusLabels[statusValue] || statusValue;
         return (
           <span style={{ 
             padding: '2px 8px', 
@@ -333,7 +340,7 @@ const CustomRenderTableComponent = () => {
             fontSize: '12px',
             fontWeight: 500,
           }}>
-            {value === 'active' ? '활성' : value === 'inactive' ? '비활성' : '대기중'}
+            {label}
           </span>
         );
       }
