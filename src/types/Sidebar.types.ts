@@ -4,4 +4,6 @@ export interface SidebarProps {
 	description: string[] []
 	onNext?: () => void
 	onPrev?: () => void
+	disableNext?: boolean
+	disablePrev?: boolean
 }

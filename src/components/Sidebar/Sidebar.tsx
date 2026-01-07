@@ -12,7 +12,7 @@ import { Button } from "../Button/Button";
 import {SidebarProps} from "../../types/Sidebar.types";
 import { arrowUpIconBase64 } from "../../assets/icons"
 
-export function Sidebar({buttonStyle, description, title, onPrev, onNext}: SidebarProps) {
+export function Sidebar({buttonStyle, description, title, onPrev, onNext, disablePrev, disableNext}: SidebarProps) {
 	
 	const [openSections, setOpenSections] = React.useState<boolean[]>(
 		Array(description.length).fill(true) // 기본적으로 모두 열려있게
@@ -46,20 +46,42 @@ export function Sidebar({buttonStyle, description, title, onPrev, onNext}: Sideb
 			</StyledDescription>
 			{
 				buttonStyle === 'start' ? (
-					<StartButton onNext={onNext} />
+					<StartButton
+						onNext={onNext}
+						disableNext={disableNext}
+					/>
 				) : buttonStyle === 'middle' ? (
-					<MiddleButton onNext={onNext} onPrev={onPrev} />
+					<MiddleButton
+						onNext={onNext}
+						onPrev={onPrev}
+						disableNext={disableNext}
+						disablePrev={disablePrev}
+					/>
 				) : buttonStyle === 'end' ? (
-					<EndButton onPrev={onPrev} />
+					<EndButton
+						onPrev={onPrev}
+						disablePrev={disablePrev}
+					/>
 				) : (
-					<MiddleButton onNext={onNext} onPrev={onPrev} />
+					<MiddleButton
+						onNext={onNext}
+						onPrev={onPrev}
+						disableNext={disableNext}
+						disablePrev={disablePrev}
+					/>
 				)
 			}
 		</StyledSidebar>
 	)
 }
 
-function StartButton({ onNext }: { onNext?: () => void }) {
+function StartButton({
+						 onNext,
+						 disableNext,
+					 }: {
+	onNext?: () => void
+	disableNext?: boolean
+}) {
 	return (
 		<StyledButtonArea>
 			<Button
@@ -68,6 +90,7 @@ function StartButton({ onNext }: { onNext?: () => void }) {
 				label="다음으로"
 				width="240px"
 				height="40px"
+				disabled={disableNext}
 				onClick={onNext}
 			/>
 		</StyledButtonArea>
@@ -77,9 +100,13 @@ function StartButton({ onNext }: { onNext?: () => void }) {
 function MiddleButton({
 						  onNext,
 						  onPrev,
+						  disableNext,
+						  disablePrev,
 					  }: {
 	onNext?: () => void
 	onPrev?: () => void
+	disableNext?: boolean
+	disablePrev?: boolean
 }) {
 	return (
 		<StyledButtonArea>
@@ -89,6 +116,7 @@ function MiddleButton({
 				label="이전으로"
 				width="115px"
 				height="40px"
+				disabled={disablePrev}
 				onClick={onPrev}
 			/>
 			<Button
@@ -97,13 +125,17 @@ function MiddleButton({
 				label="다음으로"
 				width="115px"
 				height="40px"
+				disabled={disableNext}
 				onClick={onNext}
 			/>
 		</StyledButtonArea>
 	)
 }
 
-function EndButton({ onPrev }: { onPrev?: () => void }) {
+function EndButton({ onPrev, disablePrev }: {
+	onPrev?: () => void
+	disablePrev?: boolean
+}) {
 	return (
 		<StyledButtonArea>
 			<Button
@@ -112,6 +144,7 @@ function EndButton({ onPrev }: { onPrev?: () => void }) {
 				label="이전으로"
 				width="240px"
 				height="40px"
+				disabled={disablePrev}
 				onClick={onPrev}
 			/>
 		</StyledButtonArea>
