@@ -51,9 +51,10 @@ const getCellBackgroundColor = (params: {
 // ============================================
 // 레이아웃 컴포넌트
 // ============================================
-export const TableOuterWrapper = styled.div`
+export const TableOuterWrapper = styled.div<{ $width?: string }>`
   position: relative;
-  display: block;
+  display: inline-block;
+  ${({ $width }) => $width && `width: ${$width};`}
   outline: none;
 
   &:focus {

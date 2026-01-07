@@ -95,6 +95,28 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   // 실제 사용할 rowHeight (styleConfig 우선)
   const effectiveRowHeight = styleConfig?.bodyRowHeight || rowHeight || '30px';
 
+  // 테이블 너비 계산 (컬럼 width 합계)
+  const tableWidth = useMemo(() => {
+    const hasAllWidths = columns.every(col => col.width);
+    if (!hasAllWidths) return undefined; // width 미정의 컬럼이 있으면 auto
+    
+    let totalWidth = 0;
+    for (const col of columns) {
+      const w = col.width;
+      if (typeof w === 'number') {
+        totalWidth += w;
+      } else if (typeof w === 'string') {
+        const num = parseFloat(w);
+        if (!isNaN(num)) {
+          totalWidth += num;
+        } else {
+          return undefined; // %, auto 등은 계산 불가
+        }
+      }
+    }
+    return `${totalWidth}px`;
+  }, [columns]);
+
   const sortedData = useMemo(() => {
     if (!sortColumn || !sortDirection) return data;
 
@@ -470,7 +492,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, [isSelecting, handleCellMouseUp, handleKeyDown]);
 
   return (
-    <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu}>
+    <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu} $width={tableWidth}>
       <TableWrapper $borderColor={styleConfig?.borderColor}>
         {(title !== undefined || onTitleChange) && (
           <TableTitle $fontFamily={styleConfig?.fontFamily}>
