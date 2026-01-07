@@ -56,6 +56,8 @@ export default function TableCell({
   colSpan,
   onEdit,
   render,
+  backgroundColor,
+  align,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
@@ -94,6 +96,10 @@ export default function TableCell({
     setIsEditing(false);
   }, []);
 
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue(e.target.value);
+  }, []);
+
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -125,6 +131,8 @@ export default function TableCell({
       isHeaderColumn={isHeaderColumn}
       isSelected={isSelected}
       $rowSelected={rowSelected}
+      $backgroundColor={backgroundColor}
+      $align={align}
       $edgeTop={selectionEdge?.top}
       $edgeBottom={selectionEdge?.bottom}
       $edgeLeft={selectionEdge?.left}
@@ -140,7 +148,7 @@ export default function TableCell({
         <EditableInput
           type={getInputType(dataType)}
           value={editValue}
-          onChange={(e) => setEditValue(e.target.value)}
+          onChange={handleInputChange}
           onBlur={save}
           onKeyDown={handleKeyDown}
           autoFocus

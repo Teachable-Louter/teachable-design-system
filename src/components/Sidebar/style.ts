@@ -96,7 +96,7 @@ export const StyledOpenContents = styled.div`
 `
 export const StyledOpenContentsText = styled.p`
     align-self: stretch;
-
+    white-space: pre-line;
     color: ${colors.text.subtle};
 
     font-family: ${typography.fontFamily.primary};
