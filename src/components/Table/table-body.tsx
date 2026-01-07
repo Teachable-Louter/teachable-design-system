@@ -53,11 +53,12 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
   hoveredRowIndex,
   onRowClick,
   onRowHover,
+  styleConfig,
 }: TableBodyProps<T>) {
   const getRowBackground = (rowIndex: number): string | undefined => {
     if (!enableRowSelection) return undefined;
-    if (selectedRowIndex === rowIndex) return '#e7f4fe';
-    if (hoveredRowIndex === rowIndex) return '#f4f5f6';
+    if (selectedRowIndex === rowIndex) return styleConfig?.selectedBackgroundColor || '#e7f4fe';
+    if (hoveredRowIndex === rowIndex) return styleConfig?.hoverBackgroundColor || '#f4f5f6';
     return undefined;
   };
 
@@ -69,6 +70,7 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
           onClick={enableRowSelection ? () => onRowClick?.(rowIndex) : undefined}
           onMouseEnter={enableRowSelection ? () => onRowHover?.(rowIndex) : undefined}
           onMouseLeave={enableRowSelection ? () => onRowHover?.(null) : undefined}
+          $hoverColor={styleConfig?.hoverBackgroundColor}
           style={{
             cursor: enableRowSelection ? 'pointer' : undefined,
             backgroundColor: getRowBackground(rowIndex),
@@ -79,31 +81,38 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
             const { isSelected, edge } = getSelectionInfo(rowIndex, colIndex, selectionStart, selectionEnd);
             const isEditingRequested =
               !!editingCell && editingCell.row === rowIndex && editingCell.col === colIndex;
+            // editable: false인 셀은 선택되지 않도록
+            const cellEditable = col.editable !== false;
+            const cellIsSelected = cellEditable ? isSelected : false;
+            
             return (
               <TableCell
                 key={`${rowIndex}-${col.key}`}
                 value={row[col.key]}
-                editable={col.editable !== false}
+                editable={cellEditable}
                 width={col.width}
                 height={col.height}
                 rowHeight={rowHeight}
                 dataType={col.dataType}
                 isHeaderColumn={col.isHeaderColumn}
-                isSelected={isSelected}
+                isSelected={cellIsSelected}
                 rowSelected={enableRowSelection && (selectedRowIndex === rowIndex || hoveredRowIndex === rowIndex)}
-                isEditingRequested={isEditingRequested}
+                isEditingRequested={cellEditable ? isEditingRequested : false}
                 startEditingToken={editToken}
                 startEditingValue={isEditingRequested ? editStartValue : null}
-                selectionEdge={isSelected ? edge : undefined}
+                selectionEdge={cellIsSelected ? edge : undefined}
                 rowSpan={col.rowSpan}
                 colSpan={col.colSpan}
                 backgroundColor={col.backgroundColor}
+                hoverBackgroundColor={col.hoverBackgroundColor || styleConfig?.hoverBackgroundColor}
+                selectedBackgroundColor={col.selectedBackgroundColor || styleConfig?.selectedBackgroundColor}
                 align={col.align}
+                styleConfig={styleConfig}
                 onEdit={(value) => onCellEdit?.(rowIndex, col.key, value)}
                 render={col.render ? (value) => col.render!(value, row, rowIndex) : undefined}
-                onMouseDown={enableRowSelection ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}
-                onMouseEnter={enableRowSelection ? undefined : () => onCellMouseEnter?.(rowIndex, colIndex)}
-                onMouseUp={enableRowSelection ? undefined : onCellMouseUp}
+                onMouseDown={enableRowSelection || !cellEditable ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}
+                onMouseEnter={enableRowSelection || !cellEditable ? undefined : () => onCellMouseEnter?.(rowIndex, colIndex)}
+                onMouseUp={enableRowSelection || !cellEditable ? undefined : onCellMouseUp}
               />
             );
           })}

@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { colors as themeColors, typography } from '../../style/theme';
-import type { SortDirection } from '../../types/table';
+import type { SortDirection, TableStyleConfig } from '../../types/table';
 
 // ============================================
 // 디자인 토큰
 // ============================================
-const colors = {
+export const defaultColors = {
   header: themeColors.surface['secondary-subtler'],
   headerHover: themeColors.action['secondary-pressed'],
   body: themeColors.surface.white,
@@ -38,13 +38,14 @@ const getCellBackgroundColor = (params: {
   isHeaderColumn?: boolean;
   rowSelected?: boolean;
   backgroundColor?: string;
+  selectedBackgroundColor?: string;
 }): string => {
-  const { isSelected, isHeaderColumn, rowSelected, backgroundColor } = params;
+  const { isSelected, isHeaderColumn, rowSelected, backgroundColor, selectedBackgroundColor } = params;
   
-  if (isSelected) return colors.selected;
-  if (isHeaderColumn) return colors.header;
+  if (isSelected) return selectedBackgroundColor || defaultColors.selected;
+  if (isHeaderColumn) return defaultColors.header;
   if (rowSelected) return 'inherit'; // 행 선택 시 부모 스타일 상속
-  return backgroundColor || colors.body;
+  return backgroundColor || defaultColors.body;
 };
 
 // ============================================
@@ -60,11 +61,44 @@ export const TableOuterWrapper = styled.div`
   }
 `;
 
-export const TableWrapper = styled.div`
+export const TableWrapper = styled.div<{ $borderColor?: string }>`
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+`;
+
+export const TableTitle = styled.div<{ $fontFamily?: string }>`
+  padding: 8px 16px;
+  font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
+  font-size: 16px;
+  font-weight: 700;
+  color: ${defaultColors.text};
+  background: ${defaultColors.header};
+  border-bottom: 1px solid ${defaultColors.borderLight};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const TableTitleInput = styled.input`
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  outline: none;
+  padding: 0;
+  
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const TableTitleActions = styled.div`
+  display: flex;
+  gap: 4px;
 `;
 
 export const TableContainer = styled.div<{ maxHeight?: string }>`
@@ -80,17 +114,17 @@ export const TableContainer = styled.div<{ maxHeight?: string }>`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${colors.body};
-    border: 1px solid ${colors.border};
-    margin-top: 20px; /* 상단 화살표 버튼 높이만큼 여백 */
+    background: ${defaultColors.body};
+    border: 1px solid ${defaultColors.border};
+    margin-top: 20px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${colors.scrollThumb};
-    border: 1px solid ${colors.scrollThumbBorder};
+    background: ${defaultColors.scrollThumb};
+    border: 1px solid ${defaultColors.scrollThumbBorder};
 
     &:hover {
-      background: ${colors.headerHover};
+      background: ${defaultColors.headerHover};
     }
   }
 
@@ -98,43 +132,43 @@ export const TableContainer = styled.div<{ maxHeight?: string }>`
   &::-webkit-scrollbar-button:vertical:end:increment {
     display: block;
     height: 20px;
-    background: ${colors.header};
-    border: 1px solid ${colors.borderLight};
+    background: ${defaultColors.header};
+    border: 1px solid ${defaultColors.borderLight};
   }
 
   &::-webkit-scrollbar-button:vertical:start:decrement:hover,
   &::-webkit-scrollbar-button:vertical:end:increment:hover {
-    background: ${colors.headerHover};
+    background: ${defaultColors.headerHover};
   }
 `;
 
 // ============================================
 // 테이블 기본 컴포넌트
 // ============================================
-export const StyledTable = styled.table`
+export const StyledTable = styled.table<{ $fontFamily?: string }>`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  table-layout: auto;
-  font-family: ${typography.fontFamily.primary};
+  table-layout: fixed;
+  font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
 `;
 
-export const TableHead = styled.thead`
+export const TableHead = styled.thead<{ $backgroundColor?: string }>`
   position: sticky;
   top: 0;
   z-index: 10;
-  background: ${colors.header};
+  background: ${({ $backgroundColor }) => $backgroundColor || defaultColors.header};
 `;
 
 export const TableBody = styled.tbody``;
 
-export const TableRow = styled.tr<{ striped?: boolean }>`
+export const TableRow = styled.tr<{ striped?: boolean; $hoverColor?: string }>`
   &:nth-of-type(even) {
-    ${({ striped }) => striped && `background-color: ${colors.bodyHover};`}
+    ${({ striped }) => striped && `background-color: ${defaultColors.bodyHover};`}
   }
 
   &:hover {
-    background-color: ${colors.bodyHover};
+    background-color: ${({ $hoverColor }) => $hoverColor || defaultColors.bodyHover};
   }
 `;
 
@@ -147,24 +181,32 @@ const baseCellStyle = `
   line-height: 1.5;
 `;
 
-export const TableHeaderCell = styled.th<{ width?: string; sortable?: boolean }>`
+export const TableHeaderCell = styled.th<{
+  width?: string;
+  sortable?: boolean;
+  $height?: string;
+  $fontSize?: string;
+  $textColor?: string;
+  $borderColor?: string;
+}>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
-  background: ${colors.header};
-  border: 1px solid ${colors.borderLight};
+  background: inherit;
+  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
   border-left: none;
+  border-top: none;
   padding: ${spacing.headerPadding};
   text-align: left;
   font-weight: 700;
-  font-size: 15px;
-  color: ${colors.text};
-  height: 30px;
+  font-size: ${({ $fontSize }) => $fontSize || '15px'};
+  color: ${({ $textColor }) => $textColor || defaultColors.text};
+  height: ${({ $height }) => $height || '30px'};
   white-space: nowrap;
   position: relative;
   ${({ width }) => width && `width: ${width};`}
 
   &:first-of-type {
-    border-left: 1px solid ${colors.borderLight};
+    border-left: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
   }
 
   ${({ sortable }) =>
@@ -174,13 +216,13 @@ export const TableHeaderCell = styled.th<{ width?: string; sortable?: boolean }>
     user-select: none;
 
     &:hover {
-      background: ${colors.headerHover};
+      background: ${defaultColors.headerHover};
     }
   `}
 `;
 
 export const TableDataCell = styled.td<{
-  editable?: boolean;
+  $editable?: boolean;
   width?: string;
   height?: string;
   isHeaderColumn?: boolean;
@@ -191,59 +233,76 @@ export const TableDataCell = styled.td<{
   $edgeRight?: boolean;
   $rowSelected?: boolean;
   $backgroundColor?: string;
+  $hoverBackgroundColor?: string;
+  $selectedBackgroundColor?: string;
+  $selectedBorderColor?: string;
   $align?: 'left' | 'center' | 'right';
+  $fontSize?: string;
+  $textColor?: string;
+  $borderColor?: string;
 }>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
-  background: ${({ isHeaderColumn, isSelected, $rowSelected, $backgroundColor }) => 
+  background: ${({ isHeaderColumn, isSelected, $rowSelected, $backgroundColor, $selectedBackgroundColor }) => 
     getCellBackgroundColor({
       isSelected,
       isHeaderColumn,
       rowSelected: $rowSelected,
       backgroundColor: $backgroundColor,
+      selectedBackgroundColor: $selectedBackgroundColor,
     })};
-  border-right: 1px solid ${({ isHeaderColumn }) => 
-    isHeaderColumn ? colors.borderLight : colors.border};
-  border-bottom: 1px solid ${({ isHeaderColumn }) => 
-    isHeaderColumn ? colors.borderLight : colors.border};
+  border-right: 1px solid ${({ isHeaderColumn, $borderColor }) => 
+    $borderColor || (isHeaderColumn ? defaultColors.borderLight : defaultColors.border)};
+  border-bottom: 1px solid ${({ isHeaderColumn, $borderColor }) => 
+    $borderColor || (isHeaderColumn ? defaultColors.borderLight : defaultColors.border)};
   border-left: none;
   border-top: none;
   padding: ${({ isHeaderColumn }) => (isHeaderColumn ? spacing.headerPadding : spacing.cellPadding)};
   font-weight: ${({ isHeaderColumn }) => (isHeaderColumn ? 700 : 400)};
-  font-size: ${({ isHeaderColumn }) => (isHeaderColumn ? '15px' : '13px')};
-  color: ${({ isHeaderColumn }) => (isHeaderColumn ? colors.text : colors.textSecondary)};
+  font-size: ${({ isHeaderColumn, $fontSize }) => $fontSize || (isHeaderColumn ? '15px' : '13px')};
+  color: ${({ isHeaderColumn, $textColor }) => $textColor || (isHeaderColumn ? defaultColors.text : defaultColors.textSecondary)};
   height: ${({ height }) => height ?? '30px'};
   position: relative;
   user-select: none;
   text-align: ${({ $align }) => $align ?? 'left'};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 0;
 
   &:first-of-type {
-    border-left: 1px solid ${({ isHeaderColumn }) => 
-      isHeaderColumn ? colors.borderLight : colors.border};
+    border-left: 1px solid ${({ isHeaderColumn, $borderColor }) => 
+      $borderColor || (isHeaderColumn ? defaultColors.borderLight : defaultColors.border)};
   }
 
-  ${({ isSelected, $edgeTop, $edgeBottom, $edgeLeft, $edgeRight }) =>
+  ${({ isSelected, $edgeTop, $edgeBottom, $edgeLeft, $edgeRight, $selectedBorderColor }) =>
     isSelected &&
     `
     z-index: 1;
     box-shadow: 
-      ${$edgeTop ? `inset 0 2px 0 0 ${colors.selectedBorder}` : `inset 0 0.5px 0 0 ${colors.selectedBorder}50`}${$edgeBottom ? `, inset 0 -2px 0 0 ${colors.selectedBorder}` : `, inset 0 -0.5px 0 0 ${colors.selectedBorder}50`}${$edgeLeft ? `, inset 2px 0 0 0 ${colors.selectedBorder}` : `, inset 0.5px 0 0 0 ${colors.selectedBorder}50`}${$edgeRight ? `, inset -2px 0 0 0 ${colors.selectedBorder}` : `, inset -0.5px 0 0 0 ${colors.selectedBorder}50`};
+      ${$edgeTop ? `inset 0 2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `inset 0 0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeBottom ? `, inset 0 -2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0 -0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeLeft ? `, inset 2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeRight ? `, inset -2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset -0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`};
   `}
 
-  ${({ editable, isSelected, $rowSelected }) =>
-    editable && !isSelected && !$rowSelected &&
+  ${({ $editable, isSelected, $rowSelected, $hoverBackgroundColor }) =>
+    $editable && !isSelected && !$rowSelected &&
     `
     cursor: cell;
     &:hover {
-      background-color: ${colors.bodyHover};
+      background-color: ${$hoverBackgroundColor || defaultColors.bodyHover};
     }
   `}
 
-  ${({ isSelected }) =>
+  ${({ $editable }) =>
+    !$editable &&
+    `
+    cursor: default;
+  `}
+
+  ${({ isSelected, $selectedBackgroundColor }) =>
     isSelected &&
     `
     &:hover {
-      background-color: ${colors.selected};
+      background-color: ${$selectedBackgroundColor || defaultColors.selected};
     }
   `}
 `;
@@ -261,6 +320,13 @@ export const SortIcon = styled.span<{ active?: boolean; direction?: SortDirectio
     width: 12px;
     height: 12px;
   }
+`;
+
+export const CellContent = styled.span`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const EditableInput = styled.input`
@@ -293,8 +359,8 @@ export const ScrollButton = styled.button<{ position: 'top' | 'bottom' }>`
   width: 20px;
   height: 20px;
   padding: 0;
-  background: ${colors.header};
-  border: 1px solid ${colors.borderLight};
+  background: ${defaultColors.header};
+  border: 1px solid ${defaultColors.borderLight};
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -302,7 +368,7 @@ export const ScrollButton = styled.button<{ position: 'top' | 'bottom' }>`
   transition: background-color 0.2s;
 
   &:hover {
-    background: ${colors.headerHover};
+    background: ${defaultColors.headerHover};
   }
 
   &:disabled {
@@ -313,7 +379,7 @@ export const ScrollButton = styled.button<{ position: 'top' | 'bottom' }>`
   svg {
     width: 14px;
     height: 14px;
-    color: ${colors.text};
+    color: ${defaultColors.text};
   }
 `;
 
@@ -335,8 +401,8 @@ export const ContextMenu = styled.div<{ x: number; y: number }>`
   left: ${({ x }) => x}px;
   z-index: 1000;
   min-width: 160px;
-  background: ${colors.body};
-  border: 1px solid ${colors.border};
+  background: ${defaultColors.body};
+  border: 1px solid ${defaultColors.border};
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 4px 0;
@@ -350,25 +416,25 @@ export const ContextMenuItem = styled.button<{ disabled?: boolean }>`
   background: transparent;
   text-align: left;
   font-size: 13px;
-  color: ${({ disabled }) => (disabled ? colors.disabledText : colors.text)};
+  color: ${({ disabled }) => (disabled ? defaultColors.disabledText : defaultColors.text)};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
   align-items: center;
   gap: 8px;
 
   &:hover {
-    background: ${({ disabled }) => (disabled ? 'transparent' : colors.bodyHover)};
+    background: ${({ disabled }) => (disabled ? 'transparent' : defaultColors.bodyHover)};
   }
 
   span.shortcut {
     margin-left: auto;
     font-size: 11px;
-    color: ${colors.disabledText};
+    color: ${defaultColors.disabledText};
   }
 `;
 
 export const ContextMenuDivider = styled.div`
   height: 1px;
-  background: ${colors.borderLight};
+  background: ${defaultColors.borderLight};
   margin: 4px 0;
 `;

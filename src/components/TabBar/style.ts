@@ -22,6 +22,7 @@ export const Title = styled.span`
 
 interface TabItemProps {
   isSelected: boolean;
+  isDisabled?: boolean;
 }
 export const Tablist = styled.div`
   display: flex;
@@ -33,12 +34,18 @@ export const TabItem = styled.div<TabItemProps>`
   font-family: ${typography.fontFamily.primary};
   ${({ isSelected }) =>
     isSelected ? typography.body.xsmallBold : typography.body.xsmall}
-  color: ${({ isSelected }) =>
-    isSelected ? colors.text.secondary : colors.text.subtle};
+  color: ${({ isSelected, isDisabled }) =>
+    isDisabled
+      ? colors.text.disabled
+      : isSelected
+      ? colors.text.secondary
+      : colors.text.subtle};
   background-color: ${({ isSelected }) =>
     isSelected ? colors.action["secondary-selected"] : "transparent"};
   border-radius: 4px;
-  cursor: pointer;
+  cursor: ${({ isDisabled }) => (isDisabled ? "not-allowed" : "pointer")};
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
+  pointer-events: ${({ isDisabled }) => (isDisabled ? "none" : "auto")};
 
   &:hover {
     background-color: ${({ isSelected }) =>
