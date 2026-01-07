@@ -5,6 +5,7 @@ import * as S from "./style";
 export interface TabItem {
   id: string;
   label: string;
+  disabled?: boolean;
 }
 
 export interface TabBarProps {
@@ -19,7 +20,8 @@ export const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProp
     defaultSelectedId || items[0]?.id
   );
 
-  const handleTabClick = (id: string) => {
+  const handleTabClick = (id: string, disabled?: boolean) => {
+    if (disabled) return;
     setSelectedId(id);
     if (onChange) {
       onChange(id);
@@ -34,7 +36,8 @@ export const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProp
           <S.TabItem
             key={item.id}
             isSelected={selectedId === item.id}
-            onClick={() => handleTabClick(item.id)}
+            isDisabled={item.disabled}
+            onClick={() => handleTabClick(item.id, item.disabled)}
           >
             {item.label}
           </S.TabItem>
