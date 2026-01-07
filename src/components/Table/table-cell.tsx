@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
 import type { TableCellProps, DataType } from '../../types/table';
-import { TableDataCell, EditableInput } from './style';
+import { TableDataCell, EditableInput, CellContent } from './style';
 
 const formatValue = (val: unknown, dataType: DataType): string => {
   if (val == null) return '';
@@ -57,7 +57,10 @@ export default function TableCell({
   onEdit,
   render,
   backgroundColor,
+  hoverBackgroundColor,
+  selectedBackgroundColor,
   align,
+  styleConfig,
   onMouseDown,
   onMouseEnter,
   onMouseUp,
@@ -111,38 +114,49 @@ export default function TableCell({
   }, [save, cancel]);
 
   const handleMouseDown = useCallback((e: MouseEvent) => {
-    if (isEditing) return;
+    if (isEditing || !editable) return;
     e.preventDefault();
     onMouseDown?.();
-  }, [isEditing, onMouseDown]);
+  }, [isEditing, editable, onMouseDown]);
 
   const handleMouseEnter = useCallback(() => {
-    if (isEditing) return;
+    if (isEditing || !editable) return;
     onMouseEnter?.();
-  }, [isEditing, onMouseEnter]);
+  }, [isEditing, editable, onMouseEnter]);
+
+  const handleDoubleClick = useCallback(() => {
+    if (!editable) return;
+    startEditing();
+  }, [editable, startEditing]);
 
   const displayValue = render ? render(value) : formatValue(value, dataType);
 
   return (
     <TableDataCell
-      editable={editable}
+      $editable={editable}
       width={width}
       height={height || rowHeight}
       isHeaderColumn={isHeaderColumn}
       isSelected={isSelected}
       $rowSelected={rowSelected}
       $backgroundColor={backgroundColor}
+      $hoverBackgroundColor={hoverBackgroundColor}
+      $selectedBackgroundColor={selectedBackgroundColor}
+      $selectedBorderColor={styleConfig?.selectedBorderColor}
       $align={align}
+      $fontSize={styleConfig?.bodyFontSize}
+      $textColor={styleConfig?.bodyTextColor}
+      $borderColor={styleConfig?.borderColor}
       $edgeTop={selectionEdge?.top}
       $edgeBottom={selectionEdge?.bottom}
       $edgeLeft={selectionEdge?.left}
       $edgeRight={selectionEdge?.right}
       rowSpan={rowSpan}
       colSpan={colSpan}
-      onDoubleClick={startEditing}
-      onMouseDown={handleMouseDown}
-      onMouseEnter={handleMouseEnter}
-      onMouseUp={onMouseUp}
+      onDoubleClick={handleDoubleClick}
+      onMouseDown={editable ? handleMouseDown : undefined}
+      onMouseEnter={editable ? handleMouseEnter : undefined}
+      onMouseUp={editable ? onMouseUp : undefined}
     >
       {isEditing ? (
         <EditableInput
@@ -154,7 +168,9 @@ export default function TableCell({
           autoFocus
         />
       ) : (
-        displayValue
+        <CellContent title={typeof displayValue === 'string' ? displayValue : undefined}>
+          {displayValue}
+        </CellContent>
       )}
     </TableDataCell>
   );

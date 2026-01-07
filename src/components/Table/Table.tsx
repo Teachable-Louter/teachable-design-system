@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 import { ChevronUp, ChevronDown, Copy, ClipboardPaste, Trash2, XCircle } from 'lucide-react';
-import type { TableProps, SortDirection, DataType, CellPosition } from '../../types/table';
+import type { TableProps, SortDirection, DataType, CellPosition, TableStyleConfig } from '../../types/table';
 import {
   TableWrapper,
   TableContainer,
@@ -12,9 +12,13 @@ import {
   ContextMenuItem,
   ContextMenuDivider,
   ContextMenuOverlay,
+  TableTitle,
+  TableTitleInput,
+  TableTitleActions,
 } from './style';
 import TableHeader from './table-header';
 import TableBody from './table-body';
+import AssignIcon from './icons/AssignIcon';
 
 interface ContextMenuState {
   visible: boolean;
@@ -53,6 +57,9 @@ const formatCellValue = (value: unknown): string => {
 };
 
 export default function Table<T extends Record<string, unknown> = Record<string, unknown>>({
+  title,
+  onTitleChange,
+  onTitleDelete,
   columns,
   data,
   onCellEdit,
@@ -66,6 +73,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   selectedRowIndex,
   onRowClick,
   enableKeyboardNavigation,
+  showAssignButton,
+  onAssignClick,
+  styleConfig,
 }: TableProps<T>) {
   const outerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,6 +89,11 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   const [editingCell, setEditingCell] = useState<CellPosition | null>(null);
   const [editStartValue, setEditStartValue] = useState<string | null>(null);
   const [editToken, setEditToken] = useState(0);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [titleValue, setTitleValue] = useState(title || '');
+
+  // 실제 사용할 rowHeight (styleConfig 우선)
+  const effectiveRowHeight = styleConfig?.bodyRowHeight || rowHeight || '30px';
 
   const sortedData = useMemo(() => {
     if (!sortColumn || !sortDirection) return data;
@@ -114,16 +129,23 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, []);
 
   const handleCellMouseDown = useCallback((rowIndex: number, colIndex: number) => {
+    // editable: false인 셀은 선택 불가
+    const col = columns[colIndex];
+    if (col.editable === false) return;
+    
     setIsSelecting(true);
     setSelectionStart({ row: rowIndex, col: colIndex });
     setSelectionEnd({ row: rowIndex, col: colIndex });
-  }, []);
+  }, [columns]);
 
   const handleCellMouseEnter = useCallback((rowIndex: number, colIndex: number) => {
     if (isSelecting) {
+      // editable: false인 셀은 범위에서 제외하지 않고, 드래그만 막음
+      const col = columns[colIndex];
+      if (col.editable === false) return;
       setSelectionEnd({ row: rowIndex, col: colIndex });
     }
-  }, [isSelecting]);
+  }, [isSelecting, columns]);
 
   const handleCellMouseUp = useCallback(() => {
     if (isSelecting && selectionStart && selectionEnd) {
@@ -388,6 +410,38 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     closeContextMenu();
   }, [closeContextMenu]);
 
+  const handleAssign = useCallback(() => {
+    if (!selectionStart || !selectionEnd || !onAssignClick) return;
+    
+    const cells: CellPosition[] = [];
+    const minRow = Math.min(selectionStart.row, selectionEnd.row);
+    const maxRow = Math.max(selectionStart.row, selectionEnd.row);
+    const minCol = Math.min(selectionStart.col, selectionEnd.col);
+    const maxCol = Math.max(selectionStart.col, selectionEnd.col);
+
+    for (let r = minRow; r <= maxRow; r++) {
+      for (let c = minCol; c <= maxCol; c++) {
+        cells.push({ row: r, col: c });
+      }
+    }
+    onAssignClick(cells);
+    closeContextMenu();
+  }, [selectionStart, selectionEnd, onAssignClick, closeContextMenu]);
+
+  const handleTitleSave = useCallback(() => {
+    setIsEditingTitle(false);
+    onTitleChange?.(titleValue);
+  }, [titleValue, onTitleChange]);
+
+  const handleTitleKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleTitleSave();
+    } else if (e.key === 'Escape') {
+      setTitleValue(title || '');
+      setIsEditingTitle(false);
+    }
+  }, [handleTitleSave, title]);
+
   const hasSelection = selectionStart !== null && selectionEnd !== null;
   const selectionCellCount = useMemo(() => {
     if (!selectionStart || !selectionEnd) return 0;
@@ -417,9 +471,42 @@ export default function Table<T extends Record<string, unknown> = Record<string,
 
   return (
     <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu}>
-      <TableWrapper>
+      <TableWrapper $borderColor={styleConfig?.borderColor}>
+        {(title !== undefined || onTitleChange) && (
+          <TableTitle $fontFamily={styleConfig?.fontFamily}>
+            {isEditingTitle ? (
+              <TableTitleInput
+                value={titleValue}
+                onChange={(e) => setTitleValue(e.target.value)}
+                onBlur={handleTitleSave}
+                onKeyDown={handleTitleKeyDown}
+                autoFocus
+              />
+            ) : (
+              <span onDoubleClick={() => onTitleChange && setIsEditingTitle(true)}>
+                {title || '제목 없음'}
+              </span>
+            )}
+            {onTitleDelete && (
+              <TableTitleActions>
+                <button
+                  onClick={onTitleDelete}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    color: '#666',
+                  }}
+                >
+                  <XCircle size={16} />
+                </button>
+              </TableTitleActions>
+            )}
+          </TableTitle>
+        )}
         <TableContainer ref={containerRef} maxHeight={maxHeight}>
-          <StyledTable>
+          <StyledTable $fontFamily={styleConfig?.fontFamily}>
             <colgroup>
               {columns.map((col) => (
                 <col
@@ -433,11 +520,12 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               sortColumn={sortColumn ?? undefined}
               sortDirection={sortDirection}
               onSort={handleSort}
+              styleConfig={styleConfig}
             />
             <TableBody<T>
               columns={columns}
               data={sortedData}
-              rowHeight={rowHeight}
+              rowHeight={effectiveRowHeight}
               onCellEdit={onCellEdit}
               selectionStart={enableRowSelection ? null : selectionStart}
               selectionEnd={enableRowSelection ? null : selectionEnd}
@@ -452,6 +540,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               hoveredRowIndex={hoveredRowIndex ?? undefined}
               onRowClick={(rowIndex) => onRowClick?.(rowIndex, sortedData[rowIndex])}
               onRowHover={setHoveredRowIndex}
+              styleConfig={styleConfig}
             />
           </StyledTable>
         </TableContainer>
@@ -472,6 +561,15 @@ export default function Table<T extends Record<string, unknown> = Record<string,
         <>
           <ContextMenuOverlay onClick={closeContextMenu} />
           <ContextMenu x={contextMenu.x} y={contextMenu.y}>
+            {showAssignButton && (
+              <>
+                <ContextMenuItem onClick={handleAssign} disabled={!hasSelection || !onAssignClick}>
+                  <AssignIcon size={14} />
+                  보강배정하기
+                </ContextMenuItem>
+                <ContextMenuDivider />
+              </>
+            )}
             <ContextMenuItem onClick={handleCopy} disabled={!hasSelection}>
               <Copy size={14} />
               복사

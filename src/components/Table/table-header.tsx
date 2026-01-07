@@ -17,13 +17,14 @@ export default function TableHeader<T = Record<string, unknown>>({
   sortColumn,
   sortDirection,
   onSort,
+  styleConfig,
 }: TableHeaderProps<T>) {
   const handleClick = (key: string, sortable?: boolean) => {
     if (sortable) onSort?.(key);
   };
 
   return (
-    <TableHead>
+    <TableHead $backgroundColor={styleConfig?.headerBackgroundColor}>
       <TableRow>
         {columns.map(({ key, header, width, sortable, rowSpan, colSpan }) => {
           const isActive = sortColumn === key;
@@ -35,6 +36,10 @@ export default function TableHeader<T = Record<string, unknown>>({
               sortable={sortable}
               rowSpan={rowSpan}
               colSpan={colSpan}
+              $height={styleConfig?.headerHeight}
+              $fontSize={styleConfig?.headerFontSize}
+              $textColor={styleConfig?.headerTextColor}
+              $borderColor={styleConfig?.borderColor}
               onClick={() => handleClick(key, sortable)}
             >
               {header}
