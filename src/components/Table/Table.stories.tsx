@@ -553,3 +553,311 @@ export const FullFeature: Story = {
   args: { columns: [], data: [] },
   render: () => <FullFeatureTableComponent />,
 };
+
+// ========== StyleConfig 테스트 ==========
+interface StyleConfigData extends Record<string, unknown> {
+  id: number;
+  name: string;
+  subject: string;
+  teacher: string;
+}
+
+const StyleConfigTableComponent = () => {
+  const columns: TableColumn<StyleConfigData>[] = [
+    { key: 'id', header: '번호', width: '60px', editable: false },
+    { key: 'name', header: '과목명', width: '120px' },
+    { key: 'subject', header: '교과', width: '100px' },
+    { key: 'teacher', header: '담당교사', width: '100px' },
+  ];
+
+  const data: StyleConfigData[] = [
+    { id: 1, name: '국어', subject: '국어', teacher: '김선생' },
+    { id: 2, name: '수학', subject: '수학', teacher: '이선생' },
+    { id: 3, name: '영어', subject: '외국어', teacher: '박선생' },
+    { id: 4, name: '과학', subject: '과학', teacher: '최선생' },
+  ];
+
+  return (
+    <div style={{ width: '420px' }}>
+      <p style={{ marginBottom: '10px', color: '#666' }}>
+        styleConfig로 헤더/바디 높이, 폰트, 색상 등 커스터마이징
+      </p>
+      <Table<StyleConfigData>
+        columns={columns}
+        data={data}
+        styleConfig={{
+          headerHeight: '48px',
+          bodyRowHeight: '40px',
+          fontFamily: 'Georgia, serif',
+          headerFontSize: '14px',
+          bodyFontSize: '13px',
+          headerBackgroundColor: '#1e40af',
+          headerTextColor: '#ffffff',
+          bodyTextColor: '#1f2937',
+          borderColor: '#1e40af',
+          rowHoverColor: '#dbeafe',
+          cellHoverBackgroundColor: '#bfdbfe',
+          cellSelectedBackgroundColor: '#93c5fd',
+          cellSelectedBorderColor: '#1e40af',
+        }}
+      />
+    </div>
+  );
+};
+
+export const StyleConfig: Story = {
+  name: 'Style Config',
+  args: { columns: [], data: [] },
+  render: () => <StyleConfigTableComponent />,
+};
+
+// ========== Title 기능 테스트 ==========
+interface TitleTableData extends Record<string, unknown> {
+  id: number;
+  mon: string;
+  tue: string;
+  wed: string;
+  thu: string;
+  fri: string;
+}
+
+const TitleTableComponent = () => {
+  const [title, setTitle] = useState('1학년 1반 시간표');
+  const [data, setData] = useState<TitleTableData[]>([
+    { id: 1, mon: '국어', tue: '수학', wed: '영어', thu: '과학', fri: '사회' },
+    { id: 2, mon: '수학', tue: '영어', wed: '국어', thu: '체육', fri: '음악' },
+    { id: 3, mon: '영어', tue: '국어', wed: '수학', thu: '미술', fri: '도덕' },
+  ]);
+
+  const columns: TableColumn<TitleTableData>[] = [
+    { key: 'id', header: '교시', width: '60px', editable: false },
+    { key: 'mon', header: '월', width: '80px' },
+    { key: 'tue', header: '화', width: '80px' },
+    { key: 'wed', header: '수', width: '80px' },
+    { key: 'thu', header: '목', width: '80px' },
+    { key: 'fri', header: '금', width: '80px' },
+  ];
+
+  const handleAddRow = () => {
+    setData(prev => [...prev, { 
+      id: prev.length + 1, 
+      mon: '', tue: '', wed: '', thu: '', fri: '' 
+    }]);
+  };
+
+  const handleDeleteRow = () => {
+    setData(prev => prev.slice(0, -1));
+  };
+
+  return (
+    <div style={{ width: '500px' }}>
+      <p style={{ marginBottom: '10px', color: '#666' }}>
+        표 제목 수정 가능, 추가/수정/삭제 버튼
+      </p>
+      <Table<TitleTableData>
+        columns={columns}
+        data={data}
+        title={title}
+        onTitleChange={(newTitle) => setTitle(newTitle)}
+        onAdd={handleAddRow}
+        onEdit={() => console.log('Edit mode')}
+        onDelete={handleDeleteRow}
+        onTitleDelete={() => {
+          if (confirm('정말 삭제하시겠습니까?')) {
+            setTitle('');
+          }
+        }}
+        onCellEdit={(rowIndex, columnKey, value) => {
+          setData((prev) =>
+            prev.map((row, idx) =>
+              idx === rowIndex ? ({ ...row, [columnKey]: value } as TitleTableData) : row
+            )
+          );
+        }}
+      />
+    </div>
+  );
+};
+
+export const TitleTable: Story = {
+  name: 'Title Table',
+  args: { columns: [], data: [] },
+  render: () => <TitleTableComponent />,
+};
+
+// ========== 보강배정 버튼 테스트 ==========
+interface AssignData extends Record<string, unknown> {
+  period: string;
+  mon: string;
+  tue: string;
+  wed: string;
+  thu: string;
+  fri: string;
+}
+
+const AssignButtonTableComponent = () => {
+  const [data, setData] = useState<AssignData[]>([
+    { period: '1교시', mon: '국어', tue: '수학', wed: '', thu: '과학', fri: '사회' },
+    { period: '2교시', mon: '', tue: '영어', wed: '국어', thu: '', fri: '음악' },
+    { period: '3교시', mon: '영어', tue: '', wed: '수학', thu: '미술', fri: '' },
+    { period: '4교시', mon: '수학', tue: '국어', wed: '', thu: '', fri: '도덕' },
+  ]);
+
+  const columns: TableColumn<AssignData>[] = [
+    { key: 'period', header: '교시', width: '80px', editable: false },
+    { key: 'mon', header: '월', width: '80px' },
+    { key: 'tue', header: '화', width: '80px' },
+    { key: 'wed', header: '수', width: '80px' },
+    { key: 'thu', header: '목', width: '80px' },
+    { key: 'fri', header: '금', width: '80px' },
+  ];
+
+  return (
+    <div style={{ width: '500px' }}>
+      <p style={{ marginBottom: '10px', color: '#666' }}>
+        셀 우클릭 → 컨텍스트 메뉴에서 "보강배정하기" 버튼 확인
+      </p>
+      <Table<AssignData>
+        columns={columns}
+        data={data}
+        showAssignButton={true}
+        onAssignClick={(cells) => {
+          const cellInfo = cells.map(c => `(${c.row},${c.col})`).join(', ');
+          alert(`보강배정하기: ${cellInfo}`);
+          console.log('Assign clicked for cells:', cells);
+        }}
+        onCellEdit={(rowIndex, columnKey, value) => {
+          setData((prev) =>
+            prev.map((row, idx) =>
+              idx === rowIndex ? ({ ...row, [columnKey]: value } as AssignData) : row
+            )
+          );
+        }}
+      />
+    </div>
+  );
+};
+
+export const AssignButton: Story = {
+  name: 'Assign Button',
+  args: { columns: [], data: [] },
+  render: () => <AssignButtonTableComponent />,
+};
+
+// ========== 셀별 호버/선택 색상 테스트 ==========
+interface CellColorData extends Record<string, unknown> {
+  id: number;
+  normal: string;
+  custom: string;
+  highlight: string;
+}
+
+const CellColorTableComponent = () => {
+  const columns: TableColumn<CellColorData>[] = [
+    { key: 'id', header: 'ID', width: '60px', editable: false },
+    { key: 'normal', header: '기본', width: '120px' },
+    { 
+      key: 'custom', 
+      header: '커스텀 색상', 
+      width: '120px',
+      hoverBackgroundColor: '#fef3c7',
+      selectedBackgroundColor: '#fde68a',
+    },
+    { 
+      key: 'highlight', 
+      header: '하이라이트', 
+      width: '120px',
+      hoverBackgroundColor: '#dcfce7',
+      selectedBackgroundColor: '#bbf7d0',
+    },
+  ];
+
+  const data: CellColorData[] = [
+    { id: 1, normal: '기본 셀', custom: '노란색 호버', highlight: '녹색 호버' },
+    { id: 2, normal: '기본 셀', custom: '노란색 호버', highlight: '녹색 호버' },
+    { id: 3, normal: '기본 셀', custom: '노란색 호버', highlight: '녹색 호버' },
+  ];
+
+  return (
+    <div style={{ width: '440px' }}>
+      <p style={{ marginBottom: '10px', color: '#666' }}>
+        컬럼별로 호버/선택 색상을 다르게 설정
+      </p>
+      <Table<CellColorData>
+        columns={columns}
+        data={data}
+      />
+    </div>
+  );
+};
+
+export const CellColor: Story = {
+  name: 'Cell Color',
+  args: { columns: [], data: [] },
+  render: () => <CellColorTableComponent />,
+};
+
+// ========== Border 스타일 테스트 ==========
+interface BorderStyleData extends Record<string, unknown> {
+  id: number;
+  col1: string;
+  col2: string;
+  col3: string;
+}
+
+const BorderStyleTableComponent = () => {
+  const columns: TableColumn<BorderStyleData>[] = [
+    { key: 'id', header: 'ID', width: '60px' },
+    { key: 'col1', header: '컬럼1', width: '100px' },
+    { key: 'col2', header: '컬럼2', width: '100px' },
+    { key: 'col3', header: '컬럼3', width: '100px' },
+  ];
+
+  const data: BorderStyleData[] = [
+    { id: 1, col1: 'A1', col2: 'B1', col3: 'C1' },
+    { id: 2, col1: 'A2', col2: 'B2', col3: 'C2' },
+    { id: 3, col1: 'A3', col2: 'B3', col3: 'C3' },
+  ];
+
+  return (
+    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+      <div>
+        <p style={{ marginBottom: '10px', color: '#666' }}>기본 스타일</p>
+        <Table<BorderStyleData>
+          columns={columns}
+          data={data}
+        />
+      </div>
+      <div>
+        <p style={{ marginBottom: '10px', color: '#666' }}>빨간색 테두리</p>
+        <Table<BorderStyleData>
+          columns={columns}
+          data={data}
+          styleConfig={{
+            borderColor: '#dc2626',
+            headerBackgroundColor: '#fef2f2',
+          }}
+        />
+      </div>
+      <div>
+        <p style={{ marginBottom: '10px', color: '#666' }}>녹색 테마</p>
+        <Table<BorderStyleData>
+          columns={columns}
+          data={data}
+          styleConfig={{
+            borderColor: '#16a34a',
+            headerBackgroundColor: '#dcfce7',
+            rowHoverColor: '#f0fdf4',
+            cellSelectedBorderColor: '#16a34a',
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export const BorderStyle: Story = {
+  name: 'Border Style',
+  args: { columns: [], data: [] },
+  render: () => <BorderStyleTableComponent />,
+};

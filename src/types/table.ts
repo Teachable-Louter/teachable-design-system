@@ -9,6 +9,36 @@ export type SortDirection = 'asc' | 'desc' | null;
 /** 텍스트 정렬 */
 export type TextAlign = 'left' | 'center' | 'right';
 
+/** 테이블 스타일 설정 */
+export interface TableStyleConfig {
+  /** 헤더 높이 */
+  headerHeight?: string;
+  /** 바디 행 높이 */
+  bodyRowHeight?: string;
+  /** 폰트 패밀리 */
+  fontFamily?: string;
+  /** 헤더 폰트 크기 */
+  headerFontSize?: string;
+  /** 바디 폰트 크기 */
+  bodyFontSize?: string;
+  /** 헤더 배경색 */
+  headerBackgroundColor?: string;
+  /** 헤더 텍스트 색상 */
+  headerTextColor?: string;
+  /** 바디 배경색 */
+  bodyBackgroundColor?: string;
+  /** 바디 텍스트 색상 */
+  bodyTextColor?: string;
+  /** 테두리 색상 */
+  borderColor?: string;
+  /** 호버 시 배경색 */
+  hoverBackgroundColor?: string;
+  /** 선택 시 배경색 */
+  selectedBackgroundColor?: string;
+  /** 선택 시 테두리 색상 */
+  selectedBorderColor?: string;
+}
+
 /**
  * 테이블 컬럼 정의
  * @template T - 행 데이터 타입
@@ -40,6 +70,10 @@ export interface TableColumn<T = Record<string, unknown>> {
   sortFn?: (a: unknown, b: unknown) => number;
   /** 컬럼 배경색 (예: '#f0f0f0', 'rgba(255,0,0,0.1)') */
   backgroundColor?: string;
+  /** 셀 호버 시 배경색 */
+  hoverBackgroundColor?: string;
+  /** 셀 선택 시 배경색 */
+  selectedBackgroundColor?: string;
   /** 텍스트 정렬 @default 'left' */
   align?: TextAlign;
 }
@@ -49,6 +83,12 @@ export type TableRow<T = Record<string, unknown>> = T;
 
 /** 테이블 컴포넌트 Props */
 export interface TableProps<T = Record<string, unknown>> {
+  /** 테이블 제목 */
+  title?: string;
+  /** 제목 변경 콜백 */
+  onTitleChange?: (title: string) => void;
+  /** 제목 삭제 콜백 */
+  onTitleDelete?: () => void;
   columns: TableColumn<T>[];
   data: TableRow<T>[];
   onCellEdit?: (rowIndex: number, columnKey: string, value: unknown) => void;
@@ -57,7 +97,7 @@ export interface TableProps<T = Record<string, unknown>> {
   onPaste?: (startRow: number, startCol: number, values: string[][]) => void;
   /** 최대 높이 (스크롤 활성화) */
   maxHeight?: string;
-  /** 행 높이 (기본값: 30px) */
+  /** 행 높이 (기본값: 30px) - deprecated, use styleConfig.bodyRowHeight */
   rowHeight?: string;
   /** 줄무늬 스타일 */
   striped?: boolean;
@@ -70,6 +110,12 @@ export interface TableProps<T = Record<string, unknown>> {
   onRowClick?: (rowIndex: number, row: T) => void;
   /** 키보드 네비게이션 활성화 (↑↓ 화살표) */
   enableKeyboardNavigation?: boolean;
+  /** 보강배정하기 버튼 표시 여부 */
+  showAssignButton?: boolean;
+  /** 보강배정하기 버튼 클릭 콜백 */
+  onAssignClick?: (cells: CellPosition[]) => void;
+  /** 스타일 설정 */
+  styleConfig?: TableStyleConfig;
 }
 
 /** 테이블 셀 Props */
@@ -101,8 +147,14 @@ export interface TableCellProps {
   render?: (value: unknown) => ReactNode;
   /** 컬럼 배경색 (예: '#f0f0f0', 'rgba(255,0,0,0.1)') */
   backgroundColor?: string;
+  /** 셀 호버 시 배경색 */
+  hoverBackgroundColor?: string;
+  /** 셀 선택 시 배경색 */
+  selectedBackgroundColor?: string;
   /** 텍스트 정렬 @default 'left' */
   align?: TextAlign;
+  /** 스타일 설정 */
+  styleConfig?: TableStyleConfig;
   onMouseDown?: () => void;
   onMouseEnter?: () => void;
   onMouseUp?: () => void;
@@ -114,6 +166,8 @@ export interface TableHeaderProps<T = Record<string, unknown>> {
   sortColumn?: string;
   sortDirection?: SortDirection;
   onSort?: (columnKey: string) => void;
+  /** 스타일 설정 */
+  styleConfig?: TableStyleConfig;
 }
 
 /** 테이블 바디 Props */
@@ -144,6 +198,8 @@ export interface TableBodyProps<T = Record<string, unknown>> {
   onRowClick?: (rowIndex: number) => void;
   /** 행 호버 콜백 */
   onRowHover?: (rowIndex: number | null) => void;
+  /** 스타일 설정 */
+  styleConfig?: TableStyleConfig;
 }
 
 /** 셀 위치 */
