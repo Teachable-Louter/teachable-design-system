@@ -2,13 +2,14 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { colors } from '../../style';
 import { typography } from '../../style';
-import element from '../../assets/icons/checked.png';
+import { checkedIconBase64 } from '../../assets/icons';
 
 export interface StyledDropdownProps {
 	size?: 'small' | 'medium' | 'large';
 	onSelect?: (option: string) => void;
 	isOpen?: boolean;
 	isSelected?: boolean;
+	width?: string;
 }
 
 const getButtonSize = (size?: 'small' | 'medium' | 'large') => {
@@ -112,12 +113,13 @@ export const StyledDropDown = styled.button<StyledDropdownProps>`
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-	width: 320px;
+	width: ${({ width }) => width || '320px'};
 	
     border: ${({ isOpen }) =>
             isOpen ? `2px solid ${colors.input['border-active']}` : `1px solid ${colors.input.border}`};
     ${props => getButtonSize(props.size)}
 	
+	cursor: pointer;
 `;
 
 export const StyledBox = styled.div`
@@ -153,7 +155,10 @@ export const StyledOptions = styled.div<StyledDropdownProps>`
 	border: 1px solid ${colors.border["gray-light"]};
 	border-radius: 8px;
 
+	z-index: 100;
+    width: ${({ width }) => width ? `calc(${width} - 18px)` : '302px'};
     display: flex;
+	position: fixed;
     padding: 12px 8px;
     flex-direction: column;
     align-items: flex-start;
@@ -164,6 +169,8 @@ export const StyledOptions = styled.div<StyledDropdownProps>`
             '240px'};
     overflow-y: auto;
     overflow-x: hidden;
+	
+	background: ${colors.surface.white};
 `
 
 export const StyledOption = styled.div<StyledDropdownProps>`
@@ -184,7 +191,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
 	${props => getOptionSize(props.size)}
 
 
-    ${({ isSelected }) => isSelected && css`
+	${({ isSelected }) => isSelected && css`
 		background: ${colors.action["secondary-selected"]};
 		color: ${colors.text.secondary};
 
@@ -194,7 +201,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
         content: '';
         width: 16px;
         height: 16px;
-        background-image: url(${element});
+        background-image: url(${checkedIconBase64});
         background-size: cover;
         background-repeat: no-repeat;
         position: absolute;
@@ -202,9 +209,7 @@ export const StyledOption = styled.div<StyledDropdownProps>`
         top: 50%;
         transform: translateY(-50%);
     }
-	`}
-	
-	&:hover {
+	`}	&:hover {
 		background: ${colors.action["secondary-hover"]};
 	}
 	&:active {

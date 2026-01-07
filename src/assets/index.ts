@@ -1,1 +1,1 @@
-// export * from "./icons" 형식으로
+export * from "./icons";
