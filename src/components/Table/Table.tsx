@@ -178,15 +178,16 @@ export default function Table<T extends Record<string, unknown> = Record<string,
       const cols: string[] = [];
       for (let c = minCol; c <= maxCol; c++) {
         const col = columns[c];
-        // editable: false인 컬럼은 복사에서 제외
-        if (col?.editable === false) continue;
-        const colKey = col?.key;
-        const value = sortedData[r]?.[colKey as keyof T];
-        cols.push(formatCellValue(value));
+        // editable: false인 컬럼은 빈 문자열로 복사하여 행 구조 유지
+        if (col?.editable === false) {
+          cols.push('');
+        } else {
+          const colKey = col?.key;
+          const value = sortedData[r]?.[colKey as keyof T];
+          cols.push(formatCellValue(value));
+        }
       }
-      if (cols.length > 0) {
-        rows.push(cols.join('\t'));
-      }
+      rows.push(cols.join('\t'));
     }
     return rows.join('\n');
   }, [selectionStart, selectionEnd, columns, sortedData]);
