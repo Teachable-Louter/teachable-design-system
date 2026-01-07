@@ -53,7 +53,7 @@ const getCellBackgroundColor = (params: {
 // ============================================
 export const TableOuterWrapper = styled.div`
   position: relative;
-  display: inline-block;
+  display: block;
   outline: none;
 
   &:focus {
