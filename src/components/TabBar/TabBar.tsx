@@ -1,25 +1,20 @@
 import { useState } from "react";
 import React from "react";
 import * as S from "./style";
+import { TabBarProps } from "../../types/TabBar.types";
 
-export interface TabItem {
-  id: string;
-  label: string;
-}
-
-export interface TabBarProps {
-  title?: string;
-  items: TabItem[];
-  defaultSelectedId?: string;
-  onChange?: (id: string) => void;
-}
-
-export const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProps) => {
+export const TabBar = ({
+  title,
+  items,
+  defaultSelectedId,
+  onChange,
+}: TabBarProps) => {
   const [selectedId, setSelectedId] = useState(
     defaultSelectedId || items[0]?.id
   );
 
-  const handleTabClick = (id: string) => {
+  const handleTabClick = (id: string, disabled?: boolean) => {
+    if (disabled) return;
     setSelectedId(id);
     if (onChange) {
       onChange(id);
@@ -34,7 +29,8 @@ export const TabBar = ({ title, items, defaultSelectedId, onChange }: TabBarProp
           <S.TabItem
             key={item.id}
             isSelected={selectedId === item.id}
-            onClick={() => handleTabClick(item.id)}
+            isDisabled={item.disabled}
+            onClick={() => handleTabClick(item.id, item.disabled)}
           >
             {item.label}
           </S.TabItem>
