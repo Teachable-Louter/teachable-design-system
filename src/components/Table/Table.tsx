@@ -177,11 +177,16 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     for (let r = minRow; r <= maxRow; r++) {
       const cols: string[] = [];
       for (let c = minCol; c <= maxCol; c++) {
-        const colKey = columns[c]?.key;
+        const col = columns[c];
+        // editable: false인 컬럼은 복사에서 제외
+        if (col?.editable === false) continue;
+        const colKey = col?.key;
         const value = sortedData[r]?.[colKey as keyof T];
         cols.push(formatCellValue(value));
       }
-      rows.push(cols.join('\t'));
+      if (cols.length > 0) {
+        rows.push(cols.join('\t'));
+      }
     }
     return rows.join('\n');
   }, [selectionStart, selectionEnd, columns, sortedData]);
@@ -327,12 +332,28 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     };
   }, []);
 
+  // 선택 범위 내에 editable한 셀이 있는지 확인
+  const hasEditableCellInSelection = useCallback((): boolean => {
+    if (!selectionStart || !selectionEnd) return false;
+    
+    const minCol = Math.min(selectionStart.col, selectionEnd.col);
+    const maxCol = Math.max(selectionStart.col, selectionEnd.col);
+    
+    for (let c = minCol; c <= maxCol; c++) {
+      if (columns[c]?.editable !== false) {
+        return true;
+      }
+    }
+    return false;
+  }, [selectionStart, selectionEnd, columns]);
+
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
-    if (selectionStart && selectionEnd) {
+    // editable한 셀이 선택되어 있을 때만 컨텍스트 메뉴 표시
+    if (selectionStart && selectionEnd && hasEditableCellInSelection()) {
       setContextMenu({ visible: true, x: e.clientX, y: e.clientY });
     }
-  }, [selectionStart, selectionEnd]);
+  }, [selectionStart, selectionEnd, hasEditableCellInSelection]);
 
   const closeContextMenu = useCallback(() => {
     setContextMenu({ visible: false, x: 0, y: 0 });
