@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
 import type { TableCellProps, DataType } from '../../types/table';
-import { TableDataCell, EditableInput } from './style';
+import { TableDataCell, EditableInput, CellContent } from './style';
 
 const formatValue = (val: unknown, dataType: DataType): string => {
   if (val == null) return '';
@@ -154,7 +154,9 @@ export default function TableCell({
           autoFocus
         />
       ) : (
-        displayValue
+        <CellContent title={typeof displayValue === 'string' ? displayValue : undefined}>
+          {displayValue}
+        </CellContent>
       )}
     </TableDataCell>
   );

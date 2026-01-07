@@ -216,6 +216,10 @@ export const TableDataCell = styled.td<{
   position: relative;
   user-select: none;
   text-align: ${({ $align }) => $align ?? 'left'};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 0;
 
   &:first-of-type {
     border-left: 1px solid ${({ isHeaderColumn }) => 
@@ -261,6 +265,13 @@ export const SortIcon = styled.span<{ active?: boolean; direction?: SortDirectio
     width: 12px;
     height: 12px;
   }
+`;
+
+export const CellContent = styled.span`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const EditableInput = styled.input`
