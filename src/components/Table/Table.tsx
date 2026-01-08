@@ -117,6 +117,17 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     return `${totalWidth}px`;
   }, [columns]);
 
+  // 선택 영역에 editable: true인 셀이 있는지 확인
+  const hasEditableCellInSelection = useCallback(() => {
+    if (!selectionStart || !selectionEnd) return false;
+    const minCol = Math.min(selectionStart.col, selectionEnd.col);
+    const maxCol = Math.max(selectionStart.col, selectionEnd.col);
+    for (let c = minCol; c <= maxCol; c++) {
+      if (columns[c]?.editable !== false) return true;
+    }
+    return false;
+  }, [selectionStart, selectionEnd, columns]);
+
   const sortedData = useMemo(() => {
     if (!sortColumn || !sortDirection) return data;
 
@@ -351,10 +362,11 @@ export default function Table<T extends Record<string, unknown> = Record<string,
 
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
-    if (selectionStart && selectionEnd) {
+    // editable한 셀이 선택 영역에 있을 때만 컨텍스트 메뉴 표시
+    if (selectionStart && selectionEnd && hasEditableCellInSelection()) {
       setContextMenu({ visible: true, x: e.clientX, y: e.clientY });
     }
-  }, [selectionStart, selectionEnd]);
+  }, [selectionStart, selectionEnd, hasEditableCellInSelection]);
 
   const closeContextMenu = useCallback(() => {
     setContextMenu({ visible: false, x: 0, y: 0 });

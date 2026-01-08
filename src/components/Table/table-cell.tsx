@@ -114,15 +114,15 @@ export default function TableCell({
   }, [save, cancel]);
 
   const handleMouseDown = useCallback((e: MouseEvent) => {
-    if (isEditing || !editable) return;
+    if (!editable || isEditing) return;
     e.preventDefault();
     onMouseDown?.();
-  }, [isEditing, editable, onMouseDown]);
+  }, [editable, isEditing, onMouseDown]);
 
   const handleMouseEnter = useCallback(() => {
-    if (isEditing || !editable) return;
+    if (!editable || isEditing) return;
     onMouseEnter?.();
-  }, [isEditing, editable, onMouseEnter]);
+  }, [editable, isEditing, onMouseEnter]);
 
   const handleDoubleClick = useCallback(() => {
     if (!editable) return;
@@ -153,10 +153,11 @@ export default function TableCell({
       $edgeRight={selectionEdge?.right}
       rowSpan={rowSpan}
       colSpan={colSpan}
-      onDoubleClick={handleDoubleClick}
+      onDoubleClick={editable ? handleDoubleClick : undefined}
       onMouseDown={editable ? handleMouseDown : undefined}
       onMouseEnter={editable ? handleMouseEnter : undefined}
       onMouseUp={editable ? onMouseUp : undefined}
+      style={!editable ? { cursor: 'default', userSelect: 'none' } : undefined}
     >
       {isEditing ? (
         <EditableInput
