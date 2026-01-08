@@ -284,8 +284,8 @@ export const TableDataCell = styled.td<{
       ${$edgeTop ? `inset 0 2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `inset 0 0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeBottom ? `, inset 0 -2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0 -0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeLeft ? `, inset 2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeRight ? `, inset -2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset -0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`};
   `}
 
-  ${({ isSelected, $rowSelected, $hoverBackgroundColor }) =>
-    !isSelected && !$rowSelected &&
+  ${({ isSelected, isHeaderColumn, $rowSelected, $hoverBackgroundColor }) =>
+    !isSelected && !$rowSelected && !isHeaderColumn &&
     `
     &:hover {
       background-color: ${$hoverBackgroundColor || defaultColors.bodyHover};
