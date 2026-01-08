@@ -81,8 +81,8 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
             const { isSelected, edge } = getSelectionInfo(rowIndex, colIndex, selectionStart, selectionEnd);
             const isEditingRequested =
               !!editingCell && editingCell.row === rowIndex && editingCell.col === colIndex;
-            // editable: false인 셀은 선택되지 않도록
-            const cellEditable = col.editable !== false;
+            // editable: true가 아닌 셀은 선택/수정 불가
+            const cellEditable = col.editable === true;
             const cellIsSelected = cellEditable ? isSelected : false;
             
             return (

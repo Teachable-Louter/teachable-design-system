@@ -123,7 +123,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     const minCol = Math.min(selectionStart.col, selectionEnd.col);
     const maxCol = Math.max(selectionStart.col, selectionEnd.col);
     for (let c = minCol; c <= maxCol; c++) {
-      if (columns[c]?.editable !== false) return true;
+      if (columns[c]?.editable === true) return true;
     }
     return false;
   }, [selectionStart, selectionEnd, columns]);
@@ -162,9 +162,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, []);
 
   const handleCellMouseDown = useCallback((rowIndex: number, colIndex: number) => {
-    // editable: false인 셀은 선택 불가
+    // editable: true가 아닌 셀은 선택 불가
     const col = columns[colIndex];
-    if (col.editable === false) return;
+    if (col.editable !== true) return;
     
     setIsSelecting(true);
     setSelectionStart({ row: rowIndex, col: colIndex });
@@ -173,9 +173,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
 
   const handleCellMouseEnter = useCallback((rowIndex: number, colIndex: number) => {
     if (isSelecting) {
-      // editable: false인 셀은 범위에서 제외하지 않고, 드래그만 막음
+      // editable: true가 아닌 셀은 드래그 선택 불가
       const col = columns[colIndex];
-      if (col.editable === false) return;
+      if (col.editable !== true) return;
       setSelectionEnd({ row: rowIndex, col: colIndex });
     }
   }, [isSelecting, columns]);
@@ -298,7 +298,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               const targetCol = startCol + cIdx;
               if (targetRow < data.length && targetCol < columns.length) {
                 const col = columns[targetCol];
-                if (col.editable !== false) {
+                if (col.editable === true) {
                   let parsedValue: unknown = cellValue;
                   if (col.dataType === 'number') {
                     const num = parseFloat(cellValue.replace(/,/g, ''));
@@ -324,7 +324,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
       for (let r = minRow; r <= maxRow; r++) {
         for (let c = minCol; c <= maxCol; c++) {
           const col = columns[c];
-          if (col.editable !== false) {
+          if (col.editable === true) {
             onCellEdit(r, col.key, '');
           }
         }
@@ -403,7 +403,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
             const targetCol = startCol + cIdx;
             if (targetRow < data.length && targetCol < columns.length) {
               const col = columns[targetCol];
-              if (col.editable !== false) {
+              if (col.editable === true) {
                 let parsedValue: unknown = cellValue;
                 if (col.dataType === 'number') {
                   const num = parseFloat(cellValue.replace(/,/g, ''));
@@ -430,7 +430,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     for (let r = minRow; r <= maxRow; r++) {
       for (let c = minCol; c <= maxCol; c++) {
         const col = columns[c];
-        if (col.editable !== false) {
+        if (col.editable === true) {
           onCellEdit(r, col.key, '');
         }
       }
