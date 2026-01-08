@@ -284,20 +284,19 @@ export const TableDataCell = styled.td<{
       ${$edgeTop ? `inset 0 2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `inset 0 0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeBottom ? `, inset 0 -2px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0 -0.5px 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeLeft ? `, inset 2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset 0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`}${$edgeRight ? `, inset -2px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}` : `, inset -0.5px 0 0 0 ${$selectedBorderColor || defaultColors.selectedBorder}50`};
   `}
 
-  ${({ $editable, isSelected, $rowSelected, $hoverBackgroundColor }) =>
-    $editable && !isSelected && !$rowSelected &&
+  ${({ isSelected, $rowSelected, $hoverBackgroundColor }) =>
+    !isSelected && !$rowSelected &&
     `
-    cursor: cell;
     &:hover {
       background-color: ${$hoverBackgroundColor || defaultColors.bodyHover};
     }
   `}
 
   ${({ $editable }) =>
-    !$editable &&
-    `
-    cursor: default;
-  `}
+    $editable
+    ? `cursor: cell;`
+    : `cursor: default;`
+  }
 
   ${({ isSelected, $selectedBackgroundColor }) =>
     isSelected &&
