@@ -23,7 +23,7 @@ export const defaultColors = {
 
 const spacing = {
   cellPadding: '4px 16px',
-  headerPadding: '4px 16px',
+  headerPadding: '0 16px',
 } as const;
 
 // ============================================
@@ -202,7 +202,7 @@ export const TableHeaderCell = styled.th<{
   font-weight: 700;
   font-size: ${({ $fontSize }) => $fontSize || '15px'};
   color: ${({ $textColor }) => $textColor || defaultColors.text};
-  height: ${({ $height }) => $height || '30px'};
+  height: ${({ $height }) => $height || '23px'};
   white-space: nowrap;
   position: relative;
   ${({ width }) => width && `width: ${width};`}
