@@ -162,18 +162,15 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, []);
 
   const handleCellMouseDown = useCallback((rowIndex: number, colIndex: number) => {
-    // editable: true가 아닌 셀은 선택 불가
-    const col = columns[colIndex];
-    if (col.editable !== true) return;
-    
+    // 1셀 선택은 모든 셀에서 가능
     setIsSelecting(true);
     setSelectionStart({ row: rowIndex, col: colIndex });
     setSelectionEnd({ row: rowIndex, col: colIndex });
-  }, [columns]);
+  }, []);
 
   const handleCellMouseEnter = useCallback((rowIndex: number, colIndex: number) => {
     if (isSelecting) {
-      // editable: true가 아닌 셀은 드래그 선택 불가
+      // 드래그 선택 시 editable: true가 아닌 셀은 범위 확장 불가
       const col = columns[colIndex];
       if (col.editable !== true) return;
       setSelectionEnd({ row: rowIndex, col: colIndex });

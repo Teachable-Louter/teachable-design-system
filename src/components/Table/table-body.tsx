@@ -81,9 +81,8 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
             const { isSelected, edge } = getSelectionInfo(rowIndex, colIndex, selectionStart, selectionEnd);
             const isEditingRequested =
               !!editingCell && editingCell.row === rowIndex && editingCell.col === colIndex;
-            // editable: true가 아닌 셀은 선택/수정 불가
+            // editable: true인 셀만 수정 가능, 선택/호버는 모든 셀에서 가능
             const cellEditable = col.editable === true;
-            const cellIsSelected = cellEditable ? isSelected : false;
             
             return (
               <TableCell
@@ -95,12 +94,12 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
                 rowHeight={rowHeight}
                 dataType={col.dataType}
                 isHeaderColumn={col.isHeaderColumn}
-                isSelected={cellIsSelected}
+                isSelected={isSelected}
                 rowSelected={enableRowSelection && (selectedRowIndex === rowIndex || hoveredRowIndex === rowIndex)}
                 isEditingRequested={cellEditable ? isEditingRequested : false}
                 startEditingToken={editToken}
                 startEditingValue={isEditingRequested ? editStartValue : null}
-                selectionEdge={cellIsSelected ? edge : undefined}
+                selectionEdge={isSelected ? edge : undefined}
                 rowSpan={col.rowSpan}
                 colSpan={col.colSpan}
                 backgroundColor={col.backgroundColor}
@@ -108,11 +107,11 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
                 selectedBackgroundColor={col.selectedBackgroundColor || styleConfig?.selectedBackgroundColor}
                 align={col.align}
                 styleConfig={styleConfig}
-                onEdit={(value) => onCellEdit?.(rowIndex, col.key, value)}
+                onEdit={cellEditable ? (value) => onCellEdit?.(rowIndex, col.key, value) : undefined}
                 render={col.render ? (value) => col.render!(value, row, rowIndex) : undefined}
-                onMouseDown={enableRowSelection || !cellEditable ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}
-                onMouseEnter={enableRowSelection || !cellEditable ? undefined : () => onCellMouseEnter?.(rowIndex, colIndex)}
-                onMouseUp={enableRowSelection || !cellEditable ? undefined : onCellMouseUp}
+                onMouseDown={enableRowSelection ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}
+                onMouseEnter={enableRowSelection ? undefined : () => onCellMouseEnter?.(rowIndex, colIndex)}
+                onMouseUp={enableRowSelection ? undefined : onCellMouseUp}
               />
             );
           })}
