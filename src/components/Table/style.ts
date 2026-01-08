@@ -193,7 +193,8 @@ export const TableHeaderCell = styled.th<{
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
   background: inherit;
-  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
+  border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-left: none;
   border-top: none;
   padding: ${spacing.headerPadding};
@@ -207,7 +208,7 @@ export const TableHeaderCell = styled.th<{
   ${({ width }) => width && `width: ${width};`}
 
   &:first-of-type {
-    border-left: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
+    border-left: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   }
 
   ${({ sortable }) =>
