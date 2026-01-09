@@ -180,6 +180,7 @@ const baseCellStyle = `
   box-sizing: border-box;
   vertical-align: middle;
   line-height: 1.5;
+  font-family: ${typography.fontFamily.primary};
 `;
 
 export const TableHeaderCell = styled.th<{
