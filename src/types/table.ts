@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 
 /** 셀 데이터 타입 */
 export type DataType = 'text' | 'number' | 'date' | 'boolean' | 'custom';
@@ -200,6 +200,8 @@ export interface TableBodyProps<T = Record<string, unknown>> {
   onRowHover?: (rowIndex: number | null) => void;
   /** 스타일 설정 */
   styleConfig?: TableStyleConfig;
+  /** 부모 스크롤 컨테이너 참조 (가상화용) */
+  parentRef?: RefObject<HTMLDivElement | null>;
 }
 
 /** 셀 위치 */

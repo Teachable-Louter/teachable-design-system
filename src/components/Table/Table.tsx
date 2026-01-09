@@ -572,6 +572,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               onRowClick={(rowIndex) => onRowClick?.(rowIndex, sortedData[rowIndex])}
               onRowHover={setHoveredRowIndex}
               styleConfig={styleConfig}
+              parentRef={containerRef}
             />
           </StyledTable>
         </TableContainer>

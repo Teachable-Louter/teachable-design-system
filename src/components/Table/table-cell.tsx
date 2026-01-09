@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, type KeyboardEvent, type MouseEvent } from 'react';
+import React, { useEffect, useRef, useState, useCallback, memo, type KeyboardEvent, type MouseEvent } from 'react';
 import type { TableCellProps, DataType } from '../../types/table';
 import { TableDataCell, EditableInput, CellContent } from './style';
 
@@ -38,7 +38,7 @@ const getInputType = (dataType: DataType): string => {
   return 'text';
 };
 
-export default function TableCell({
+function TableCell({
   value,
   editable = false,
   width,
@@ -175,3 +175,36 @@ export default function TableCell({
     </TableDataCell>
   );
 }
+
+// React.memo를 적용하여 불필요한 리렌더링 방지
+// props가 변경되지 않으면 리렌더링하지 않음
+export default memo(TableCell, (prevProps, nextProps) => {
+  // 자주 변경되는 props만 비교하여 성능 최적화
+  // 참조 비교 먼저 수행 (빠름)
+  if (prevProps.value !== nextProps.value) return false;
+  if (prevProps.isSelected !== nextProps.isSelected) return false;
+  if (prevProps.rowSelected !== nextProps.rowSelected) return false;
+  if (prevProps.isEditingRequested !== nextProps.isEditingRequested) return false;
+  if (prevProps.startEditingToken !== nextProps.startEditingToken) return false;
+  if (prevProps.startEditingValue !== nextProps.startEditingValue) return false;
+  
+  // selectionEdge 객체 비교 (자주 변경됨)
+  const prevEdge = prevProps.selectionEdge;
+  const nextEdge = nextProps.selectionEdge;
+  if (prevEdge !== nextEdge) {
+    if (!prevEdge || !nextEdge) return false;
+    if (prevEdge.top !== nextEdge.top) return false;
+    if (prevEdge.bottom !== nextEdge.bottom) return false;
+    if (prevEdge.left !== nextEdge.left) return false;
+    if (prevEdge.right !== nextEdge.right) return false;
+  }
+  
+  // 정적 props는 변경이 드물어 비교 생략 가능
+  // editable, width, height, dataType 등은 보통 초기화 후 변경되지 않음
+  if (prevProps.editable !== nextProps.editable) return false;
+  if (prevProps.width !== nextProps.width) return false;
+  if (prevProps.height !== nextProps.height) return false;
+  if (prevProps.backgroundColor !== nextProps.backgroundColor) return false;
+  
+  return true; // props가 같으면 리렌더링 스킵
+});
