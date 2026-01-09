@@ -48,3 +48,11 @@ export const WithCustomTabs: Story = {
 	},
 };
 
+export const WithGap: Story = {
+	args: {
+		tabs: ['교사', '학급'],
+		defaultSelected: '교사',
+		gap: '25px',
+	},
+};
+
