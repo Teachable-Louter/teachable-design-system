@@ -4,13 +4,14 @@ import { typography } from '../../style';
 
 export interface StyledTabProps {
 	isSelected?: boolean;
+	gap?: string;
 }
 
-export const StyledTabContainer = styled.div`
+export const StyledTabContainer = styled.div<StyledTabProps>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 0;
+	gap: ${({ gap }) => gap || '10px'};
 `;
 
 export const StyledTab = styled.button<StyledTabProps>`
