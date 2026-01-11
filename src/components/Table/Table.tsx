@@ -75,6 +75,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   styleConfig,
   enableCellSelectList,
   cellSelectList,
+  cellSelectListRowHeight,
 }: TableProps<T>) {
   const outerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -551,6 +552,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               parentRef={containerRef}
               enableCellSelectList={enableCellSelectList}
               cellSelectList={cellSelectList}
+              cellSelectListRowHeight={cellSelectListRowHeight}
               onCellSelectListItemClick={(rowIndex, columnKey, value) => onCellEdit?.(rowIndex, columnKey, value)}
             />
           </StyledTable>

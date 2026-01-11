@@ -120,6 +120,8 @@ export interface TableProps<T = Record<string, unknown>> {
   enableCellSelectList?: boolean;
   /** 셀 클릭 시 표시할 선택 리스트 */
   cellSelectList?: string[];
+  /** 셀 선택 리스트 아이템 행 높이 (기본값: '30px') */
+  cellSelectListRowHeight?: string;
 }
 
 /** 테이블 셀 Props */
@@ -166,6 +168,8 @@ export interface TableCellProps {
   enableSelectList?: boolean;
   /** 선택 리스트 */
   selectList?: string[];
+  /** 선택 리스트 아이템 행 높이 */
+  selectListRowHeight?: string;
   /** 선택 리스트 아이템 클릭 콜백 */
   onSelectListItemClick?: (value: string) => void;
 }
@@ -236,6 +240,8 @@ export interface TableBodyProps<T = Record<string, unknown>> {
   enableCellSelectList?: boolean;
   /** 셀 선택 리스트 아이템들 */
   cellSelectList?: string[];
+  /** 셀 선택 리스트 아이템 행 높이 */
+  cellSelectListRowHeight?: string;
   /** 셀 선택 리스트 아이템 클릭 콜백 */
   onCellSelectListItemClick?: (rowIndex: number, columnKey: string, value: string) => void;
 }

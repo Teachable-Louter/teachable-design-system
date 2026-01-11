@@ -66,6 +66,7 @@ function TableCell({
   onMouseUp,
   enableSelectList = false,
   selectList = [],
+  selectListRowHeight,
   onSelectListItemClick,
 }: TableCellProps) {
   const [isEditing, setIsEditing] = useState(false);
@@ -177,7 +178,7 @@ function TableCell({
     const listToShow = isEditing ? filteredSelectList : selectList;
     
     return (
-      <CellSelectListDropdown $visible={showSelectList}>
+      <CellSelectListDropdown $visible={showSelectList} $rowHeight={selectListRowHeight}>
         {listToShow.map((item, index) => (
           <CellSelectListItem
             key={`${item}-${index}`}

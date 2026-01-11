@@ -60,6 +60,7 @@ interface VirtualRowProps<T extends Record<string, unknown>> {
   styleConfig: TableStyleConfig | undefined;
   enableCellSelectList?: boolean;
   cellSelectList?: string[];
+  cellSelectListRowHeight?: string;
   onCellSelectListItemClick?: (rowIndex: number, columnKey: string, value: string) => void;
   onCellEdit?: (rowIndex: number, columnKey: string, value: unknown) => void;
   onCellMouseDown?: (rowIndex: number, colIndex: number) => void;
@@ -86,6 +87,7 @@ const VirtualRow = memo(<T extends Record<string, unknown>>({
   styleConfig,
   enableCellSelectList,
   cellSelectList,
+  cellSelectListRowHeight,
   onCellSelectListItemClick,
   onCellEdit,
   onCellMouseDown,
@@ -158,6 +160,7 @@ const VirtualRow = memo(<T extends Record<string, unknown>>({
             styleConfig={styleConfig}
             enableSelectList={enableCellSelectList}
             selectList={cellSelectList}
+            selectListRowHeight={cellSelectListRowHeight}
             onSelectListItemClick={onCellSelectListItemClick ? (value) => onCellSelectListItemClick(rowIndex, col.key, value) : undefined}
             onEdit={cellEditable ? (value) => onCellEdit?.(rowIndex, col.key, value) : undefined}
             render={col.render ? (value) => col.render!(value, row, rowIndex) : undefined}
@@ -196,6 +199,7 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
   parentRef, // 부모 스크롤 컨테이너 참조 (가상화용)
   enableCellSelectList,
   cellSelectList,
+  cellSelectListRowHeight,
   onCellSelectListItemClick,
 }: TableBodyProps<T>) {
   const parsedRowHeight = parseRowHeight(rowHeight);
@@ -237,6 +241,7 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
               styleConfig={styleConfig}
               enableCellSelectList={enableCellSelectList}
               cellSelectList={cellSelectList}
+              cellSelectListRowHeight={cellSelectListRowHeight}
               onCellSelectListItemClick={onCellSelectListItemClick}
               onCellEdit={onCellEdit}
               onCellMouseDown={onCellMouseDown}
@@ -279,6 +284,7 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
           styleConfig={styleConfig}
           enableCellSelectList={enableCellSelectList}
           cellSelectList={cellSelectList}
+          cellSelectListRowHeight={cellSelectListRowHeight}
           onCellSelectListItemClick={onCellSelectListItemClick}
           onCellEdit={onCellEdit}
           onCellMouseDown={onCellMouseDown}

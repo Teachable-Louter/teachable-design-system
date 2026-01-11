@@ -489,21 +489,26 @@ export const CellSelectListWrapper = styled.div`
   width: 100%;
 `;
 
-export const CellSelectListDropdown = styled.div<{ $visible: boolean }>`
+export const CellSelectListDropdown = styled.div<{ $visible: boolean; $rowHeight?: string }>`
   position: absolute;
   top: 100%;
   left: 0;
-  right: 0;
+  min-width: 100%;
+  width: max-content;
   z-index: 100;
   background: ${defaultColors.body};
   border: 1px solid ${defaultColors.border};
   border-top: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-height: 90px; /* 약 3개 아이템 높이 (30px * 3) */
+  max-height: ${({ $rowHeight }) => {
+    const height = parseInt($rowHeight || '30', 10);
+    return `${height * 3}px`;
+  }}; /* 약 3개 아이템 높이 */
   overflow-y: auto;
+  overflow-x: visible;
   display: ${({ $visible }) => ($visible ? 'block' : 'none')};
 
-  /* 스크롤바 스타일 */
+  /* 스크롤바 스타일 - 우측으로 넘침 */
   &::-webkit-scrollbar {
     width: 8px;
   }
