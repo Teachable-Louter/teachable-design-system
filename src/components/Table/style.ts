@@ -91,7 +91,9 @@ export const TableTitleCell = styled.th<{
   font-weight: 700;
   color: ${({ $textColor }) => $textColor || defaultColors.text};
   background: ${({ $backgroundColor }) => $backgroundColor || defaultColors.header};
-  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
+  border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  border-left: none;
   border-top: none;
   padding: 0 16px;
   text-align: ${({ $isEmpty }) => ($isEmpty ? 'left' : 'center')};
@@ -99,11 +101,7 @@ export const TableTitleCell = styled.th<{
   min-width: 80px;
 
   &:first-of-type {
-    border-left: none;
-  }
-
-  &:last-of-type {
-    border-right: none;
+    border-left: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   }
 `;
 
