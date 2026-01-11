@@ -2,7 +2,7 @@ import React from "react";
 import { TabAtomicProps } from "../../types/TabAtomic.types";
 import { StyledTabContainer, StyledTab } from "./style";
 
-export function TabAtomic({ tabs, defaultSelected, onChange }: TabAtomicProps) {
+export function TabAtomic({ tabs, defaultSelected, onChange, gap }: TabAtomicProps) {
 	const [selected, setSelected] = React.useState<string>(
 		defaultSelected || tabs[0] || ""
 	);
@@ -13,7 +13,7 @@ export function TabAtomic({ tabs, defaultSelected, onChange }: TabAtomicProps) {
 	};
 
 	return (
-		<StyledTabContainer>
+		<StyledTabContainer gap={gap}>
 			{tabs.map((tab) => (
 				<StyledTab
 					key={tab}
