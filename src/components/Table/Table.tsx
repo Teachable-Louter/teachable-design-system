@@ -93,6 +93,19 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   // 실제 사용할 rowHeight (styleConfig 우선)
   const effectiveRowHeight = styleConfig?.bodyRowHeight || rowHeight || '30px';
 
+  // font 스타일 파싱 (문자열 또는 객체)
+  const fontStyles = useMemo(() => {
+    const font = styleConfig?.font;
+    if (!font) return { fontFamily: styleConfig?.fontFamily };
+    if (typeof font === 'string') return { fontFamily: font };
+    return {
+      fontFamily: styleConfig?.fontFamily,
+      fontSize: font.fontSize,
+      fontWeight: font.fontWeight,
+      lineHeight: font.lineHeight,
+    };
+  }, [styleConfig?.font, styleConfig?.fontFamily]);
+
   // 테이블 너비 계산 (컬럼 width 합계)
   const tableWidth = useMemo(() => {
     const hasAllWidths = columns.every(col => col.width);
@@ -499,10 +512,15 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   }, [isSelecting, handleCellMouseUp, handleKeyDown]);
 
   return (
-    <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu} $width={tableWidth}>
+    <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu} $width={tableWidth} $hasScroll={!!maxHeight}>
       <TableWrapper $borderColor={styleConfig?.borderColor}>
         <TableContainer ref={containerRef} maxHeight={maxHeight}>
-          <StyledTable $fontFamily={styleConfig?.font || styleConfig?.fontFamily}>
+          <StyledTable 
+            $fontFamily={fontStyles.fontFamily} 
+            $fontSize={fontStyles.fontSize}
+            $fontWeight={fontStyles.fontWeight}
+            $lineHeight={fontStyles.lineHeight}
+          >
             <colgroup>
               {columns.map((col) => (
                 <col
