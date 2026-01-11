@@ -100,7 +100,7 @@ export const StyledOpenContentsText = styled.p`
     color: ${colors.text.subtle};
 
     font-family: ${typography.fontFamily.primary};
-    font-size: 13px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 19.5px */

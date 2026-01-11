@@ -324,7 +324,7 @@ export const TableDataCell = styled.td<{
   border-top: none;
   padding: ${({ isHeaderColumn }) => (isHeaderColumn ? spacing.headerPadding : spacing.cellPadding)};
   font-weight: ${({ isHeaderColumn }) => (isHeaderColumn ? 700 : 400)};
-  font-size: ${({ isHeaderColumn, $fontSize }) => $fontSize || (isHeaderColumn ? '15px' : '13px')};
+  font-size: ${({ isHeaderColumn, $fontSize }) => $fontSize || (isHeaderColumn ? '15px' : '15px')};
   color: ${({ isHeaderColumn, $textColor }) => $textColor || (isHeaderColumn ? defaultColors.text : defaultColors.textSecondary)};
   height: ${({ height }) => height ?? '30px'};
   position: relative;
@@ -479,7 +479,7 @@ export const ContextMenuItem = styled.button<{ disabled?: boolean }>`
   border: none;
   background: transparent;
   text-align: left;
-  font-size: 13px;
+  font-size: 15px;
   color: ${({ disabled }) => (disabled ? defaultColors.disabledText : defaultColors.text)};
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
@@ -552,7 +552,7 @@ export const CellSelectListDropdown = styled.div<{ $visible: boolean; $rowHeight
 
 export const CellSelectListItem = styled.div<{ $highlighted?: boolean }>`
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: 15px;
   color: ${defaultColors.textSecondary};
   cursor: pointer;
   background: ${({ $highlighted }) => ($highlighted ? defaultColors.selected : 'transparent')};

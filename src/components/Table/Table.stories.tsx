@@ -590,7 +590,7 @@ const StyleConfigTableComponent = () => {
           bodyRowHeight: '40px',
           fontFamily: 'Georgia, serif',
           headerFontSize: '14px',
-          bodyFontSize: '13px',
+          bodyFontSize: '15px',
           headerBackgroundColor: '#1e40af',
           headerTextColor: '#ffffff',
           bodyTextColor: '#1f2937',
