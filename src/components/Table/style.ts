@@ -145,7 +145,6 @@ export const TableContainer = styled.div<{ maxHeight?: string; $headerHeight?: s
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  border-bottom: 1px solid ${defaultColors.border};
   ${({ maxHeight }) => maxHeight && `max-height: ${maxHeight};`}
 
   /* 스크롤바 스타일 - Figma 디자인 기반 */
