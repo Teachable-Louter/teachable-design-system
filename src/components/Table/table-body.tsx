@@ -58,6 +58,9 @@ interface VirtualRowProps<T extends Record<string, unknown>> {
   selectedRowIndex: number | undefined;
   hoveredRowIndex: number | null | undefined;
   styleConfig: TableStyleConfig | undefined;
+  enableCellSelectList?: boolean;
+  cellSelectList?: string[];
+  onCellSelectListItemClick?: (rowIndex: number, columnKey: string, value: string) => void;
   onCellEdit?: (rowIndex: number, columnKey: string, value: unknown) => void;
   onCellMouseDown?: (rowIndex: number, colIndex: number) => void;
   onCellMouseEnter?: (rowIndex: number, colIndex: number) => void;
@@ -81,6 +84,9 @@ const VirtualRow = memo(<T extends Record<string, unknown>>({
   selectedRowIndex,
   hoveredRowIndex,
   styleConfig,
+  enableCellSelectList,
+  cellSelectList,
+  onCellSelectListItemClick,
   onCellEdit,
   onCellMouseDown,
   onCellMouseEnter,
@@ -150,6 +156,9 @@ const VirtualRow = memo(<T extends Record<string, unknown>>({
             selectedBackgroundColor={col.selectedBackgroundColor || styleConfig?.selectedBackgroundColor}
             align={col.align}
             styleConfig={styleConfig}
+            enableSelectList={enableCellSelectList}
+            selectList={cellSelectList}
+            onSelectListItemClick={onCellSelectListItemClick ? (value) => onCellSelectListItemClick(rowIndex, col.key, value) : undefined}
             onEdit={cellEditable ? (value) => onCellEdit?.(rowIndex, col.key, value) : undefined}
             render={col.render ? (value) => col.render!(value, row, rowIndex) : undefined}
             onMouseDown={enableRowSelection ? undefined : () => onCellMouseDown?.(rowIndex, colIndex)}
@@ -185,6 +194,9 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
   onRowHover,
   styleConfig,
   parentRef, // 부모 스크롤 컨테이너 참조 (가상화용)
+  enableCellSelectList,
+  cellSelectList,
+  onCellSelectListItemClick,
 }: TableBodyProps<T>) {
   const parsedRowHeight = parseRowHeight(rowHeight);
   const shouldVirtualize = data.length >= VIRTUALIZATION_THRESHOLD && !!parentRef?.current;
@@ -223,6 +235,9 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
               selectedRowIndex={selectedRowIndex}
               hoveredRowIndex={hoveredRowIndex}
               styleConfig={styleConfig}
+              enableCellSelectList={enableCellSelectList}
+              cellSelectList={cellSelectList}
+              onCellSelectListItemClick={onCellSelectListItemClick}
               onCellEdit={onCellEdit}
               onCellMouseDown={onCellMouseDown}
               onCellMouseEnter={onCellMouseEnter}
@@ -262,6 +277,9 @@ export default function TableBody<T extends Record<string, unknown> = Record<str
           selectedRowIndex={selectedRowIndex}
           hoveredRowIndex={hoveredRowIndex}
           styleConfig={styleConfig}
+          enableCellSelectList={enableCellSelectList}
+          cellSelectList={cellSelectList}
+          onCellSelectListItemClick={onCellSelectListItemClick}
           onCellEdit={onCellEdit}
           onCellMouseDown={onCellMouseDown}
           onCellMouseEnter={onCellMouseEnter}

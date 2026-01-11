@@ -78,24 +78,6 @@ export default function TableHeader<T = Record<string, unknown>>({
                 {title || '제목 없음'}
               </span>
             )}
-            {onTitleDelete && (
-              <TableTitleActions>
-                <button
-                  onClick={onTitleDelete}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: '4px',
-                    color: '#666',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  <XCircle size={14} />
-                </button>
-              </TableTitleActions>
-            )}
           </TableTitleCell>
         </TableTitleRow>
       )}

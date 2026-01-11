@@ -479,3 +479,61 @@ export const ContextMenuDivider = styled.div`
   background: ${defaultColors.borderLight};
   margin: 4px 0;
 `;
+
+// ============================================
+// 셀 선택 리스트 모달
+// ============================================
+export const CellSelectListWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 100%;
+`;
+
+export const CellSelectListDropdown = styled.div<{ $visible: boolean }>`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: ${defaultColors.body};
+  border: 1px solid ${defaultColors.border};
+  border-top: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 90px; /* 약 3개 아이템 높이 (30px * 3) */
+  overflow-y: auto;
+  display: ${({ $visible }) => ($visible ? 'block' : 'none')};
+
+  /* 스크롤바 스타일 */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${defaultColors.body};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${defaultColors.scrollThumb};
+    border-radius: 4px;
+
+    &:hover {
+      background: ${defaultColors.headerHover};
+    }
+  }
+`;
+
+export const CellSelectListItem = styled.div<{ $highlighted?: boolean }>`
+  padding: 6px 12px;
+  font-size: 13px;
+  color: ${defaultColors.textSecondary};
+  cursor: pointer;
+  background: ${({ $highlighted }) => ($highlighted ? defaultColors.selected : 'transparent')};
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: ${defaultColors.bodyHover};
+  }
+`;

@@ -861,3 +861,60 @@ export const BorderStyle: Story = {
   args: { columns: [], data: [] },
   render: () => <BorderStyleTableComponent />,
 };
+
+// 셀 선택 리스트 기능 스토리
+interface CellSelectData extends Record<string, unknown> {
+  id: string;
+  teacher: string;
+  subject: string;
+}
+
+const CellSelectListComponent = () => {
+  const [data, setData] = useState<CellSelectData[]>([
+    { id: '1', teacher: '홍길동', subject: '수학' },
+    { id: '2', teacher: '김철수', subject: '영어' },
+    { id: '3', teacher: '이영희', subject: '과학' },
+    { id: '4', teacher: '', subject: '' },
+    { id: '5', teacher: '', subject: '' },
+  ]);
+
+  const columns: TableColumn<CellSelectData>[] = [
+    { key: 'id', header: '번호', width: '80px' },
+    { key: 'teacher', header: '담당교사', width: '150px', editable: true },
+    { key: 'subject', header: '과목', width: '150px', editable: true },
+  ];
+
+  const teacherList = ['홍길동', '김철수', '이영희', '박민수', '최지현', '정수민', '강호동', '유재석'];
+  const subjectList = ['수학', '영어', '과학', '국어', '사회', '음악', '미술', '체육', '기술가정'];
+
+  const handleCellEdit = (rowIndex: number, columnKey: string, value: unknown) => {
+    setData(prev => prev.map((row, idx) => 
+      idx === rowIndex ? { ...row, [columnKey]: value } : row
+    ));
+  };
+
+  return (
+    <div style={{ width: '600px' }}>
+      <h3 style={{ marginBottom: '16px' }}>셀 선택 리스트 기능</h3>
+      <p style={{ marginBottom: '16px', color: '#666', fontSize: '14px' }}>
+        • 셀을 클릭하면 선택 리스트가 표시됩니다<br />
+        • 더블클릭하면 편집 모드로 전환되며 검색이 가능합니다<br />
+        • 우클릭으로 리스트를 닫을 수 있습니다<br />
+        • 리스트에서 항목을 클릭하면 셀에 값이 입력됩니다
+      </p>
+      <Table<CellSelectData>
+        columns={columns}
+        data={data}
+        onCellEdit={handleCellEdit}
+        enableCellSelectList={true}
+        cellSelectList={teacherList}
+      />
+    </div>
+  );
+};
+
+export const CellSelectList: Story = {
+  name: 'Cell Select List',
+  args: { columns: [], data: [] },
+  render: () => <CellSelectListComponent />,
+};
