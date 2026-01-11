@@ -67,9 +67,66 @@ export const TableWrapper = styled.div<{ $borderColor?: string }>`
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
 `;
 
+// ============================================
+// 타이틀 행 (테이블 헤더 내부)
+// ============================================
+export const TableTitleRow = styled.tr``;
+
+export const TableTitleCell = styled.th<{
+  $isEmpty?: boolean;
+  $fontFamily?: string;
+  $fontSize?: string;
+  $textColor?: string;
+  $borderColor?: string;
+  $backgroundColor?: string;
+}>`
+  box-sizing: border-box;
+  vertical-align: middle;
+  line-height: 1.5;
+  font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
+  font-size: ${({ $fontSize }) => $fontSize || '15px'};
+  font-weight: 700;
+  color: ${({ $textColor }) => $textColor || defaultColors.text};
+  background: ${({ $backgroundColor }) => $backgroundColor || defaultColors.header};
+  border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  border-left: none;
+  border-top: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  padding: 0 16px;
+  text-align: ${({ $isEmpty }) => ($isEmpty ? 'left' : 'center')};
+  white-space: nowrap;
+  min-width: 80px;
+
+  &:first-of-type {
+    border-left: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
+  }
+`;
+
+export const TableTitleInput = styled.input<{ $fontSize?: string }>`
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: ${({ $fontSize }) => $fontSize || '15px'};
+  color: inherit;
+  outline: none;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const TableTitleActions = styled.div`
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+`;
+
+// 기존 TableTitle은 deprecated - 하위 호환성을 위해 유지
 export const TableTitle = styled.div<{ $fontFamily?: string }>`
   padding: 8px 16px;
   font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
@@ -81,25 +138,6 @@ export const TableTitle = styled.div<{ $fontFamily?: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const TableTitleInput = styled.input`
-  flex: 1;
-  border: none;
-  background: transparent;
-  font: inherit;
-  color: inherit;
-  outline: none;
-  padding: 0;
-  
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const TableTitleActions = styled.div`
-  display: flex;
-  gap: 4px;
 `;
 
 export const TableContainer = styled.div<{ maxHeight?: string }>`
@@ -180,6 +218,7 @@ const baseCellStyle = `
   box-sizing: border-box;
   vertical-align: middle;
   line-height: 1.5;
+  font-family: ${typography.fontFamily.primary};
 `;
 
 export const TableHeaderCell = styled.th<{
@@ -189,6 +228,7 @@ export const TableHeaderCell = styled.th<{
   $fontSize?: string;
   $textColor?: string;
   $borderColor?: string;
+  $isFirstRow?: boolean;
 }>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
@@ -196,7 +236,7 @@ export const TableHeaderCell = styled.th<{
   border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-left: none;
-  border-top: none;
+  border-top: ${({ $isFirstRow, $borderColor }) => $isFirstRow ? `1px solid ${$borderColor || defaultColors.border}` : 'none'};
   padding: ${spacing.headerPadding};
   text-align: left;
   font-weight: 700;
@@ -438,4 +478,67 @@ export const ContextMenuDivider = styled.div`
   height: 1px;
   background: ${defaultColors.borderLight};
   margin: 4px 0;
+`;
+
+// ============================================
+// 셀 선택 리스트 모달
+// ============================================
+export const CellSelectListWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 100%;
+`;
+
+export const CellSelectListDropdown = styled.div<{ $visible: boolean; $rowHeight?: string }>`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  z-index: 100;
+  background: ${defaultColors.body};
+  border: 1px solid ${defaultColors.border};
+  border-top: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: ${({ $rowHeight }) => {
+    const height = parseInt($rowHeight || '30', 10);
+    return `${height * 3}px`;
+  }}; /* 약 3개 아이템 높이 */
+  overflow-y: auto;
+  overflow-x: visible;
+  display: ${({ $visible }) => ($visible ? 'block' : 'none')};
+
+  /* 스크롤바 스타일 - 우측으로 넘침 */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${defaultColors.body};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${defaultColors.scrollThumb};
+    border-radius: 4px;
+
+    &:hover {
+      background: ${defaultColors.headerHover};
+    }
+  }
+`;
+
+export const CellSelectListItem = styled.div<{ $highlighted?: boolean }>`
+  padding: 6px 12px;
+  font-size: 13px;
+  color: ${defaultColors.textSecondary};
+  cursor: pointer;
+  background: ${({ $highlighted }) => ($highlighted ? defaultColors.selected : 'transparent')};
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: ${defaultColors.bodyHover};
+  }
 `;

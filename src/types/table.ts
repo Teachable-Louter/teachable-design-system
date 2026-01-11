@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, RefObject } from 'react';
 
 /** 셀 데이터 타입 */
 export type DataType = 'text' | 'number' | 'date' | 'boolean' | 'custom';
@@ -116,6 +116,12 @@ export interface TableProps<T = Record<string, unknown>> {
   onAssignClick?: (cells: CellPosition[]) => void;
   /** 스타일 설정 */
   styleConfig?: TableStyleConfig;
+  /** 셀 클릭 시 선택 리스트 모달 표시 여부 */
+  enableCellSelectList?: boolean;
+  /** 셀 클릭 시 표시할 선택 리스트 */
+  cellSelectList?: string[];
+  /** 셀 선택 리스트 아이템 행 높이 (기본값: '30px') */
+  cellSelectListRowHeight?: string;
 }
 
 /** 테이블 셀 Props */
@@ -158,6 +164,14 @@ export interface TableCellProps {
   onMouseDown?: () => void;
   onMouseEnter?: () => void;
   onMouseUp?: () => void;
+  /** 셀 클릭 시 선택 리스트 모달 표시 여부 */
+  enableSelectList?: boolean;
+  /** 선택 리스트 */
+  selectList?: string[];
+  /** 선택 리스트 아이템 행 높이 */
+  selectListRowHeight?: string;
+  /** 선택 리스트 아이템 클릭 콜백 */
+  onSelectListItemClick?: (value: string) => void;
 }
 
 /** 테이블 헤더 Props */
@@ -168,6 +182,26 @@ export interface TableHeaderProps<T = Record<string, unknown>> {
   onSort?: (columnKey: string) => void;
   /** 스타일 설정 */
   styleConfig?: TableStyleConfig;
+  /** 테이블 제목 */
+  title?: string;
+  /** 제목 변경 콜백 */
+  onTitleChange?: (title: string) => void;
+  /** 제목 삭제 콜백 */
+  onTitleDelete?: () => void;
+  /** 제목 편집 상태 */
+  isEditingTitle?: boolean;
+  /** 제목 편집 상태 변경 */
+  setIsEditingTitle?: (editing: boolean) => void;
+  /** 제목 값 */
+  titleValue?: string;
+  /** 제목 값 변경 */
+  setTitleValue?: (value: string) => void;
+  /** 제목 저장 */
+  onTitleSave?: () => void;
+  /** 제목 키다운 */
+  onTitleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  /** 첫 번째 컸럼 너비 (타이틀 영역 좌측 셀 너비) */
+  firstColumnWidth?: string;
 }
 
 /** 테이블 바디 Props */
@@ -200,6 +234,16 @@ export interface TableBodyProps<T = Record<string, unknown>> {
   onRowHover?: (rowIndex: number | null) => void;
   /** 스타일 설정 */
   styleConfig?: TableStyleConfig;
+  /** 부모 스크롤 컨테이너 참조 (가상화용) */
+  parentRef?: RefObject<HTMLDivElement | null>;
+  /** 셀 클릭 시 선택 리스트 모달 활성화 */
+  enableCellSelectList?: boolean;
+  /** 셀 선택 리스트 아이템들 */
+  cellSelectList?: string[];
+  /** 셀 선택 리스트 아이템 행 높이 */
+  cellSelectListRowHeight?: string;
+  /** 셀 선택 리스트 아이템 클릭 콜백 */
+  onCellSelectListItemClick?: (rowIndex: number, columnKey: string, value: string) => void;
 }
 
 /** 셀 위치 */

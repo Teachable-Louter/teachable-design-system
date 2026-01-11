@@ -12,9 +12,6 @@ import {
   ContextMenuItem,
   ContextMenuDivider,
   ContextMenuOverlay,
-  TableTitle,
-  TableTitleInput,
-  TableTitleActions,
 } from './style';
 import TableHeader from './table-header';
 import TableBody from './table-body';
@@ -76,6 +73,9 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   showAssignButton,
   onAssignClick,
   styleConfig,
+  enableCellSelectList,
+  cellSelectList,
+  cellSelectListRowHeight,
 }: TableProps<T>) {
   const outerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -503,39 +503,6 @@ export default function Table<T extends Record<string, unknown> = Record<string,
   return (
     <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu} $width={tableWidth}>
       <TableWrapper $borderColor={styleConfig?.borderColor}>
-        {(title !== undefined || onTitleChange) && (
-          <TableTitle $fontFamily={styleConfig?.fontFamily}>
-            {isEditingTitle ? (
-              <TableTitleInput
-                value={titleValue}
-                onChange={(e) => setTitleValue(e.target.value)}
-                onBlur={handleTitleSave}
-                onKeyDown={handleTitleKeyDown}
-                autoFocus
-              />
-            ) : (
-              <span onDoubleClick={() => onTitleChange && setIsEditingTitle(true)}>
-                {title || '제목 없음'}
-              </span>
-            )}
-            {onTitleDelete && (
-              <TableTitleActions>
-                <button
-                  onClick={onTitleDelete}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: '4px',
-                    color: '#666',
-                  }}
-                >
-                  <XCircle size={16} />
-                </button>
-              </TableTitleActions>
-            )}
-          </TableTitle>
-        )}
         <TableContainer ref={containerRef} maxHeight={maxHeight}>
           <StyledTable $fontFamily={styleConfig?.fontFamily}>
             <colgroup>
@@ -552,6 +519,16 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               sortDirection={sortDirection}
               onSort={handleSort}
               styleConfig={styleConfig}
+              title={title}
+              onTitleChange={onTitleChange}
+              onTitleDelete={onTitleDelete}
+              isEditingTitle={isEditingTitle}
+              setIsEditingTitle={setIsEditingTitle}
+              titleValue={titleValue}
+              setTitleValue={setTitleValue}
+              onTitleSave={handleTitleSave}
+              onTitleKeyDown={handleTitleKeyDown}
+              firstColumnWidth={columns[0]?.width}
             />
             <TableBody<T>
               columns={columns}
@@ -572,6 +549,11 @@ export default function Table<T extends Record<string, unknown> = Record<string,
               onRowClick={(rowIndex) => onRowClick?.(rowIndex, sortedData[rowIndex])}
               onRowHover={setHoveredRowIndex}
               styleConfig={styleConfig}
+              parentRef={containerRef}
+              enableCellSelectList={enableCellSelectList}
+              cellSelectList={cellSelectList}
+              cellSelectListRowHeight={cellSelectListRowHeight}
+              onCellSelectListItemClick={(rowIndex, columnKey, value) => onCellEdit?.(rowIndex, columnKey, value)}
             />
           </StyledTable>
         </TableContainer>
