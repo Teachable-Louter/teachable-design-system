@@ -9,6 +9,13 @@ export type SortDirection = 'asc' | 'desc' | null;
 /** 텍스트 정렬 */
 export type TextAlign = 'left' | 'center' | 'right';
 
+/** 폰트 스타일 객체 */
+export interface FontStyle {
+  fontSize?: string;
+  lineHeight?: string;
+  fontWeight?: number;
+}
+
 /** 테이블 스타일 설정 */
 export interface TableStyleConfig {
   /** 헤더 높이 */
@@ -17,8 +24,8 @@ export interface TableStyleConfig {
   bodyRowHeight?: string;
   /** 폰트 패밀리 */
   fontFamily?: string;
-  /** 폰트 (폰트 패밀리 단축 속성) */
-  font?: string;
+  /** 폰트 (문자열 또는 typography 객체) */
+  font?: string | FontStyle;
   /** 헤더 폰트 크기 */
   headerFontSize?: string;
   /** 바디 폰트 크기 */

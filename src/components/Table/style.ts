@@ -51,10 +51,10 @@ const getCellBackgroundColor = (params: {
 // ============================================
 // 레이아웃 컴포넌트
 // ============================================
-export const TableOuterWrapper = styled.div<{ $width?: string }>`
+export const TableOuterWrapper = styled.div<{ $width?: string; $hasScroll?: boolean }>`
   position: relative;
   display: inline-block;
-  ${({ $width }) => $width ? `width: calc(${$width} + 20px);` : ''}
+  ${({ $width, $hasScroll }) => $width ? `width: ${$hasScroll ? `calc(${$width} + 20px)` : $width};` : ''}
   outline: none;
 
   &:focus {
@@ -141,8 +141,8 @@ export const TableTitle = styled.div<{ $fontFamily?: string }>`
 `;
 
 export const TableContainer = styled.div<{ maxHeight?: string; $headerHeight?: string }>`
-  width: calc(100% + 20px);
-  overflow-y: auto;
+  width: 100%;
+  overflow-y: ${({ maxHeight }) => maxHeight ? 'auto' : 'visible'};
   overflow-x: hidden;
   position: relative;
   ${({ maxHeight }) => maxHeight && `max-height: ${maxHeight};`}
@@ -207,12 +207,20 @@ export const TableContainer = styled.div<{ maxHeight?: string; $headerHeight?: s
 // ============================================
 // 테이블 기본 컴포넌트
 // ============================================
-export const StyledTable = styled.table<{ $fontFamily?: string }>`
+export const StyledTable = styled.table<{ 
+  $fontFamily?: string; 
+  $fontSize?: string;
+  $fontWeight?: number;
+  $lineHeight?: string;
+}>`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
   font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
+  ${({ $fontSize }) => $fontSize && `font-size: ${$fontSize};`}
+  ${({ $fontWeight }) => $fontWeight && `font-weight: ${$fontWeight};`}
+  ${({ $lineHeight }) => $lineHeight && `line-height: ${$lineHeight};`}
 `;
 
 export const TableHead = styled.thead<{ $backgroundColor?: string }>`
@@ -324,7 +332,7 @@ export const TableDataCell = styled.td<{
   border-top: none;
   padding: ${({ isHeaderColumn }) => (isHeaderColumn ? spacing.headerPadding : spacing.cellPadding)};
   font-weight: ${({ isHeaderColumn }) => (isHeaderColumn ? 700 : 400)};
-  font-size: ${({ isHeaderColumn, $fontSize }) => $fontSize || (isHeaderColumn ? '15px' : '13px')};
+  font-size: ${({ isHeaderColumn, $fontSize }) => $fontSize || '15px'};
   color: ${({ isHeaderColumn, $textColor }) => $textColor || (isHeaderColumn ? defaultColors.text : defaultColors.textSecondary)};
   height: ${({ height }) => height ?? '30px'};
   position: relative;
@@ -552,7 +560,7 @@ export const CellSelectListDropdown = styled.div<{ $visible: boolean; $rowHeight
 
 export const CellSelectListItem = styled.div<{ $highlighted?: boolean }>`
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: 15px;
   color: ${defaultColors.textSecondary};
   cursor: pointer;
   background: ${({ $highlighted }) => ($highlighted ? defaultColors.selected : 'transparent')};
