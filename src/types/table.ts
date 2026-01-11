@@ -17,6 +17,8 @@ export interface TableStyleConfig {
   bodyRowHeight?: string;
   /** 폰트 패밀리 */
   fontFamily?: string;
+  /** 폰트 (폰트 패밀리 단축 속성) */
+  font?: string;
   /** 헤더 폰트 크기 */
   headerFontSize?: string;
   /** 바디 폰트 크기 */
