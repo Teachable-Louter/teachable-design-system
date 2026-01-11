@@ -114,8 +114,7 @@ export default function TableHeader<T = Record<string, unknown>>({
               $height={styleConfig?.headerHeight}
               $fontSize={styleConfig?.headerFontSize}
               $textColor={styleConfig?.headerTextColor}
-              $borderColor={styleConfig?.borderColor}
-              onClick={() => handleClick(key, sortable)}
+              $borderColor={styleConfig?.borderColor}              $isFirstRow={!showTitleRow}              onClick={() => handleClick(key, sortable)}
             >
               {header}
               {sortable && (

@@ -67,7 +67,6 @@ export const TableWrapper = styled.div<{ $borderColor?: string }>`
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
 `;
 
 // ============================================
@@ -94,7 +93,7 @@ export const TableTitleCell = styled.th<{
   border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-left: none;
-  border-top: none;
+  border-top: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   padding: 0 16px;
   text-align: ${({ $isEmpty }) => ($isEmpty ? 'left' : 'center')};
   white-space: nowrap;
@@ -229,6 +228,7 @@ export const TableHeaderCell = styled.th<{
   $fontSize?: string;
   $textColor?: string;
   $borderColor?: string;
+  $isFirstRow?: boolean;
 }>`
   ${baseCellStyle}
   min-width: ${({ width }) => (width ? '0' : '80px')};
@@ -236,7 +236,7 @@ export const TableHeaderCell = styled.th<{
   border-right: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-bottom: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
   border-left: none;
-  border-top: none;
+  border-top: ${({ $isFirstRow, $borderColor }) => $isFirstRow ? `1px solid ${$borderColor || defaultColors.border}` : 'none'};
   padding: ${spacing.headerPadding};
   text-align: left;
   font-weight: 700;
