@@ -168,6 +168,26 @@ export interface TableHeaderProps<T = Record<string, unknown>> {
   onSort?: (columnKey: string) => void;
   /** 스타일 설정 */
   styleConfig?: TableStyleConfig;
+  /** 테이블 제목 */
+  title?: string;
+  /** 제목 변경 콜백 */
+  onTitleChange?: (title: string) => void;
+  /** 제목 삭제 콜백 */
+  onTitleDelete?: () => void;
+  /** 제목 편집 상태 */
+  isEditingTitle?: boolean;
+  /** 제목 편집 상태 변경 */
+  setIsEditingTitle?: (editing: boolean) => void;
+  /** 제목 값 */
+  titleValue?: string;
+  /** 제목 값 변경 */
+  setTitleValue?: (value: string) => void;
+  /** 제목 저장 */
+  onTitleSave?: () => void;
+  /** 제목 키다운 */
+  onTitleKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  /** 첫 번째 컸럼 너비 (타이틀 영역 좌측 셀 너비) */
+  firstColumnWidth?: string;
 }
 
 /** 테이블 바디 Props */

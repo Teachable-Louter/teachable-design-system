@@ -70,6 +70,66 @@ export const TableWrapper = styled.div<{ $borderColor?: string }>`
   border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.border};
 `;
 
+// ============================================
+// 타이틀 행 (테이블 헤더 내부)
+// ============================================
+export const TableTitleRow = styled.tr``;
+
+export const TableTitleCell = styled.th<{
+  $isEmpty?: boolean;
+  $fontFamily?: string;
+  $fontSize?: string;
+  $textColor?: string;
+  $borderColor?: string;
+  $backgroundColor?: string;
+}>`
+  box-sizing: border-box;
+  vertical-align: middle;
+  line-height: 1.5;
+  font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
+  font-size: ${({ $fontSize }) => $fontSize || '15px'};
+  font-weight: 700;
+  color: ${({ $textColor }) => $textColor || defaultColors.text};
+  background: ${({ $backgroundColor }) => $backgroundColor || defaultColors.header};
+  border: 1px solid ${({ $borderColor }) => $borderColor || defaultColors.borderLight};
+  border-top: none;
+  padding: 0 16px;
+  text-align: ${({ $isEmpty }) => ($isEmpty ? 'left' : 'center')};
+  white-space: nowrap;
+  min-width: 80px;
+
+  &:first-of-type {
+    border-left: none;
+  }
+
+  &:last-of-type {
+    border-right: none;
+  }
+`;
+
+export const TableTitleInput = styled.input<{ $fontSize?: string }>`
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: ${({ $fontSize }) => $fontSize || '15px'};
+  color: inherit;
+  outline: none;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const TableTitleActions = styled.div`
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+`;
+
+// 기존 TableTitle은 deprecated - 하위 호환성을 위해 유지
 export const TableTitle = styled.div<{ $fontFamily?: string }>`
   padding: 8px 16px;
   font-family: ${({ $fontFamily }) => $fontFamily || typography.fontFamily.primary};
@@ -81,25 +141,6 @@ export const TableTitle = styled.div<{ $fontFamily?: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-export const TableTitleInput = styled.input`
-  flex: 1;
-  border: none;
-  background: transparent;
-  font: inherit;
-  color: inherit;
-  outline: none;
-  padding: 0;
-  
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const TableTitleActions = styled.div`
-  display: flex;
-  gap: 4px;
 `;
 
 export const TableContainer = styled.div<{ maxHeight?: string }>`
