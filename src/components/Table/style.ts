@@ -22,7 +22,7 @@ export const defaultColors = {
 } as const;
 
 const spacing = {
-  cellPadding: '4px 16px',
+  cellPadding: '0 16px',
   headerPadding: '0 16px',
 } as const;
 
@@ -54,7 +54,7 @@ const getCellBackgroundColor = (params: {
 export const TableOuterWrapper = styled.div<{ $width?: string }>`
   position: relative;
   display: inline-block;
-  ${({ $width }) => $width && `width: ${$width};`}
+  ${({ $width }) => $width ? `width: calc(${$width} + 20px);` : ''}
   outline: none;
 
   &:focus {
@@ -66,7 +66,7 @@ export const TableWrapper = styled.div<{ $borderColor?: string }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 // ============================================
@@ -140,44 +140,68 @@ export const TableTitle = styled.div<{ $fontFamily?: string }>`
   justify-content: space-between;
 `;
 
-export const TableContainer = styled.div<{ maxHeight?: string }>`
-  width: 100%;
-  overflow: auto;
+export const TableContainer = styled.div<{ maxHeight?: string; $headerHeight?: string }>`
+  width: calc(100% + 20px);
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
+  border-bottom: 1px solid ${defaultColors.border};
   ${({ maxHeight }) => maxHeight && `max-height: ${maxHeight};`}
 
-  /* 스크롤바 스타일 */
+  /* 스크롤바 스타일 - Figma 디자인 기반 */
   &::-webkit-scrollbar {
     width: 20px;
-    height: 20px;
   }
 
+  /* 스크롤바 트랙 - 흰색 배경 */
   &::-webkit-scrollbar-track {
     background: ${defaultColors.body};
-    border: 1px solid ${defaultColors.border};
-    margin-top: 20px;
+    border: 1px solid ${defaultColors.borderLight};
   }
 
+  /* 스크롤바 thumb - 헤더 색상과 테두리 */
   &::-webkit-scrollbar-thumb {
-    background: ${defaultColors.scrollThumb};
-    border: 1px solid ${defaultColors.scrollThumbBorder};
+    background: ${defaultColors.header};
+    border: 1px solid ${defaultColors.borderLight};
 
     &:hover {
       background: ${defaultColors.headerHover};
     }
   }
 
-  &::-webkit-scrollbar-button:vertical:start:decrement,
+  /* 위쪽 화살표 버튼 - 헤더(24px) + 버튼(20px) = 44px, 하단 20px만 클릭 가능하도록 pointer-events 설정 불가하므로 전체 44px */
+  &::-webkit-scrollbar-button:vertical:start:decrement {
+    display: block;
+    height: 44px;
+    background: ${defaultColors.header};
+    border: 1px solid ${defaultColors.borderLight};
+    background-image: 
+      linear-gradient(to bottom, transparent 23px, ${defaultColors.borderLight} 23px, ${defaultColors.borderLight} 24px, transparent 24px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2333363d' d='M6 0L0 6.5h12L6 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center top, center 32px;
+  }
+
+  /* 아래쪽 화살표 버튼 */
   &::-webkit-scrollbar-button:vertical:end:increment {
     display: block;
     height: 20px;
     background: ${defaultColors.header};
     border: 1px solid ${defaultColors.borderLight};
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2333363d' d='M6 8L12 1.5H0L6 8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 
   &::-webkit-scrollbar-button:vertical:start:decrement:hover,
   &::-webkit-scrollbar-button:vertical:end:increment:hover {
-    background: ${defaultColors.headerHover};
+    background-color: ${defaultColors.headerHover};
+  }
+
+  /* 스크롤바 코너 */
+  &::-webkit-scrollbar-corner {
+    background: ${defaultColors.header};
+    border: 1px solid ${defaultColors.borderLight};
   }
 `;
 

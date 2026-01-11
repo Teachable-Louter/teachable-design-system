@@ -1,13 +1,11 @@
 import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react';
-import { ChevronUp, ChevronDown, Copy, ClipboardPaste, Trash2, XCircle } from 'lucide-react';
+import { Copy, ClipboardPaste, Trash2 } from 'lucide-react';
 import type { TableProps, SortDirection, DataType, CellPosition, TableStyleConfig } from '../../types/table';
 import {
   TableWrapper,
   TableContainer,
   StyledTable,
   TableOuterWrapper,
-  ScrollContainer,
-  ScrollButton,
   ContextMenu,
   ContextMenuItem,
   ContextMenuDivider,
@@ -504,7 +502,7 @@ export default function Table<T extends Record<string, unknown> = Record<string,
     <TableOuterWrapper ref={outerRef} className={className} tabIndex={0} onContextMenu={handleContextMenu} $width={tableWidth}>
       <TableWrapper $borderColor={styleConfig?.borderColor}>
         <TableContainer ref={containerRef} maxHeight={maxHeight}>
-          <StyledTable $fontFamily={styleConfig?.fontFamily}>
+          <StyledTable $fontFamily={styleConfig?.font || styleConfig?.fontFamily}>
             <colgroup>
               {columns.map((col) => (
                 <col
@@ -558,17 +556,6 @@ export default function Table<T extends Record<string, unknown> = Record<string,
           </StyledTable>
         </TableContainer>
       </TableWrapper>
-
-      {maxHeight && (
-        <ScrollContainer>
-          <ScrollButton position="top" onClick={() => scroll(-100)}>
-            <ChevronUp />
-          </ScrollButton>
-          <ScrollButton position="bottom" onClick={() => scroll(100)}>
-            <ChevronDown />
-          </ScrollButton>
-        </ScrollContainer>
-      )}
 
       {contextMenu.visible && (
         <>
