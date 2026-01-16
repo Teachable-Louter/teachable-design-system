@@ -116,21 +116,38 @@ export const DatePicker = ({
     );
   }, []);
 
+  // 날짜만 비교 (시간 제외) - date1 < date2
+  const isDateBefore = useCallback((date1: Date, date2: Date) => {
+    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    return d1.getTime() < d2.getTime();
+  }, []);
+
+  // 날짜만 비교 (시간 제외) - date1 > date2
+  const isDateAfter = useCallback((date1: Date, date2: Date) => {
+    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+    return d1.getTime() > d2.getTime();
+  }, []);
+
   const isInRange = useCallback(
     (date: Date) => {
       if (!internalStartDate || !internalEndDate) return false;
-      return date > internalStartDate && date < internalEndDate;
+      return (
+        isDateAfter(date, internalStartDate) &&
+        isDateBefore(date, internalEndDate)
+      );
     },
-    [internalStartDate, internalEndDate]
+    [internalStartDate, internalEndDate, isDateAfter, isDateBefore]
   );
 
   const isDateDisabled = useCallback(
     (date: Date) => {
-      if (minDate && date < minDate) return true;
-      if (maxDate && date > maxDate) return true;
+      if (minDate && isDateBefore(date, minDate)) return true;
+      if (maxDate && isDateAfter(date, maxDate)) return true;
       return false;
     },
-    [minDate, maxDate]
+    [minDate, maxDate, isDateBefore, isDateAfter]
   );
 
   // 이전/다음 달 이동
@@ -151,20 +168,22 @@ export const DatePicker = ({
     if (isDateDisabled(date)) return;
 
     if (isRangeMode) {
-      if (!internalStartDate || (internalStartDate && internalEndDate)) {
+      if (!internalStartDate || internalEndDate) {
         // 새로운 범위 시작
         setInternalStartDate(date);
         setInternalEndDate(null);
-      } else if (internalStartDate && !internalEndDate) {
+        onRangeSelect?.(date, null);
+      } else {
         // 범위 끝 선택
-        if (date < internalStartDate) {
+        if (isDateBefore(date, internalStartDate)) {
           setInternalEndDate(internalStartDate);
           setInternalStartDate(date);
+          onRangeSelect?.(date, internalStartDate);
         } else {
           setInternalEndDate(date);
+          onRangeSelect?.(internalStartDate, date);
         }
       }
-      onRangeSelect?.(internalStartDate, internalEndDate);
     } else {
       setInternalSelectedDate(date);
       onDateSelect?.(date);
